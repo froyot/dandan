@@ -1,0 +1,20 @@
+html {
+  color: rgba(158,158,158);
+}
+
+nav {
+  background-color: #C71585;
+}
+
+nav .brand-logo {
+  color: #fff;
+}
+
+nav a, 
+nav ul a {
+  color: #fff;
+}
+
+footer.page-footer {
+  background-color: #C71585;
+}
