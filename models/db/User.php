@@ -35,7 +35,7 @@ class User extends \yii\db\ActiveRecord
             [['create_at', 'update_at', 'last_login_time'], 'safe'],
             [['name', 'password'], 'required'],
             [['name'], 'string', 'max' => 30],
-            [['password', 'token'], 'string', 'max' => 40],
+            [['password', 'token'], 'string', 'max' => 100],
             [['last_login_ip'], 'string', 'max' => 4]
         ];
     }
@@ -59,7 +59,7 @@ class User extends \yii\db\ActiveRecord
 
     public function getRole()
     {
-        return $this->hasOne(Role::className(),['user_id'=>'user_id']);
+        return $this->hasOne(Role::className(),['user_id'=>'id']);
     }
 
     /**

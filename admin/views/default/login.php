@@ -7,10 +7,9 @@ use yii\bootstrap\ActiveForm;
 /* @var $model app\models\LoginForm */
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <p>Please fill out the following fields to login:</p>
+    <p>Please fill out admin info to login:</p>
 
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
@@ -21,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'username') ?>
+    <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'password')->passwordInput() ?>
 

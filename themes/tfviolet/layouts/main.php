@@ -38,9 +38,9 @@ $this->registerAssetBundle('app\assets\AppAsset');
 	  					  ],
 						    'items' => [
 						        ['label' => 'Home', 'url' => ['site/index']],
+                    ['label' => 'Contents', 'url' => ['content/index']],
 						        ['label' => 'About', 'url' => ['site/about']],
-						        ['label' => 'Contact', 'url' => ['site/contact']],
-						        ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+						        ['label' => 'Admin', 'url' => ['/admin/default/index'], 'visible' => Yii::$app->user->isGuest],
 						    ],
 		  				]);
 			  		?>
@@ -50,8 +50,12 @@ $this->registerAssetBundle('app\assets\AppAsset');
 
         <!-- Page Layout here -->
         <div class="row">
-
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                'options'=>['class'=>'breadcrumb','style'=>'margin-left: 0.75rem; margin-right: 0.75rem;']
+            ]) ?>
           <div class="right col s12 m8 l9"> <!-- Note that "m8 l9" was added -->
+
             <p>
               <?php echo $content; ?>
             </p>

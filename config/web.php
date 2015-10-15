@@ -3,9 +3,15 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
+    'name'=>'DanDan',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'modules' => [
+            'admin' => [
+                'class' => 'app\admin\Module',
+            ],
+    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation

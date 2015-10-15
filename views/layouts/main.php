@@ -1,15 +1,17 @@
 <?php
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
+use app\assets\DefaultAsset;
+use app\common\widgets\SideNavWidget;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 // AppAsset::register($this);
-$bundle = AppAsset::register($this);
+$bundle = DefaultAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -27,7 +29,7 @@ $bundle = AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
+                'brandLabel' => Yii::$app->name,
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,13 +38,11 @@ $bundle = AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                    ['label' => 'Home', 'url' => ['/site/index']],
-                    ['label' => 'About', 'url' => ['/site/about']],
-                    ['label' => 'Contact', 'url' => ['/site/contact']],
+
                     Yii::$app->user->isGuest ?
-                        ['label' => 'Login', 'url' => ['/site/login']] :
-                        ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                            'url' => ['/site/logout'],
+                        ['label' => 'Login', 'url' => Url::to(\Yii::$app->user->loginUrl)] :
+                        ['label' => 'Logout (' . Yii::$app->user->identity->name . ')',
+                            'url' => ['/admin/default/logout'],
                             'linkOptions' => ['data-method' => 'post']],
                 ],
             ]);
@@ -53,7 +53,39 @@ $bundle = AppAsset::register($this);
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
-            <?= $content ?>
+            <div class="row">
+               <div class="col-md-2">
+            <?php
+            if(!Yii::$app->user->isGuest)
+            {
+                echo SideNavWidget::widget([
+                    'items' => [
+                     [
+                         'label' => 'Home',
+                         'url' => ['/admin/default/index'],
+
+                     ],
+                     [
+                         'label' => 'Content',
+                         'items' => [
+                              ['label' => 'posts', 'url' => ['/admin/content/index']],
+                              ['label' => 'Add Post', 'url' => ['/admin/content/create']],
+                              ['label' => 'Categorys', 'url' => ['/admin/category/index']],
+                              ['label' => 'Add Category', 'url' => ['/admin/category/create']],
+                         ],
+                     ],
+                 ],
+                 'activeUrl'=>Url::to([str_replace('admin/', '', Yii::$app->requestedRoute)]),
+                ]);
+            }
+            ?>
+            </div>
+            <div class="col-md-8">
+                        <?= $content ?>
+            </div>
+        </div>
+
+
         </div>
     </div>
 
