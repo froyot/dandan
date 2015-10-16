@@ -29,11 +29,13 @@ class Params extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'create_by'], 'required'],
+            [['name', 'type'], 'required'],
             [['type'], 'string'],
-            [['create_by'], 'integer'],
-            [['create_at'], 'safe'],
-            [['name'], 'string', 'max' => 20]
+            [['created_by'], 'integer'],
+            [['created_at'], 'safe'],
+            [['name'], 'string', 'max' => 20],
+            ['created_at','default','value'=>date('Y-m-d H:i:s')],
+            ['created_by','default','value'=>Yii::$app->user->id]
         ];
     }
 
@@ -46,8 +48,8 @@ class Params extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'type' => 'Type',
-            'create_by' => 'Create By',
-            'create_at' => 'Create At',
+            'created_by' => 'Create By',
+            'created_at' => 'Create At',
         ];
     }
 }

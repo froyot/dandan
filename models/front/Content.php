@@ -4,7 +4,7 @@ namespace app\models\front;
 
 use Yii;
 use app\models\db\Content as ContentModel;
-use app\models\front\form\ContentForm;
+use app\models\form\Content as ContentForm;
 
 /**
  * This is the model class for table "{{%content}}".
@@ -23,7 +23,7 @@ class Content extends ContentModel
     {
         $contentForm = new ContentForm();
         //获取slide文章
-        $params['ContentForm'] = [
+        $params['Content'] = [
             'isSlide'=>true
         ];
         $data = $contentForm->search($params);
@@ -31,11 +31,11 @@ class Content extends ContentModel
         $slide = $data->getModels();
 
         //获取前几篇文章
-        $params['ContentForm'] = [
+        $params['Content'] = [
             'isSlide'=>false
         ];
         $data = $contentForm->search($params);
-        $data->pagination->setPageSize(5, true);
+        $data->pagination->setPageSize(3, true);
         $indexData = $data->getModels();
 
         return [$slide, $indexData];

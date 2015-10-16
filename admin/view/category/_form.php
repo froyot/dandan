@@ -4,25 +4,21 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\db\Content */
+/* @var $model app\models\db\Params */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="content-form">
+<div class="params-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => 20]) ?>
 
-    <?= $form->field($model, 'update_at')->textInput() ?>
-
-    <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'type')->dropDownList([ 'cat' => 'Cat', 'tag' => 'Tag', 'slide' => 'Slide', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'create_by')->textInput() ?>
 
-    <?= $form->field($model, 'others')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'create_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

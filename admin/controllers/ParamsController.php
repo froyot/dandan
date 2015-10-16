@@ -3,17 +3,20 @@
 namespace app\admin\controllers;
 
 use Yii;
-use app\admin\models\Content;
-use app\admin\models\ContentForm;
+use app\admin\models\Params;
+use app\admin\models\ParamsForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\helpers\ArrayHelper;
 /**
- * ContentController implements the CRUD actions for Content model.
+ * ParamsController implements the CRUD actions for Params model.
  */
-class ContentController extends Controller
+abstract class ParamsController extends Controller
 {
+    protected $paramsType;
+
+    abstract protected function saveModel(&$model);
     public function behaviors()
     {
         return [
@@ -27,13 +30,18 @@ class ContentController extends Controller
     }
 
     /**
-     * Lists all Content models.
+     * Lists all Params models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ContentForm();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new ParamsForm();
+        $searchParams = Yii::$app->request->queryParams;
+        $searchParams['ParamsForm']['type']=$this->paramsType;
+
+
+        $dataProvider = $searchModel->search($searchParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -41,7 +49,7 @@ class ContentController extends Controller
     }
 
     /**
-     * Displays a single Content model.
+     * Displays a single Params model.
      * @param integer $id
      * @return mixed
      */
@@ -53,17 +61,18 @@ class ContentController extends Controller
     }
 
     /**
-     * Creates a new Content model.
+     * Creates a new Params model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Content();
+        $model = new Params();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $this->saveModel( $model ) ) {
+            return $this->redirect(['index']);
         } else {
+
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -71,7 +80,7 @@ class ContentController extends Controller
     }
 
     /**
-     * Updates an existing Content model.
+     * Updates an existing Params model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -80,8 +89,8 @@ class ContentController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $this->saveModel( $model ) ) {
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -90,7 +99,7 @@ class ContentController extends Controller
     }
 
     /**
-     * Deletes an existing Content model.
+     * Deletes an existing Params model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -103,15 +112,15 @@ class ContentController extends Controller
     }
 
     /**
-     * Finds the Content model based on its primary key value.
+     * Finds the Params model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Content the loaded model
+     * @return Params the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Content::findOne($id)) !== null) {
+        if (($model = Params::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

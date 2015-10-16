@@ -7,9 +7,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ContentForm represents the model behind the search form about `app\models\db\Content`.
+ * ParamsForm represents the model behind the search form about `app\models\db\Params`.
  */
-class ContentForm extends Content
+class ParamsForm extends Params
 {
     public $_keyword;//keyword to search
 
@@ -19,7 +19,6 @@ class ContentForm extends Content
       return array_merge(parent::attributes(), ['_keyword']);
 
     }
-
     /**
      * @inheritdoc
      */
@@ -27,8 +26,7 @@ class ContentForm extends Content
     {
         return [
             [['id', 'created_by'], 'integer'],
-            [['created_at', 'updated_at', 'title', 'content', 'others'], 'safe'],
-            ['_keyword','string'],
+            [['name', 'type', 'created_at'], 'safe'],
         ];
     }
 
@@ -50,7 +48,7 @@ class ContentForm extends Content
      */
     public function search($params)
     {
-        $query = Content::find();
+        $query = Params::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -66,23 +64,11 @@ class ContentForm extends Content
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
+            'created_at' => $this->created_at,
         ]);
-
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content])
-            ->andFilterWhere(['like', 'others', $this->others]);
-
-        if( $this->_keyword )
-        {
-            $query->andWhere([
-                'or',
-                 ['like','title',$this->_keyword],
-                 ['like','content',$this->_keyword]
-            ]);
-        }
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
     }

@@ -31,10 +31,10 @@ class Content extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['created_at', 'update_at'], 'safe'],
-            [['title', 'content', 'create_by'], 'required'],
+            [['created_at', 'updated_at'], 'safe'],
+            [['title', 'content'], 'required'],
             [['content'], 'string'],
-            [['create_by'], 'integer'],
+            [['created_by','updated_by'], 'integer'],
             [['title', 'others'], 'string', 'max' => 255]
         ];
     }
@@ -47,10 +47,11 @@ class Content extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'created_at' => 'Created At',
-            'update_at' => 'Update At',
+            'updated_at' => 'Updated At',
             'title' => 'Title',
             'content' => 'Content',
-            'create_by' => 'Create By',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated_by',
             'others' => 'Others',
         ];
     }

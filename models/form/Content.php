@@ -12,14 +12,27 @@ use app\models\db\Content as ContentModel;
  */
 class Content extends ContentModel
 {
+    public $_keyword;
+    public $limitNum = 0;
+    public $tags;
+    public $category;
+    public $isSlide;
+
+    public function attributes()
+    {
+        // add related fields to searchable attributes
+      return array_merge(parent::attributes(), ['tags','category','isSlide','limitNum','_keyword']);
+
+    }
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'create_by'], 'integer'],
-            [['created_at', 'update_at', 'title', 'content', 'others'], 'safe'],
+            [['id', 'created_by'], 'integer'],
+            [['created_at', 'updated_at', 'title', 'content', 'others','tags','category','_keyword'], 'safe'],
+            ['isSlide','boolean']
         ];
     }
 
@@ -42,6 +55,8 @@ class Content extends ContentModel
     public function search($params)
     {
         $query = ContentModel::find();
+        $query->joinWith('relations');
+        $query->joinWith('relations.param');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,13 +73,37 @@ class Content extends ContentModel
         $query->andFilterWhere([
             'id' => $this->id,
             'created_at' => $this->created_at,
-            'update_at' => $this->update_at,
-            'create_by' => $this->create_by,
+            'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'others', $this->others]);
+
+        if( $this->isSlide !== null )
+        {
+            if( $this->isSlide == true )
+            {
+                $query->andFilterWhere([
+                    'params.type'=>'slide'
+                ]);
+            }
+            else
+            {
+                $query->andWhere("params.type!='slide' or params.type is null");
+            }
+
+        }
+
+        if( $this->_keyword )
+        {
+            $query->andWhere([
+                    ['or'],
+                    ['like','title',$this->_keyword],
+                    ['like','content',$this->_keyword]
+                ]);
+        }
 
         return $dataProvider;
     }
