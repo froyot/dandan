@@ -2,10 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\db\Content */
 /* @var $form yii\widgets\ActiveForm */
+use allon\yii2\ueditor\Ueditor;
 ?>
 
 <div class="content-form">
@@ -14,9 +15,42 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'created_at')->textInput() ?>
     <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
-    <?= $form->field($model, 'others')->textInput(['maxlength' => 255]) ?>
 
+    <?= $form->field($model, 'content')->widget('allon\yii2\ueditor\Ueditor', [
+        'options'=>[
+            'serverUrl'=>Url::to(['editor/index']),
+            'toolbars'=> [
+                ['fullscreen', 'source', '|', 'undo', 'redo', '|',
+            'bold', 'italic', 'underline',
+            'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter','simpleupload','|','preview']
+            ],
+            'autoHeightEnabled'=>true,
+            'autoFloatEnabled'=> true,
+            'mergeEmptyline'=> true, //合并空行
+            'removeClass'=>true, //去掉冗余的class
+            'removeEmptyline'=> false, //去掉空行
+            'textAlign'=>"justify", //段落的排版方式，可以是 left，right，center，justify 去掉这个属性表示不执行排版
+            'imageBlockLine'=> 'center', //图片的浮动方式，独占一行剧中，左右浮动，默认: center，left，right，none 去掉这个属性表示不执行排版
+            'pasteFilter'=>  false, //根据规则过滤没事粘贴进来的内容
+            'clearFontSize'=>  false, //去掉所有的内嵌字号，使用编辑器默认的字号
+            'clearFontFamily'=>  false, //去掉所有的内嵌字体，使用编辑器默认的字体
+            'removeEmptyNode'=>  false, // 去掉空节点
+            'indent'=> false, // 行首缩进
+            'indentValue'=>  '2em', //行首缩进的大小
+            'bdc2sb'=>  false,
+            'tobdc'=>  false,
+            'initialFrameHeight'=>500,
+            'initialStyle'=>'body{line-height:1.5em; font-size: 14px; font-family:黑体;}'
+        ],
+        'inputOptions'=>[
+            'class'=>'myeditor',
+        ]
+
+
+      // configure additional widget properties here
+    ]);?>
+    <?= $form->field($model, 'others')->textInput(['maxlength' => 255]) ?>
+    <?= $form->field($model, 'category')->dropDownList($categorys) ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

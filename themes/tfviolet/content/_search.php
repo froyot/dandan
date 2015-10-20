@@ -15,10 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
+    <?= $form->field($model, '_keyword',['template'=> "{input}\n{hint}\n{error}","inputOptions"=>["placeholder"=>Yii::t('app','search keyword')]]) ?>
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(\Yii::t('app','search'), ['class' => 'btn btn-primary']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 

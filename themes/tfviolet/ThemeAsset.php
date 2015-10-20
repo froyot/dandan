@@ -18,7 +18,8 @@ class ThemeAsset extends AssetBundle
     public $sourcePath = '@app/themes/tfviolet/static';
     public $css = [
         'css/materialize.min.css',
-        'css/style.css'
+        'css/style.css',
+
     ];
 
     public $js = [

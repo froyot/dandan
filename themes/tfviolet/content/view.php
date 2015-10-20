@@ -16,5 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?=$model->content;?>
 
+    <div class="pagination">
+    <?php if(isset($links['pre'])):?>
+        <a href="<?=$links['pre']['url'];?>"><?=$links['pre']['title'];?></a>
+    <?php endif;?>
+    <?php if(isset($links['next'])):?>
+        <a href="<?=$links['next']['url'];?>"><?=$links['next']['title'];?></a>
+    <?php endif;?>
+</div>
 
 </div>

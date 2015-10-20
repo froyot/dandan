@@ -12,6 +12,7 @@ $config = [
                 'class' => 'app\admin\Module',
             ],
     ],
+    'language' => 'zh-CN',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -66,6 +67,9 @@ $config = [
                 ],
             ],
         ],
+    ],
+    'aliases' => [
+        '@allon/yii2/ueditor' => '@app/tmp-extensions/yii2-ueditor/src',
     ],
     'params' => $params,
 ];

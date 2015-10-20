@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 
 ?>
 <div class="content-item">
-    <a href="<?=Url::to(['content/view','id'=>$model->id]);?>"><h2><?= Html::encode($model->title) ?></h2></a>
+    <a href="<?=Url::to(['content/view','id'=>$model->id]);?>"><h3><?= Html::encode($model->title) ?></h3></a>
     <div class="abstruct-content">
         <?=$model->abstruct;?>
     </div>

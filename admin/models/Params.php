@@ -30,4 +30,13 @@ class Params extends ParamsModel
         }
         return parent::save();
     }
+
+    public function getCategorys()
+    {
+        return Params::find()->where([
+                'type'=>'cat'
+            ])
+        ->select(['id','name'])
+        ->asArray()->all();
+    }
 }

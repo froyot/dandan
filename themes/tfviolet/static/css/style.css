@@ -10,11 +10,22 @@ nav .brand-logo {
   color: #fff;
 }
 
-nav a, 
+nav a,
 nav ul a {
   color: #fff;
 }
 
 footer.page-footer {
   background-color: #C71585;
+}
+
+h3{
+    font-size: 1.9rem;
+}
+
+.jumbotron{
+    position: relative;
+}
+.jumbotron .slide-button{
+    position: absolute;
 }

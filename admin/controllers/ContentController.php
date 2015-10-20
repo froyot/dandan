@@ -8,6 +8,8 @@ use app\admin\models\ContentForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\admin\models\Params;
+use yii\helpers\ArrayHelper;
 
 /**
  * ContentController implements the CRUD actions for Content model.
@@ -60,12 +62,14 @@ class ContentController extends Controller
     public function actionCreate()
     {
         $model = new Content();
-
+        $cats = ArrayHelper::map(Params::getCategorys(), 'id', 'name');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+
             return $this->render('create', [
                 'model' => $model,
+                'categorys' => $cats
             ]);
         }
     }
@@ -79,12 +83,13 @@ class ContentController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $cats = ArrayHelper::map(Params::getCategorys(), 'id', 'name');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'categorys' => $cats
             ]);
         }
     }

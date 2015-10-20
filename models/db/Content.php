@@ -3,6 +3,7 @@
 namespace app\models\db;
 
 use Yii;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "{{%content}}".
@@ -62,9 +63,33 @@ class Content extends \yii\db\ActiveRecord
     }
 
     //从内容中获取摘要
-    public function getAbstruct()
+    public function getAbstruct($length = 300)
     {
+        if($length> 300)
+            $length = 300;
         $data =  strip_tags($this->content);
-        return mb_substr($data, 0,300);
+        return mb_substr($data, 0,$length);
+    }
+
+    public function getLinks( $id )
+    {
+        $links = [];
+        $model = Content::find()->where(['<','id',$id])->one();
+        if($model)
+        {
+            $links['pre'] = [
+                'title'=>$model->title,
+                'url'=>Url::to(['content/view','id'=>$model->id])
+            ];
+        }
+        $model = Content::find()->where(['>','id',$id])->one();
+        if($model)
+        {
+            $links['next'] = [
+                'title'=>$model->title,
+                'url'=>Url::to(['content/view','id'=>$model->id])
+            ];
+        }
+        return $links;
     }
 }

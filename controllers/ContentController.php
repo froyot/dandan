@@ -50,6 +50,7 @@ class ContentController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'links' => Content::getLinks($id)
         ]);
     }
 

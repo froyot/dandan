@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\Menu;
 use yii\widgets\Breadcrumbs;
-
+use app\helper\ViewHelper;
 /**
  * @var $this \yii\base\View
  * @var $content string
@@ -29,7 +29,7 @@ $this->registerAssetBundle('app\assets\AppAsset');
 
         <nav>
           <div class="nav-wrapper">
-            <a href="#" class="brand-logo right"><?php echo Html::encode(\Yii::$app->name); ?></a>
+            <a href="#" class="brand-logo right"><?php echo Html::encode(ViewHelper::getSiteName()); ?></a>
   					<?php
 	  					echo Menu::widget([
 	  					  'options' => [
@@ -37,10 +37,10 @@ $this->registerAssetBundle('app\assets\AppAsset');
 	  					    "class" => "left side-nav"
 	  					  ],
 						    'items' => [
-						        ['label' => 'Home', 'url' => ['site/index']],
-                    ['label' => 'Contents', 'url' => ['content/index']],
-						        ['label' => 'About', 'url' => ['site/about']],
-						        ['label' => 'Admin', 'url' => ['/admin/default/index'], 'visible' => Yii::$app->user->isGuest],
+						        ['label' => \Yii::t('app','Home'), 'url' => ['site/index']],
+                    ['label' => \Yii::t('app','Contents'), 'url' => ['content/index']],
+						        ['label' => \Yii::t('app','About'), 'url' => ['site/about']],
+						        ['label' => \Yii::t('app','Admin'), 'url' => ['/admin/default/index'], 'visible' => Yii::$app->user->isGuest],
 						    ],
 		  				]);
 			  		?>
@@ -64,15 +64,14 @@ $this->registerAssetBundle('app\assets\AppAsset');
           <div class="left col s12 m4 l3"> <!-- Note that "m4 l3" was added -->
             <div class="card">
               <div class="card-image">
-                <img src="<?php echo $this->theme->baseUrl ?>/images/rose.jpg">
-                <span class="card-title">TF Violet</span>
+                <img src="<?=ViewHelper::getLeftAd('img');?>">
+                <span class="card-title"><?=ViewHelper::getLeftAd('title');?></span>
               </div>
               <div class="card-content">
-                <p>I am a very simple card. I am good at containing small bits of information.
-                I am convenient because I require little markup to use effectively.</p>
+                <p><?=ViewHelper::getLeftAd('tips');?></p>
               </div>
               <div class="card-action">
-                <a href="#">This is a link</a>
+                <?=ViewHelper::getLeftAd('url');?>
               </div>
             </div>
           </div>
@@ -89,8 +88,8 @@ $this->registerAssetBundle('app\assets\AppAsset');
                 <p class="white-text text-lighten-1">You can use rows and columns here to organize your footer content.</p>
               </div>
               <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <?php foreach ( Yii::$app->params['view_friendLinks'] as $item ): ?>
+                <h5 class="white-text"><?=\Yii::t('app','links');?></h5>
+                <?php foreach ( ViewHelper::getLinks() as $item ): ?>
                   <li><a class="white-text" href="<?= $item['link'];?>" target="_blank"><?=$item['text'];?></a></li>
                 <?php endforeach;?>
               </div>
@@ -98,7 +97,7 @@ $this->registerAssetBundle('app\assets\AppAsset');
           </div>
           <div class="footer-copyright">
             <div class="container white-text center">
-              <?= Yii::$app->params['view_siteCopy'];?>
+              <?= ViewHelper::getCopyright()?>
             <!-- &copy; 2015 ThemeFactory.net -->
             </div>
           </div>

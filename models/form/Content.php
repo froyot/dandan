@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\db\Content as ContentModel;
-
+use app\models\db\Config as ConfigModel;
 /**
  * Content represents the model behind the search form about `app\models\db\Content`.
  */
@@ -55,8 +55,6 @@ class Content extends ContentModel
     public function search($params)
     {
         $query = ContentModel::find();
-        $query->joinWith('relations');
-        $query->joinWith('relations.param');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -83,15 +81,24 @@ class Content extends ContentModel
 
         if( $this->isSlide !== null )
         {
+            $slide = ConfigModel::findOne(['key'=>'slide']);
+            if( $slide )
+            {
+                $slide = explode(',', $slide->value);
+            }
+            else
+            {
+                $slide = [];
+            }
             if( $this->isSlide == true )
             {
                 $query->andFilterWhere([
-                    'params.type'=>'slide'
+                    'id'=>$slide
                 ]);
             }
             else
             {
-                $query->andWhere("params.type!='slide' or params.type is null");
+                $query->andWhere(['not in','id', $slide]);
             }
 
         }
@@ -99,12 +106,11 @@ class Content extends ContentModel
         if( $this->_keyword )
         {
             $query->andWhere([
-                    ['or'],
+                    'or',
                     ['like','title',$this->_keyword],
                     ['like','content',$this->_keyword]
                 ]);
         }
-
         return $dataProvider;
     }
 }
