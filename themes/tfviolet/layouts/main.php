@@ -84,8 +84,8 @@ $this->registerAssetBundle('app\assets\AppAsset');
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-                <p class="white-text text-lighten-1">You can use rows and columns here to organize your footer content.</p>
+                <h5 class="white-text"><?=ViewHelper::getFooter('title');?></h5>
+                <p class="white-text text-lighten-1"><?=ViewHelper::getFooter('tips');?></p>
               </div>
               <div class="col l4 offset-l2 s12">
                 <h5 class="white-text"><?=\Yii::t('app','links');?></h5>
@@ -97,7 +97,7 @@ $this->registerAssetBundle('app\assets\AppAsset');
           </div>
           <div class="footer-copyright">
             <div class="container white-text center">
-              <?= ViewHelper::getCopyright()?>
+              <?=ViewHelper::getCopyright()?>
             <!-- &copy; 2015 ThemeFactory.net -->
             </div>
           </div>

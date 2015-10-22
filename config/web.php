@@ -59,10 +59,10 @@ $config = [
             ),
         'view' => [
             'theme' => [
-                'basePath' => '@app/themes/tfviolet',
+                'basePath' => '@app/themes/zendefault',
                 'baseUrl' => '@web',
                 'pathMap' => [
-                    '@app/views' => '@app/themes/tfviolet',
+                    '@app/views' => '@app/themes/zendefault',
                 ],
             ],
         ],

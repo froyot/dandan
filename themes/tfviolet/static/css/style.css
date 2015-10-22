@@ -32,6 +32,10 @@ h3{
     padding-left:1.5rem;
     padding-right:1.5rem;
 }
+#index_slide img{
+  max-height: 25em;
+  width:100%;
+}
 .jumbotron .slide-button{
     position: absolute;
 }

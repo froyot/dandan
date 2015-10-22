@@ -58,6 +58,16 @@ class ViewHelper
         }
     }
 
+    public function getFooter($key)
+    {
+        ViewHelper::getConfig();
+        switch($key)
+        {
+            case 'title':return ViewHelper::$config['footerContent']['title'];break;
+            case 'tips':return ViewHelper::$config['footerContent']['tips'];break;
+            default : return '';
+        }
+    }
     public function getSiteName()
     {
         ViewHelper::getConfig();

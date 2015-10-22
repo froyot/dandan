@@ -10,6 +10,10 @@ class Config extends ConfigModel
 {
     private static $config;
 
+    /**
+     * 获取配置信息，如果有缓存直接读缓存，没有则读数据库
+     * @return [type] [description]
+     */
     public function getConfig()
     {
         $config = Yii::$app->cache->get('siteConfig');
@@ -24,6 +28,10 @@ class Config extends ConfigModel
         return Config::$config;
     }
 
+    /**
+     * 对数据库读取的配置进行处理
+     * @return [type] [description]
+     */
     private function handelData()
     {
         foreach( Config::$config as $key => $config)
@@ -44,6 +52,10 @@ class Config extends ConfigModel
         Config::handelCopyRight();
     }
 
+    /**
+     * 站点copryRight 配置生成
+     * @return [type] [description]
+     */
     private function handelCopyRight()
     {
         if( isset(Config::$config['copyRight']) )
@@ -65,7 +77,8 @@ class Config extends ConfigModel
             {
                 if( !isset( Config::$config['sysName'] ) )
                 {
-                    $copys .= "<a href='".Yii::$app->request->hostInfo."'>".Config::$config['author']."</a>";
+                    $copys .= "<a href='".Yii::$app->request->hostInfo.
+                                "'>".Config::$config['author']."</a>";
                 }
                 else
                 {
@@ -75,7 +88,8 @@ class Config extends ConfigModel
             }
             if( isset( Config::$config['sysName'] ) )
             {
-                $copys .= "<a href='".Yii::$app->request->hostInfo."'>".Config::$config['sysName']."</a>";
+                $copys .= "<a href='".Yii::$app->request->hostInfo."'>".
+                            Config::$config['sysName']."</a>";
             }
         }
         if( !$copys )
@@ -87,6 +101,10 @@ class Config extends ConfigModel
         Config::$config['copyRight'] = $copys;
     }
 
+    /**
+     * 处理网站底部设置
+     * @return [type] [description]
+     */
     private function handelFooter(  )
     {
         $config  = json_decode(Config::$config['footerContent'],true);
@@ -99,6 +117,10 @@ class Config extends ConfigModel
         Config::$config['footerContent'] = $config;
     }
 
+    /**
+     * 处理侧边广告设置
+     * @return [type] [description]
+     */
     private function handelAd(  )
     {
         $config  = json_decode(Config::$config['leftAd'],true);
@@ -114,6 +136,10 @@ class Config extends ConfigModel
         Config::$config['leftAd'] = $config;
     }
 
+    /**
+     * 友情链接处理
+     * @return [type] [description]
+     */
     private function handelLinks(  )
     {
         $config  = json_decode(Config::$config['links'],true);

@@ -50,3 +50,16 @@ config/view.php.
 
 import data from data.sql
 
+SOME EXAMPLE
+------------
+*   theme [zendefault](themes/zendefault)
+
+![zendefault index](example/zendefault/index.png)
+
+![zendefault contents](example/zendefault/contents.png)
+
+*   theme [zendefault](themes/tfviolet)
+
+![tfviolet index](example/tfviolet/index.png)
+
+![tfviolet content](example/tfviolet/contents.png)

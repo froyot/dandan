@@ -58,4 +58,11 @@ class Config extends ConfigModel
             $slide->value = implode(',', $slideContents);
         return $slide->save();
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $res = Yii::$app->cache->set('siteConfig',null);
+        return true;
+    }
 }
