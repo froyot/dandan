@@ -1,5 +1,5 @@
 <?php
-namespace app\helper;
+namespace app\common\helper;
 use app\models\front\Config;
 class ViewHelper
 {

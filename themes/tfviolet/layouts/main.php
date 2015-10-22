@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\Menu;
 use yii\widgets\Breadcrumbs;
-use app\helper\ViewHelper;
+use app\common\helper\ViewHelper;
 /**
  * @var $this \yii\base\View
  * @var $content string
