@@ -56,10 +56,10 @@ SOME EXAMPLE
 
 ![zendefault index](example/zendefault/index.png)
 
-![zendefault contents](example/zendefault/contents.png)
+![zendefault contents](example/zendefault/content.png)
 
 *   theme [zendefault](themes/tfviolet)
 
 ![tfviolet index](example/tfviolet/index.png)
 
-![tfviolet content](example/tfviolet/contents.png)
+![tfviolet content](example/tfviolet/content.png)
