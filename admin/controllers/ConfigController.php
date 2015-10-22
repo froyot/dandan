@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ConfigController implements the CRUD actions for Config model.
  */
-class ConfigController extends Controller
+class ConfigController extends BaseController
 {
     public function behaviors()
     {

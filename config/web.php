@@ -11,6 +11,15 @@ $config = [
             'admin' => [
                 'class' => 'app\admin\Module',
             ],
+            'social' => [
+                // the module class
+                'class' => 'kartik\social\Module',
+
+                // the global settings for the disqus widget
+                'disqus' => [
+                    'settings' => ['shortname' => 'dandancms'] // default settings
+                ],
+            ],
     ],
     'language' => 'zh-CN',
     'components' => [

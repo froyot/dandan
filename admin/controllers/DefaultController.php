@@ -4,37 +4,13 @@ namespace app\admin\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
+
+
 use app\admin\models\LoginForm;
 
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['error','login'],
-                        'allow' => true,
-                    ],
-                    [
 
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ]
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
 
     public function actions()
     {

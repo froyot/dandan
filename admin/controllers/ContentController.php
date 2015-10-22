@@ -5,7 +5,7 @@ namespace app\admin\controllers;
 use Yii;
 use app\admin\models\Content;
 use app\admin\models\ContentForm;
-use yii\web\Controller;
+
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\admin\models\Params;
@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
 /**
  * ContentController implements the CRUD actions for Content model.
  */
-class ContentController extends Controller
+class ContentController extends BaseController
 {
     public function behaviors()
     {
