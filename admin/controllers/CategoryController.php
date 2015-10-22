@@ -9,6 +9,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+/**
+ * category controller, to manage the content category.
+ */
 class CategoryController extends ParamsController
 {
     protected $paramsType = 'cat';

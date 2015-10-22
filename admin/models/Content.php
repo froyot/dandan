@@ -7,8 +7,8 @@ use yii\helpers\ArrayHelper;
 
 class Content extends ContentModel
 {
-    public $category;
-    private $oldCategory;
+    public $category;//content category propety
+    private $oldCategory;//temp value for change category
 
     public function attributes()
     {
@@ -24,6 +24,11 @@ class Content extends ContentModel
         ]);
     }
 
+    /**
+     * change some attribute before data change
+     * @param  [type] $insert [description]
+     * @return boolean           whether continue to save
+     */
     public function beforeSave($insert)
     {
       if (parent::beforeSave($insert)) {
@@ -35,6 +40,12 @@ class Content extends ContentModel
       }
     }
 
+    /**
+     * call after data changed sucess
+     * @param  [type] $insert            [description]
+     * @param  [type] $changedAttributes [description]
+     * @return [type]                    [description]
+     */
     public function afterSave($insert, $changedAttributes)
     {
           parent::afterSave($insert, $changedAttributes);
@@ -47,6 +58,11 @@ class Content extends ContentModel
           return true;
     }
 
+    /**
+     * call after get data,
+     * to fix some attributes
+     * @return [type] [description]
+     */
     public function afterFind()
     {
       $parName = Params::tableName();
@@ -69,6 +85,11 @@ class Content extends ContentModel
       $this->category = 0;
     }
 
+    /**
+     * call after delete data,
+     * to clear some relation data
+     * @return [type] [description]
+     */
     public function afterDelete()
     {
       //删除其他关联数据

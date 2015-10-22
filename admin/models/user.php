@@ -10,7 +10,13 @@ class User extends AdminModel implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        $user = self::find()->joinWith('role')->where(['id'=>$id,'role.role'=>'admin'])->one();
+        $user = self::find()
+                ->joinWith('role')
+                ->where([
+                    'id'=>$id,
+                    'role.role'=>'admin'
+                ])
+                ->one();
         return $user;
     }
 
@@ -19,7 +25,13 @@ class User extends AdminModel implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        $user = self::find()->joinWith('role')->where(['token'=>$token,'role.role'=>'admin'])->one();
+        $user = self::find()
+                ->joinWith('role')
+                ->where([
+                    'token'=>$token,
+                    'role.role'=>'admin'
+                    ])
+                ->one();
         return $user;
     }
 
@@ -31,7 +43,13 @@ class User extends AdminModel implements \yii\web\IdentityInterface
      */
     public static function findByUsername($name)
     {
-        $user = self::find()->joinWith('role')->where(['name'=>$name,'role.role'=>'admin'])->one();
+        $user = self::find()
+                ->joinWith('role')
+                ->where([
+                    'name'=>$name,
+                    'role.role'=>'admin'
+                    ])
+                ->one();
         return $user;
     }
 
@@ -67,6 +85,11 @@ class User extends AdminModel implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password);
+        return Yii::$app
+                ->security
+                ->validatePassword(
+                    $password,
+                    $this->password
+                );
     }
 }

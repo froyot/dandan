@@ -30,6 +30,12 @@ class Config extends ConfigModel
                 ]
             ]);
     }
+
+    /**
+     * delete slide post
+     * @param  int $id the post id
+     * @return boolean     is delete success
+     */
     public function deleteSlide($id)
     {
         $slide = Config::findOne(['key'=>'slide']);

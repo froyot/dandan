@@ -9,7 +9,7 @@ use app\models\db\Params as ParamsModel;
 class Params extends ParamsModel
 {
     /**
-     * 添加或修改分类
+     * save category data
      * @return boolean
      */
     public function saveCategory()
@@ -31,6 +31,10 @@ class Params extends ParamsModel
         return parent::save();
     }
 
+    /**
+     * get all categorys
+     * @return array category categorys
+     */
     public function getCategorys()
     {
         return Params::find()->where([

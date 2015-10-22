@@ -53,20 +53,10 @@ $config = [
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
-
-        //set view
-
-        // 'view' => [
-        //     'theme' => [
-        //         'basePath' => '@app/themes/tfdorian',
-        //         'baseUrl' => '@web',
-        //         'pathMap' => [
-        //             '@app/views' => '@app/themes/tfdorian',
-        //         ],
-        //     ],
-        // ],
-
+        'db' => array_merge(
+            require(__DIR__ . '/db.php'),
+            require(__DIR__.'/db-local.php')
+            ),
         'view' => [
             'theme' => [
                 'basePath' => '@app/themes/tfviolet',

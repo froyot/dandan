@@ -12,13 +12,16 @@ use app\admin\models\Config;
  */
 class ConfigFrom extends Config
 {
-    public $_keyword;
+    public $_keyword;//search key word
+
+    // add _keyword to attribute
     public function attributes()
     {
-        // add related fields to searchable attributes
+      // add related fields to searchable attributes
       return array_merge(parent::attributes(), ['_keyword']);
 
     }
+
     /**
      * @inheritdoc
      */
@@ -68,7 +71,6 @@ class ConfigFrom extends Config
             ['like','key',$this->_keyword],
             ['like','value',$this->_keyword]
             ]);
-
         return $dataProvider;
     }
 }

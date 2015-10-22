@@ -9,6 +9,9 @@ use allon\yii2\ueditor\UeditorInterface;
 use yii\filters\VerbFilter;
 use app\admin\models\LoginForm;
 
+/**
+ * editor Controller
+ */
 class EditorController extends UeditorController implements UeditorInterface
 {
 

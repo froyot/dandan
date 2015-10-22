@@ -9,7 +9,14 @@ use yii\helpers\ArrayHelper;
 class Relation extends RelationModel
 {
 
-    public function updateContentCategory($contentId, $catId, $oldCatId = 0)
+    /**
+     * update content category
+     * @param  int          $contentId      contentId
+     * @param  int          $catId          categoryId
+     * @param  int          $oldCatId       old categoryId
+     * @return boolean
+     */
+    public function updateContentCategory( $contentId, $catId, $oldCatId = 0)
     {
         if( $catId == 0 )
             return;
@@ -32,6 +39,12 @@ class Relation extends RelationModel
         return $relation->save();
     }
 
+    /**
+     * update slide content
+     * @param  [type] $contentId [description]
+     * @param  [type] $isSlide   [description]
+     * @return [type]            [description]
+     */
     public function updateContentSlide( $contentId, $isSlide )
     {
         $slide = Params::findOne(['type'=>'slide']);

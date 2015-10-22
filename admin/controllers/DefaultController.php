@@ -11,7 +11,6 @@ use app\admin\models\LoginForm;
 class DefaultController extends BaseController
 {
 
-
     public function actions()
     {
         return [
@@ -25,32 +24,47 @@ class DefaultController extends BaseController
         ];
     }
 
+    /**
+     * admin index render controllr
+     * @return view indexView
+     */
     public function actionIndex()
     {
-
         return $this->render('index');
     }
 
+    /**
+     * admin login
+     * @return [type] [description]
+     */
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!\Yii::$app->user->isGuest)
+        {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login())
+        {
             return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+        }
+        else
+        {
+            return $this->render(
+                'login', [
+                    'model' => $model,
+                ]
+            );
         }
     }
-
+    /**
+     * logout
+     * @return [type] [description]
+     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 }

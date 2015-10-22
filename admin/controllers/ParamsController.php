@@ -17,17 +17,6 @@ abstract class ParamsController extends Controller
     protected $paramsType;
 
     abstract protected function saveModel(&$model);
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Lists all Params models.
@@ -38,8 +27,6 @@ abstract class ParamsController extends Controller
         $searchModel = new ParamsForm();
         $searchParams = Yii::$app->request->queryParams;
         $searchParams['ParamsForm']['type']=$this->paramsType;
-
-
         $dataProvider = $searchModel->search($searchParams);
 
         return $this->render('index', [
@@ -62,7 +49,7 @@ abstract class ParamsController extends Controller
 
     /**
      * Creates a new Params model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'index' page.
      * @return mixed
      */
     public function actionCreate()
@@ -81,7 +68,7 @@ abstract class ParamsController extends Controller
 
     /**
      * Updates an existing Params model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      */

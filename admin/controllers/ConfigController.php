@@ -5,26 +5,15 @@ namespace app\admin\controllers;
 use Yii;
 use app\admin\models\Config;
 use app\admin\models\ConfigFrom;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * ConfigController implements the CRUD actions for Config model.
  */
 class ConfigController extends BaseController
 {
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Lists all Config models.
@@ -54,24 +43,6 @@ class ConfigController extends BaseController
     }
 
     /**
-     * Creates a new Config model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    // public function actionCreate()
-    // {
-    //     $model = new Config();
-
-    //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
-    //         return $this->redirect(['view', 'id' => $model->key]);
-    //     } else {
-    //         return $this->render('create', [
-    //             'model' => $model,
-    //         ]);
-    //     }
-    // }
-
-    /**
      * Updates an existing Config model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
@@ -89,19 +60,6 @@ class ConfigController extends BaseController
             ]);
         }
     }
-
-    /**
-     * Deletes an existing Config model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    // public function actionDelete($id)
-    // {
-    //     $this->findModel($id)->delete();
-
-    //     return $this->redirect(['index']);
-    // }
 
     /**
      * Finds the Config model based on its primary key value.
