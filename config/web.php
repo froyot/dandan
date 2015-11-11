@@ -1,6 +1,7 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+require(__DIR__.'/ucenter.php');
 
 $config = [
     'name'=>'DanDan',
@@ -20,6 +21,10 @@ $config = [
                     'settings' => ['shortname' => 'dandancms'] // default settings
                 ],
             ],
+
+        'ucenter' => [
+            'class' => 'app\modules\ucenter\Module',
+        ],
     ],
     'language' => 'zh-CN',
     'components' => [
@@ -57,15 +62,7 @@ $config = [
             require(__DIR__ . '/db.php'),
             require(__DIR__.'/db-local.php')
             ),
-        'view' => [
-            'theme' => [
-                'basePath' => '@app/themes/zendefault',
-                'baseUrl' => '@web',
-                'pathMap' => [
-                    '@app/views' => '@app/themes/zendefault',
-                ],
-            ],
-        ],
+
     ],
     'aliases' => [
         '@allon/yii2/ueditor' => '@app/tmp-extensions/yii2-ueditor/src',
