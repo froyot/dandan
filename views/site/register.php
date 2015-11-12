@@ -6,7 +6,7 @@ use yii\helpers\Url;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\LoginForm */
 
-$this->title = 'Login';
+$this->title = Yii::t('app','Register');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
@@ -22,12 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?= $form->field($model, 'username') ?>
-
+    <?= $form->field($model, 'email') ?>
     <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'repassword')->passwordInput() ?>
 
-    <?= $form->field($model, 'rememberMe', [
-        'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-    ])->checkbox() ?>
 
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">

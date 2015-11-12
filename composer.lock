@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "280673ee517683f2998580d932fca35a",
+    "hash": "0a81012ba81566f20e01ed71c9ab909c",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -364,6 +364,39 @@
                 "sdk"
             ],
             "time": "2015-04-03 20:31:47"
+        },
+        {
+            "name": "froyot/yii2-ucenter",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/froyot/yii-ucenter",
+                "reference": "420907dc645073ecb41772d9aa42a95a3c36dba8"
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "froyot\\yii\\ucenter\\": ""
+                }
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Allon",
+                    "email": "xianlong300@sina.com"
+                }
+            ],
+            "description": "yii-ucenter",
+            "keywords": [
+                "ucenter",
+                "yii2"
+            ],
+            "time": "2015-11-12 02:32:35"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -1058,7 +1091,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "kartik-v/yii2-social": 20
+        "kartik-v/yii2-social": 20,
+        "froyot/yii2-ucenter": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -21,10 +21,6 @@ $config = [
                     'settings' => ['shortname' => 'dandancms'] // default settings
                 ],
             ],
-
-        'ucenter' => [
-            'class' => 'app\modules\ucenter\Module',
-        ],
     ],
     'language' => 'zh-CN',
     'components' => [
@@ -36,7 +32,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\action\User',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -47,7 +43,20 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+               'class' => 'Swift_SmtpTransport',
+               'host' => 'smtp.sina.com',  //每种邮箱的host配置不一样
+               'username' => 'inwatch_mail@sina.com',
+               'password' => 'inwatch',
+               'port' => '25',
+               'encryption' => 'tls',
+
+                           ],
+            'messageConfig'=>[
+               'charset'=>'UTF-8',
+               'from'=>['inwatch_mail@sina.com'=>'admin']
+               ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

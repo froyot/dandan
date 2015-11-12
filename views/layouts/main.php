@@ -41,8 +41,8 @@ $bundle = DefaultAsset::register($this);
 
                     Yii::$app->user->isGuest ?
                         ['label' => 'Login', 'url' => Url::to(\Yii::$app->user->loginUrl)] :
-                        ['label' => 'Logout (' . Yii::$app->user->identity->name . ')',
-                            'url' => ['/admin/default/logout'],
+                        ['label' => 'Logout (' . Yii::$app->user->identity->user_nicename . ')',
+                            'url' => ['site/logout'],
                             'linkOptions' => ['data-method' => 'post']],
                 ],
             ]);
@@ -55,30 +55,7 @@ $bundle = DefaultAsset::register($this);
             ]) ?>
             <div class="row">
                <div class="col-md-2">
-            <?php
-            if(!Yii::$app->user->isGuest)
-            {
-                echo SideNavWidget::widget([
-                    'items' => [
-                     [
-                         'label' => 'Home',
-                         'url' => ['/admin/default/index'],
 
-                     ],
-                     [
-                         'label' => 'Content',
-                         'items' => [
-                              ['label' => 'posts', 'url' => ['/admin/content/index']],
-                              ['label' => 'Add Post', 'url' => ['/admin/content/create']],
-                              ['label' => 'Categorys', 'url' => ['/admin/category/index']],
-                              ['label' => 'Add Category', 'url' => ['/admin/category/create']],
-                         ],
-                     ],
-                 ],
-                 'activeUrl'=>Url::to([str_replace('admin/', '', Yii::$app->requestedRoute)]),
-                ]);
-            }
-            ?>
             </div>
             <div class="col-md-8">
                         <?= $content ?>

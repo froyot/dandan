@@ -18,7 +18,8 @@
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "kartik-v/yii2-social": "@dev"
+        "kartik-v/yii2-social": "@dev",
+        "froyot/yii2-ucenter": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
@@ -51,5 +52,11 @@
             "npm-asset-library": "vendor/npm",
             "bower-asset-library": "vendor/bower"
         }
-    }
+    },
+    "repositories":[
+        {
+            "type": "git",
+            "url": "github.com/froyot/yii-ucenter.git"
+        }
+    ]
 }
