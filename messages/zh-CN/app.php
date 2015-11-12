@@ -20,6 +20,17 @@ return[
     'active email'=> '激活邮件',
     'active_code'=>'请点击连接激活',
     'or_copy_link'=>'或者复制链接在浏览器打开',
-    'link'=>'链接'
+    'link'=>'链接',
+    'user info'=>'用户资料',
+    'edit userinfo'=>'编辑用户资料',
+
+    'user_nicename'=>'用户昵称',
+    'user_email'=>'邮箱',
+    'mobile'=>'手机号',
+    'sex'=>'性别',
+    'male'=>'男',
+    'female'=>'女',
+    'birthday'=>'生日',
+    'signature'=>'个性签名'
 
 ];

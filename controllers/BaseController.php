@@ -3,21 +3,14 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
+use yii\base\InvalidConfigException;
+use yii\base\Model;
+use yii\web\ForbiddenHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 
 class BaseController extends Controller
 {
-    public $model;
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-            ],
-        ];
-    }
+
 
     /**
      * @var string the model class name. This property must be set.
@@ -54,29 +47,34 @@ class BaseController extends Controller
     {
         return [
             'index' => [
-                'class' => 'app\controllers\action\IndexAction',
+                'class' => 'app\controllers\actions\IndexAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],
             'view' => [
-                'class' => 'app\controllers\action\ViewAction',
+                'class' => 'app\controllers\actions\ViewAction',
+                'modelClass' => $this->modelClass,
+                'checkAccess' => [$this, 'checkAccess'],
+            ],
+            'edit' => [
+                'class' => 'app\controllers\actions\ViewAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ],
             'create' => [
-                'class' => 'app\controllers\action\CreateAction',
+                'class' => 'app\controllers\actions\CreateAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
                 'scenario' => $this->createScenario,
             ],
             'update' => [
-                'class' => 'app\controllers\action\UpdateAction',
+                'class' => 'app\controllers\actions\UpdateAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
                 'scenario' => $this->updateScenario,
             ],
             'delete' => [
-                'class' => 'app\controllers\action\DeleteAction',
+                'class' => 'app\controllers\actions\DeleteAction',
                 'modelClass' => $this->modelClass,
                 'checkAccess' => [$this, 'checkAccess'],
             ]
@@ -112,5 +110,30 @@ class BaseController extends Controller
     public function checkAccess($action, $model = null, $params = [])
     {
 
+    }
+
+    public function afterAction($action, $result)
+    {
+        $renderFile = $action->id;
+        if( $action->id == 'update' )
+        {
+            if( $result->hasErrors() )
+            {
+                $renderFile = 'edit';
+            }
+            else
+            {
+                return $this->redirect(['user/view','id'=>Yii::$app->request->get('id')]);
+            }
+        }
+        $userid = 0;
+        if( !Yii::$app->user->isGuest )
+        {
+            $userid = Yii::$app->user->id;
+        }
+
+        $result = $this->render($renderFile, ['data'=>$result,'user_id'=>$userid]);
+        $result = parent::afterAction($action, $result);
+        return $result;
     }
 }

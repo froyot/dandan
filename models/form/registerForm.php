@@ -52,62 +52,16 @@ class RegisterForm extends Model
             ['email','email','message'=>Yii::t('app','email format error')],
             // rememberMe must be a boolean value
             // password is validated by validatePassword()
-            ['username', 'validateUsername'],
-            ['email', 'validateEmail'],
-            ['repassword','validatePassword']
+            ['username', 'unique','message'=>Yii::t( 'app','username exist' )],
+            ['email', 'unique','message'=>Yii::t( 'app','email exist' )],
+            [
+                'repassword','compare',
+                'compareAttribute'=>'password',
+                'message'=>Yii::t( 'app','double password error' )
+            ]
         ];
     }
 
-    /**
-     * Validates the username, make sure the username is can use
-     *
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function validateUsername($attribute, $params)
-    {
-        if (!$this->hasErrors()) {
-            if( User::checkUserNameExist( $this->username ) )
-            {
-                $this->addError( $attribute, Yii::t( 'app','username exist' ) );
-            }
-        }
-    }
-
-    /**
-     * Validates the email, make sure the email is can use
-     *
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function validateEmail($attribute, $params)
-    {
-        if (!$this->hasErrors()) {
-            if( User::checkEmailExist( $this->email ) )
-            {
-                $this->addError( $attribute, Yii::t( 'app','email exist' ) );
-            }
-        }
-    }
-
-    /**
-     * Validates the email, make sure the email is can use
-     *
-     *
-     * @param string $attribute the attribute currently being validated
-     * @param array $params the additional name-value pairs given in the rule
-     */
-    public function validatePassword($attribute, $params)
-    {
-        if (!$this->hasErrors()) {
-            if( $this->repassword != $this->password )
-            {
-                $this->addError( $attribute, Yii::t( 'app','double password error' ) );
-            }
-        }
-    }
 
     /**
      * create user and login to site

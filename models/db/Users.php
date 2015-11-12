@@ -44,14 +44,16 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             [['sex', 'user_status', 'score', 'user_type', 'coin'], 'integer'],
-            [['birthday', 'last_login_time', 'create_time'], 'safe'],
+            [['last_login_time', 'create_time'], 'date', 'format'=>'yyyy-MM-dd HH:mm:ss'],
+            ['birthday', 'date', 'format'=>'yyyy-MM-dd'],
             [['user_login', 'user_activation_key'], 'string', 'max' => 60],
             [['user_pass'], 'string', 'max' => 64],
             [['user_nicename'], 'string', 'max' => 50],
             [['user_email', 'user_url'], 'string', 'max' => 100],
             [['avatar', 'signature'], 'string', 'max' => 255],
             [['last_login_ip'], 'string', 'max' => 16],
-            [['mobile'], 'string', 'max' => 20]
+            [['mobile'], 'string', 'length' => 11],
+            ['mobile','match','pattern'=>'/^[0-9]{11}$/']
         ];
     }
 

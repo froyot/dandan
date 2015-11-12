@@ -21,6 +21,16 @@ class User extends UserDb implements \yii\web\IdentityInterface
             ['password','string']
             ]);
     }
+
+    public function attributeLabels()
+    {
+        $label = parent::attributeLabels();
+        foreach( $label as $key => $item )
+        {
+            $label[$key] = Yii::t('app',$key);
+        }
+        return $label;
+    }
     /**
      * @inheritdoc
      */
@@ -72,6 +82,13 @@ class User extends UserDb implements \yii\web\IdentityInterface
       return Yii::$app->security->validatePassword($password, $this->user_pass);
     }
 
+    public function afterLogin($identity, $cookieBased, $duration)
+    {
+        var_dump('expression');die;
+        $identity->last_login_time = date('Y-m-d H:i:s');
+        $identity->last_login_ip = Yii::$app->request->getUserIP();
+        $identity->save();
+    }
     /**
      * 保存前数据处理
      * @return [type] [description]
