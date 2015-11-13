@@ -84,6 +84,7 @@ class BaseController extends Controller
         {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
         }
+        $data = null;
         return $this->render('create',['model'=>$model]);
     }
 
@@ -186,4 +187,5 @@ class BaseController extends Controller
             'delete' => ['DELETE'],
         ];
     }
+
 }

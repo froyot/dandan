@@ -50,11 +50,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template'=>'{update} {delete}',
                 'buttons'=>[
                     'update' => function ($url, $model, $key) {
-                            $options = array_merge([
+                            $options = [
                                 'title' => Yii::t('yii', 'Update'),
                                 'aria-label' => Yii::t('yii', 'Update'),
                                 'data-pjax' => '0',
-                            ]);
+                            ];
                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::to(['edit','id'=>$key]), $options);
                     }
                 ],

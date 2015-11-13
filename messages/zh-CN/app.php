@@ -39,6 +39,9 @@ return[
     'active'=>'是否激活',
     'actived'=>'激活',
     'unactived'=>'未激活',
-    'keyword'=>'关键字'
+    'keyword'=>'关键字',
+    'show'=>'显示',
+    'hidden'=>'隐藏',
+    'menu'=>'菜单'
 
 ];

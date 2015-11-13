@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use Yii;
-
+use yii\base\Model;
 
 class UserController extends BaseController implements BaseControllerInterface
 {
