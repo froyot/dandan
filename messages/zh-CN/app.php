@@ -31,6 +31,14 @@ return[
     'male'=>'男',
     'female'=>'女',
     'birthday'=>'生日',
-    'signature'=>'个性签名'
+    'signature'=>'个性签名',
+    'create'=>'添加',
+    'nav cat'=>'菜单分类',
+    'name'=>'名字',
+    'remark'=>'标注',
+    'active'=>'是否激活',
+    'actived'=>'激活',
+    'unactived'=>'未激活',
+    'keyword'=>'关键字'
 
 ];

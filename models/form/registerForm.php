@@ -29,7 +29,6 @@ class RegisterForm extends Model
             'password'      => Yii::t('app','password'),
             'repassword'    => Yii::t('app','repassword'),
             'email'         => Yii::t('app','email')
-
         ];
     }
 

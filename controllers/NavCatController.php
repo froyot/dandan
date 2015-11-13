@@ -5,9 +5,10 @@ namespace app\controllers;
 use Yii;
 
 
-class UserController extends BaseController implements BaseControllerInterface
+class NavCatController extends BaseController implements BaseControllerInterface
 {
-    public $modelClass = "app\models\action\User";
+    public $modelClass = "app\models\action\NavCat";
+    public $modelFormClass = "app\models\\form\NavCatForm";
 
     public function afterCreate( $model )
     {
@@ -16,7 +17,7 @@ class UserController extends BaseController implements BaseControllerInterface
 
     public function afterUpdate( $model )
     {
-        return $this->redirect(['view','id'=>$model->id]);
+        return $this->redirect(['index']);
     }
 
     public function afterDelete( $model )

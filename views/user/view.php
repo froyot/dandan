@@ -7,11 +7,11 @@ $this->title = Yii::t('app','user info');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="content-view">
-    <?php if( $user_id == $data->id ):?>
-        <?=Html::a(Yii::t('app','edit userinfo').'&gt;&gt;',Url::to(['user/edit','id'=>$data->id]));?>
+    <?php if( $user_id == $model->id ):?>
+        <?=Html::a(Yii::t('app','edit userinfo').'&gt;&gt;',Url::to(['user/edit','id'=>$model->id]));?>
     <?php endif;?>
     <?= DetailView::widget([
-        'model' => $data,
+        'model' => $model,
         'attributes' => [
             'avatar',
             'birthday',

@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\Url;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\db\Content */
 /* @var $form yii\widgets\ActiveForm */
@@ -11,7 +11,7 @@ use allon\yii2\ueditor\Ueditor;
 
 <div class="content-form">
 
-    <?php $form = ActiveForm::begin(['action'=>Url::to(['user/update','id'=>$model->id])]); ?>
+    <?php $form = ActiveForm::begin($option); ?>
 
     <?= $form->field($model, 'user_nicename')->textInput() ?>
     <?= $form->field($model, 'user_email')->textInput() ?>
