@@ -1,9 +1,10 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
-require(__DIR__.'/ucenter.php');
+
 
 $config = [
+    'timeZone'=>'Asia/Chongqing',
     'name'=>'DanDan',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -34,6 +35,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\action\User',
             'enableAutoLogin' => true,
+            'on afterLogin' => ['app\compoments\EventHandler','afterLogin']
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -66,6 +68,9 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'myEvent' =>[
+            'class'=>'app\compoments\EventHandler'
         ],
         'db' => array_merge(
             require(__DIR__ . '/db.php'),

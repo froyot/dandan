@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\web\ForbiddenHttpException;
@@ -10,8 +11,25 @@ use yii\web\Controller;
 
 class BaseController extends Controller
 {
-
-
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index','view'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
     /**
      * @var string the model class name. This property must be set.
      */

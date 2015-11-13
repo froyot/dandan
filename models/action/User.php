@@ -6,9 +6,14 @@ namespace app\models\action;
 use app\models\db\Users as UserDb;
 use yii\base\InvalidParamException;
 use yii\helpers\ArrayHelper;
+
 use Yii;
 class User extends UserDb implements \yii\web\IdentityInterface
 {
+    public function init()
+    {
+        parent::init();
+    }
     /**
      * unencode password
      * @var string
@@ -19,7 +24,7 @@ class User extends UserDb implements \yii\web\IdentityInterface
     {
         return ArrayHelper::merge(parent::rules(),[
             ['password','string']
-            ]);
+        ]);
     }
 
     public function attributeLabels()
@@ -82,13 +87,6 @@ class User extends UserDb implements \yii\web\IdentityInterface
       return Yii::$app->security->validatePassword($password, $this->user_pass);
     }
 
-    public function afterLogin($identity, $cookieBased, $duration)
-    {
-        var_dump('expression');die;
-        $identity->last_login_time = date('Y-m-d H:i:s');
-        $identity->last_login_ip = Yii::$app->request->getUserIP();
-        $identity->save();
-    }
     /**
      * 保存前数据处理
      * @return [type] [description]

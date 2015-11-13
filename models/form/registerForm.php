@@ -6,7 +6,10 @@ use Yii;
 use yii\base\Model;
 use app\models\action\User;
 use yii\base\Event;
-use app\models\util\Mailer;
+
+use app\compoments\EventHandler;
+use app\compoments\MyEvent;
+
 /**
  * LoginForm is the model behind the login form.
  */
@@ -16,20 +19,9 @@ class RegisterForm extends Model
     public $password;
     public $repassword;
     public $email;
-    private $activeCode;
+    public $activeCode;
     const EVENT_AFTER_REGISTER = 'afterRegister';
-    public function init()
-    {
-        parent::init();
-        Event::on(
-            RegisterForm::className(),
-            RegisterForm::EVENT_AFTER_REGISTER,
-            function ($event) {
-                $obj = $event->sender;
-                call_user_func([$obj,RegisterForm::EVENT_AFTER_REGISTER]);
-            }
-        );
-    }
+
     public function attributeLabels()
     {
         return [
@@ -52,8 +44,8 @@ class RegisterForm extends Model
             ['email','email','message'=>Yii::t('app','email format error')],
             // rememberMe must be a boolean value
             // password is validated by validatePassword()
-            ['username', 'unique','message'=>Yii::t( 'app','username exist' )],
-            ['email', 'unique','message'=>Yii::t( 'app','email exist' )],
+            ['username', 'valideteUsername'],
+            ['email', 'valideteEmail'],
             [
                 'repassword','compare',
                 'compareAttribute'=>'password',
@@ -61,8 +53,28 @@ class RegisterForm extends Model
             ]
         ];
     }
+    public function valideteUsername($attribute, $params)
+    {
+        if( !$this->hasErrors() )
+        {
+            if( User::checkUserNameExist( $this->username ) )
+            {
+                $this->addError( $attribute, Yii::t( 'app','username exist' ) );
 
+            }
+        }
+    }
+    public function valideteEmail($attribute, $params)
+    {
+        if( !$this->hasErrors() )
+        {
+            if( User::checkEmailExist( $this->username ) )
+            {
+                $this->addError( $attribute, Yii::t( 'app','email exist' ) );
 
+            }
+        }
+    }
     /**
      * create user and login to site
      * @return int login ok return 1, login error return 0, register error return -1
@@ -81,7 +93,9 @@ class RegisterForm extends Model
            {
                 Yii::trace('register success');
                 $this->activeCode = $user->getActiveCode();
-                $this->trigger(self::EVENT_AFTER_REGISTER);
+                $event = new MyEvent();
+                $event->context = $this;
+                Yii::$app->myEvent->trigger(EventHandler::MY_EVENT_AFTER_REGISTER,$event);
                 if( Yii::$app->user->login($user) )
                 {
                     return 1;
@@ -131,4 +145,5 @@ class RegisterForm extends Model
         }
         return $this->_user;
     }
+
 }
