@@ -42,6 +42,16 @@ return[
     'keyword'=>'关键字',
     'show'=>'显示',
     'hidden'=>'隐藏',
-    'menu'=>'菜单'
+    'menu'=>'菜单',
+    'parent'=>'父级',
+    'select'=>'选择',
+    'label'=>'标签',
+    'default'=>'默认',
+    'new window'=>'新窗口',
+    'open type'=>'打开方式',
+    'icon'=>'图标',
+    'href'=>'地址',
+    'status'=>'状态',
+    'order'=>'排序'
 
 ];

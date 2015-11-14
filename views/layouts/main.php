@@ -5,7 +5,9 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\DefaultAsset;
-use app\common\widgets\SideNavWidget;
+use yii\helpers\ArrayHelper;
+use app\models\util\ViewHelper;
+
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -37,14 +39,14 @@ $bundle = DefaultAsset::register($this);
             ]);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
+                'items' => ArrayHelper::merge([
 
                     Yii::$app->user->isGuest ?
                         ['label' => 'Login', 'url' => Url::to(\Yii::$app->user->loginUrl)] :
                         ['label' => 'Logout (' . Yii::$app->user->identity->user_nicename . ')',
                             'url' => ['site/logout'],
                             'linkOptions' => ['data-method' => 'post']],
-                ],
+                ],ViewHelper::getSiteMenu())
             ]);
             NavBar::end();
         ?>

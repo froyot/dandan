@@ -6,16 +6,14 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\action\Nav */
 
-$this->title = 'Create Nav';
-$this->params['breadcrumbs'][] = ['label' => 'Navs', 'url' => ['index']];
+$this->title = Yii::t('app','create').Yii::t('app','menu');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','menu'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nav-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
+        'option' =>[]
     ]) ?>
 
 </div>

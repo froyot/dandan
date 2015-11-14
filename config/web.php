@@ -72,6 +72,9 @@ $config = [
         'myEvent' =>[
             'class'=>'app\compoments\EventHandler'
         ],
+        'cacheManage'=>[
+            'class'=>'app\models\util\CacheManage'
+        ],
         'db' => array_merge(
             require(__DIR__ . '/db.php'),
             require(__DIR__.'/db-local.php')

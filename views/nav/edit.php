@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\action\Nav */
 
@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'option' =>['action'=>Url::to(['nav/update','id'=>$model->id])]
     ]) ?>
 
 </div>

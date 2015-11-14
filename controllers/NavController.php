@@ -25,25 +25,6 @@ class NavController extends BaseController implements BaseControllerInterface
         return $this->redirect(['index']);
     }
 
-    public function actionCreate()
-    {
-        $model = new $this->modelClass([
-            'scenario' => Model::SCENARIO_DEFAULT,
-        ]);
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        if ( $model->save() )
-        {
-           return $this->afterCreate( $model );
-        }
-        elseif (!$model->hasErrors())
-        {
-            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
-        }
-        if( Yii::$app->getRequest()->getIsGet() )
-        {
-            $model->parentid = Yii::$app->getRequest()->get('parent');
-        }
-        return $this->render('create',['model'=>$model]);
-    }
+
 
 }

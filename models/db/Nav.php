@@ -37,7 +37,8 @@ class Nav extends \yii\db\ActiveRecord
             [['cid', 'parentid', 'label', 'href', 'icon'], 'required'],
             [['cid', 'parentid', 'status', 'listorder'], 'integer'],
             [['label', 'href', 'icon', 'path'], 'string', 'max' => 255],
-            [['target'], 'string', 'max' => 50]
+            [['target'], 'string', 'max' => 50],
+            ['listorder','default','value'=>0]
         ];
     }
 
