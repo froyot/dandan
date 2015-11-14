@@ -52,6 +52,10 @@ return[
     'icon'=>'图标',
     'href'=>'地址',
     'status'=>'状态',
-    'order'=>'排序'
+    'order'=>'排序',
+    'article'=>'文章',
+    'taxonomy'=>'文章类型',
+    'img'=>'图片',
+    'description'=>'描述'
 
 ];

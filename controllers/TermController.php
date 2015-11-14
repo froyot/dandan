@@ -1,15 +1,17 @@
 <?php
 
 namespace app\controllers;
-use yii\base\Model;
+
 use Yii;
 use yii\web\ServerErrorHttpException;
-
-
-class NavController extends BaseController implements BaseControllerInterface
+use yii\base\Model;
+/**
+ * TermController implements the CRUD actions for Term model.
+ */
+class TermController extends BaseController implements BaseControllerInterface
 {
-    public $modelClass = "app\models\action\Nav";
-    public $modelFormClass = "app\models\\form\NavForm";
+    public $modelClass = "app\models\action\Term";
+    public $modelFormClass = "app\models\\form\TermForm";
 
     public function afterCreate( $model )
     {
@@ -35,7 +37,7 @@ class NavController extends BaseController implements BaseControllerInterface
         if(Yii::$app->getRequest()->getIsGet())
         {
             if( Yii::$app->getRequest()->get('parent'))
-                $model->parentid = Yii::$app->getRequest()->get('parent');
+                $model->parent = Yii::$app->getRequest()->get('parent');
         }
         if ( $model->save() )
         {
@@ -48,6 +50,4 @@ class NavController extends BaseController implements BaseControllerInterface
         $data = null;
         return $this->render('create',['model'=>$model]);
     }
-
-
 }

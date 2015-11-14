@@ -43,7 +43,7 @@ private $data;
                 ];
                 $this->tree[] = $treeItem;
             }
-            elseif( $nav->parentid == $parent )
+            elseif( $nav->{$this->parentKey} == $parent )
             {
                 $treeItem = new TreeItem();
                 $treeItem->attributes = [

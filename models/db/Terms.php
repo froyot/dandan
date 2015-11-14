@@ -43,8 +43,11 @@ class Terms extends \yii\db\ActiveRecord
             [['parent', 'count', 'listorder', 'status'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 200],
             [['taxonomy'], 'string', 'max' => 32],
+            ['taxonomy','in','range'=>['article','img']],
             [['path', 'seo_title', 'seo_keywords', 'seo_description'], 'string', 'max' => 500],
-            [['list_tpl', 'one_tpl'], 'string', 'max' => 50]
+            [['list_tpl', 'one_tpl'], 'string', 'max' => 50],
+            [['name'],'required'],
+            ['status','default','value'=>1]
         ];
     }
 

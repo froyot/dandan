@@ -31,8 +31,6 @@ class ViewHelper extends Model{
             Yii::$app->cacheManage->site_menu = $menu;
         }
         return $menu;
-
-
     }
 
     /**
@@ -51,7 +49,8 @@ class ViewHelper extends Model{
             $childs = $this->getMenuChild( $item->childs );
             if( $childs )
             {
-                $menu[] = $childs;
+                $menu['url'] = '#';
+                $menu['items'] = $childs;
             }
             elseif( !$item->model->href )
             {
@@ -59,7 +58,7 @@ class ViewHelper extends Model{
             }
             else
             {
-                 $menu['url'] = $item->model->href ;
+                $menu['url'] = $item->model->href;
             }
             $menus[] = $menu;
         }

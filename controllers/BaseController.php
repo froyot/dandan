@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\web\ForbiddenHttpException;
+use yii\web\ServerErrorHttpException;
 use yii\web\Controller;
 
 
