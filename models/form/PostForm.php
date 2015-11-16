@@ -22,15 +22,6 @@ class PostForm extends Post
        // add related fields to searchable attributes
       return ArrayHelper::merge(parent::attributes(), ['_keywords','listorder','cat_name']);
     }
-
-    public function attributeLabels()
-    {
-        return ArrayHelper::merge(parent::attributeLabels(),
-          [
-              '_keywords' => Yii::t('app','keyword'),
-          ]
-        );
-    }
     /**
      * @inheritdoc
      */

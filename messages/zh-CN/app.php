@@ -57,6 +57,17 @@ return[
     'taxonomy'=>'文章类型',
     'img'=>'图片',
     'description'=>'描述',
-    'Create Post'=>'添加内容'
+    'Create Post'=>'添加内容',
+    'listorder'=>'排序',
+    'post_title'=>'标题',
+    'cat_name'=>'分类',
+    'post_hits'=>'点击数',
+    'comment_count'=>'评论数',
+    'post_keywords'=>'关键字',
+    'post_source'=>'来源',
+    'post_excerpt'=>'摘要',
+    'post_author'=>'作者',
+    'post_date'=>'日期',
+    'post_status'=>'状态'
 
 ];
