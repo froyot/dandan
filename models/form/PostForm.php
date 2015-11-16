@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 use app\models\action\Post;
 use yii\helpers\ArrayHelper;
 use app\models\action\TermRelationship;
+use app\models\action\User;
+
 /**
  * PostForm represents the model behind the search form about `app\models\action\Post`.
  */
@@ -53,6 +55,7 @@ class PostForm extends Post
     {
         $query = Post::find()->joinWith('postExtra');
         $postExtraTbName = TermRelationship::tableName();
+        $authorTbName = User::tableName();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

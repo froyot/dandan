@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use app\models\util\Tree;
 /* @var $this yii\web\View */
 /* @var $model app\models\action\Post */
 /* @var $form yii\widgets\ActiveForm */
@@ -12,45 +12,44 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'post_author')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'cat_id')->dropDownList(Tree::makeDropDown( [
+            'model'=> 'app\models\action\term',
+            'parentKey'=>'parent',
+            'primaryKey'=>'term_id',
+            'rootParent'=>0
+        ],
+        [
+            'value'=>'term_id',
+            'label'=>'name',
+            'icon'=>'├─',
+            'levelChar'=>'    '
+        ]
+    ),[
+    'name'=>'cat_id',
+    'encodeSpaces'=>true,
+    'prompt' => '--'.Yii::t('app','select').Yii::t('app','parent').Yii::t('app','menu').'--'])->label(Yii::t('app','parent').Yii::t('app','menu')) ?>
 
-    <?= $form->field($model, 'post_keywords')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'post_source')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'post_date')->textInput() ?>
-
-    <?= $form->field($model, 'post_content')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'post_title')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'post_excerpt')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'post_status')->textInput() ?>
-
-    <?= $form->field($model, 'comment_status')->textInput() ?>
-
-    <?= $form->field($model, 'post_modified')->textInput() ?>
-
-    <?= $form->field($model, 'post_content_filtered')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'post_parent')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'post_type')->textInput() ?>
-
-    <?= $form->field($model, 'post_mime_type')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'comment_count')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'smeta')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'post_hits')->textInput() ?>
-
-    <?= $form->field($model, 'post_like')->textInput() ?>
-
-    <?= $form->field($model, 'istop')->textInput() ?>
-
-    <?= $form->field($model, 'recommended')->textInput() ?>
+    <?= $form->field($model, 'post_title')->textInput(['maxlength' => true,'name'=>'post_title']) ?>
+    <?= $form->field($model, 'post_keywords')->textInput(['maxlength' => true,'name'=>'post_keywords']) ?>
+    <?= $form->field($model, 'post_source')->textInput(['maxlength' => true,'name'=>'post_source']) ?>
+    <?= $form->field($model, 'post_excerpt')->textarea(['rows' => 6,'name'=>'post_excerpt']) ?>
+    <?= $form->field($model, 'post_content')->textarea(['rows' => 6,'name'=>'post_content']) ?>
+    <?= $form->field($model, 'post_status')->radioList([
+                                                0=>Yii::t('app','post pass'),
+                                                1=>Yii::t('app','wait view')
+                                            ],['name'=>'post_status']) ?>
+    <?= $form->field($model, 'comment_status')->radioList([
+                                                0=>Yii::t('app','allow'),
+                                                1=>Yii::t('app','deny')
+                                            ],['name'=>'comment_status']) ?>
+    <?= $form->field($model, 'istop')->radioList([
+                                                0=>Yii::t('app','top'),
+                                                1=>Yii::t('app','no top')
+                                            ],['name'=>'istop']) ?>
+    <?= $form->field($model, 'recommended')->radioList([
+                                                0=>Yii::t('app','recommend'),
+                                                1=>Yii::t('app','un recommend')
+                                            ],['name'=>'recommended']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

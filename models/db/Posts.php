@@ -45,10 +45,9 @@ class Posts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['post_author', 'post_status', 'comment_status', 'post_parent', 'post_type', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended'], 'integer'],
-            [['post_keywords'], 'required'],
+            [['post_author', 'post_status', 'comment_status', 'post_parent', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended'], 'integer'],
             [['post_date', 'post_modified'], 'safe'],
-            [['post_content', 'post_title', 'post_excerpt', 'post_content_filtered', 'smeta'], 'string'],
+            [['post_content', 'post_title', 'post_excerpt', 'post_content_filtered', 'smeta','post_type'], 'string'],
             [['post_keywords', 'post_source'], 'string', 'max' => 150],
             [['post_mime_type'], 'string', 'max' => 100]
         ];

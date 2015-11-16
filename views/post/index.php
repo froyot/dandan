@@ -37,10 +37,25 @@ $this->params['breadcrumbs'][] = $this->title;
             'comment_count',
             'post_keywords',
             'post_source',
-            'post_excerpt:ntext',
-            'post_author',
+            ['attribute'=>'post_excerpt',
+             'value'=>function($model){
+                return $model->post_excerpt?'已设置':'未设置';
+             }
+            ],
+            [
+            'attribute'=>'post_author',
+            'value'=>'author.user_login'
+            ],
             'post_date',
-            'post_status',
+            ['attribute'=>'post_status',
+             'format'=>'raw',
+             'value'=>function($model){
+                $status = $model->post_status?'已审核':'未审核';
+                $top = $model->istop?'置顶':'未置顶';
+                $recommended = $model->recommended?'推荐':'未推荐';
+                return $status.'<br/>'.$top.'<br/>'.$recommended;
+             }
+            ],
             ['class' => 'yii\grid\ActionColumn',
              'template'=>" {update} | {delete}",
              'buttons'=>[

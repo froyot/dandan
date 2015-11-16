@@ -13,7 +13,8 @@ use yii\web\Controller;
 
 class BaseController extends Controller
 {
-
+    public static $SCENARIO_INSERT = Model::SCENARIO_DEFAULT;
+    public static $SCENARIO_UPDATE = Model::SCENARIO_DEFAULT;
 
     public function behaviors()
     {
@@ -74,18 +75,22 @@ class BaseController extends Controller
     public function actionCreate()
     {
         $model = new $this->modelClass([
-            'scenario' => Model::SCENARIO_DEFAULT,
+            'scenario' => static::$SCENARIO_INSERT,
         ]);
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        if ( $model->save() )
+
+        if( Yii::$app->getRequest()->getIsPost() )
         {
-           return $this->afterCreate( $model );
+            $res = $model->load(Yii::$app->getRequest()->post(), '');
+
+            if ( $model->save() )
+            {
+               return $this->afterCreate( $model );
+            }
+            elseif (!$model->hasErrors())
+            {
+                throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            }
         }
-        elseif (!$model->hasErrors())
-        {
-            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
-        }
-        $data = null;
         return $this->render('create',['model'=>$model]);
     }
 
@@ -138,7 +143,7 @@ class BaseController extends Controller
     public function actionUpdate( $id )
     {
         $model = $this->findModel($id);
-        $model->scenario = Model::SCENARIO_DEFAULT;
+        $model->scenario = self::SCENARIO_UPDATE;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         // var_dump($model->toArray());die;
         if ($model->save() === false && !$model->hasErrors()) {

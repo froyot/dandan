@@ -14,6 +14,8 @@ use yii\filters\VerbFilter;
  */
 class PostController extends BaseController implements BaseControllerInterface
 {
+    public static $SCENARIO_INSERT = 'post';
+    public static $SCENARIO_UPDATE = 'post';
     public $modelClass = "app\models\action\Post";
     public $modelFormClass = "app\models\\form\PostForm";
 

@@ -68,6 +68,8 @@ return[
     'post_excerpt'=>'摘要',
     'post_author'=>'作者',
     'post_date'=>'日期',
-    'post_status'=>'状态'
+    'post_status'=>'状态',
+    'cat'=>'分类',
+    'not allow empty'=>'不允许为空'
 
 ];
