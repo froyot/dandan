@@ -9,8 +9,9 @@ class Nav extends NavDb
     public function init()
     {
         parent::init();
-        $this->on(self::EVENT_AFTER_INSERT,[$this,'afterInsert']);
-        $this->on(self::EVENT_AFTER_INSERT,[$this,'afterInsert']);
+        $this->on(self::EVENT_AFTER_INSERT,[$this,'afterDataSave']);
+        $this->on(self::EVENT_AFTER_UPDATE,[$this,'afterDataSave']);
+        $this->on(self::EVENT_AFTER_DELETE,[$this,'afterDataDelete']);
     }
     public function attributeLabels()
     {
@@ -22,21 +23,40 @@ class Nav extends NavDb
         return $label;
     }
 
-    public function afterInsert( $event )
+
+    public function afterDataSave( $event )
     {
-        $event->sender->updatePath( );
-    }
-    public function afterUpdate( $event )
-    {
-        $event->sender->updatePath( );
-    }
-    private function updatePath()
-    {
-        if( $this->parentid )
+        //update path
+        if( !$event->sender->parentid )
         {
             $this->parentid = 0;
         }
-        $this->path = $this->parentid.'-'.$this->getPrimaryKey();
-        $this->save();
+        $parent = Nav::find()
+                    ->where(['id'=>$event->sender->parentid])
+                    ->select(['path'])
+                    ->one();
+        if($parent)
+        {
+            $event->sender->path = $parent->path.'-'.$event->sender->getPrimaryKey();
+        }
+        else
+        {
+            $event->sender->path = '0-'.$event->sender->getPrimaryKey();
+        }
+
+        $event->sender->off(self::EVENT_AFTER_INSERT);
+        $event->sender->off(self::EVENT_AFTER_UPDATE);
+        $event->sender->save();
+
+        //删除菜单缓存
+        Yii::$app->cacheManage->site_menu = null;
     }
+
+    public function afterDataDelete()
+    {
+        //删除菜单缓存
+        Yii::$app->cacheManage->site_menu = null;
+    }
+
+
 }

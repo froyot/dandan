@@ -38,16 +38,33 @@ $bundle = DefaultAsset::register($this);
                 ],
             ]);
             echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => ArrayHelper::merge([
+                'options' => ['class' => 'navbar-nav navbar-left'],
+                'items' => ViewHelper::getSiteMenu()
+            ]);
 
-                    Yii::$app->user->isGuest ?
+            echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-right'],
+                'items' => [
+                Yii::$app->user->isGuest ?
                         ['label' => 'Login', 'url' => Url::to(\Yii::$app->user->loginUrl)] :
                         ['label' => 'Logout (' . Yii::$app->user->identity->user_nicename . ')',
                             'url' => ['site/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
-                ],ViewHelper::getSiteMenu())
-            ]);
+                            'linkOptions' => ['data-method' => 'post']]
+                    ],
+                ]);
+        ?>
+        <?= Html::beginForm(Url::to(['site/search']));?>
+        <div class="navbar-form navbar-right">
+            <div class="form-group">
+                <input id="searchbox" type="text" class="form-control" placeholder="搜索问题、话题或人,,,">
+            </div>
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('app','search'), ['class' => 'btn btn-primary']) ?>
+            </div>
+        </div>
+        <?= Html::endForm();?>
+        <?php
+
             NavBar::end();
         ?>
 
@@ -55,13 +72,8 @@ $bundle = DefaultAsset::register($this);
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
-            <div class="row">
-               <div class="col-md-2">
 
-            </div>
-            <div class="col-md-8">
-                        <?= $content ?>
-            </div>
+            <?= $content ?>
         </div>
 
 

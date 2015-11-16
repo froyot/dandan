@@ -56,6 +56,7 @@ return[
     'article'=>'文章',
     'taxonomy'=>'文章类型',
     'img'=>'图片',
-    'description'=>'描述'
+    'description'=>'描述',
+    'Create Post'=>'添加内容'
 
 ];

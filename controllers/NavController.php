@@ -37,6 +37,7 @@ class NavController extends BaseController implements BaseControllerInterface
             if( Yii::$app->getRequest()->get('parent'))
                 $model->parentid = Yii::$app->getRequest()->get('parent');
         }
+
         if ( $model->save() )
         {
            return $this->afterCreate( $model );

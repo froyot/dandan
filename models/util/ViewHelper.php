@@ -6,6 +6,7 @@
 namespace app\models\util;
 use yii\base\Model;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use Yii;
 
 class ViewHelper extends Model{
@@ -58,7 +59,29 @@ class ViewHelper extends Model{
             }
             else
             {
-                $menu['url'] = $item->model->href;
+                $href = json_decode($item->model->href,true);
+                $url = '#';
+                if( is_array( $href ) )
+                {
+                    if(isset($href['a']) && isset($href['c']))
+                    {
+                        if(!isset($href['p']))
+                        {
+                            $href['p'] = [];
+                        }
+
+                        $url = Url::to(ArrayHelper::merge(
+                            [$href['c'].'/'.$href['a']]
+                            ,$href['p']
+                            ));
+                    }
+                }
+                elseif(is_string($href))
+                {
+                    $url = $href;
+                    $menu['linkOptions']['target'] = '_blank';
+                }
+                $menu['url'] = $url;
             }
             $menus[] = $menu;
         }

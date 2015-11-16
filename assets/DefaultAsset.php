@@ -15,15 +15,38 @@ use yii\web\AssetBundle;
  */
 class DefaultAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public static $assertUrl;
+    public $sourcePath = '@webroot/static';
     public $css = [
-        'css/site.css',
+        'css/site.css'
     ];
     public $js = [
+
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
     ];
+
+    public function addPageScript($view, $jsFile) {
+        $view->registerJsFile($this->getAssetUrl($view).$jsFile, [DefaultAsset::className(), 'depends' => 'app\assets\DefaultAsset']);
+    }
+
+    public function addPageCssFile($view, $cssFiel)
+    {
+        $view->registerCssFile($this->getAssetUrl($view).$cssFiel);
+    }
+
+    private function getAssetUrl($view)
+    {
+        if(!self::$assertUrl)
+        {
+            $assertManage = $view->getAssetManager();
+            self::$assertUrl = $assertManage->getAssetUrl($this,'');
+        }
+        return self::$assertUrl;
+    }
+
+
+
 }
