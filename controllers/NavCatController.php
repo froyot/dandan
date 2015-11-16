@@ -24,4 +24,8 @@ class NavCatController extends BaseController implements BaseControllerInterface
     {
         return $this->redirect(['index']);
     }
+    public function beforeRenderEdit( &$model )
+    {
+
+    }
 }

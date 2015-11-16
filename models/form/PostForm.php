@@ -30,7 +30,8 @@ class PostForm extends Post
     public function rules()
     {
         return [
-            [['id', 'post_author', 'post_status', 'comment_status', 'post_parent', 'post_type', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended'], 'integer'],
+            [['id', 'post_author', 'post_status', 'comment_status', 'post_parent', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended'], 'integer'],
+            ['post_type','string'],
             [['post_keywords', 'post_source', 'post_date', 'post_content', 'post_title', 'post_excerpt', 'post_modified', 'post_content_filtered', 'post_mime_type', 'smeta','_keywords'], 'safe'],
         ];
     }
@@ -60,8 +61,7 @@ class PostForm extends Post
             'query' => $query,
         ]);
 
-        $this->load($params);
-
+        $this->load($params,'');
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');

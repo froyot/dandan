@@ -13,13 +13,21 @@ use app\models\action\TermRelationship;
 /**
  * PostController implements the CRUD actions for Post model.
  */
-class PostController extends BaseController implements BaseControllerInterface
+class PageController extends BaseController implements BaseControllerInterface
 {
-    public static $SCENARIO_INSERT = 'post';
-    public static $SCENARIO_UPDATE = 'post';
+    public static $SCENARIO_INSERT = 'page';
+    public static $SCENARIO_UPDATE = 'page';
     public $modelClass = "app\models\action\Post";
     public $modelFormClass = "app\models\\form\PostForm";
 
+    public function beforeAction( $action )
+    {
+        if( $action->id == 'index' )
+        {
+            $this->addParams['post_type'] = 'page';
+        }
+        return true;
+    }
     public function afterCreate( $model )
     {
         return $this->redirect(['index']);
@@ -37,13 +45,6 @@ class PostController extends BaseController implements BaseControllerInterface
 
     public function beforeRenderEdit( &$model )
     {
-        $cat = TermRelationship::find()
-                ->where(['object_id'=>$model->getPrimaryKey()])
-                ->select(['term_id'])->one();
-        if( $cat )
-        {
-            $model->cat_id = $cat->term_id;
-        }
 
     }
 }

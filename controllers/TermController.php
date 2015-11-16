@@ -27,6 +27,10 @@ class TermController extends BaseController implements BaseControllerInterface
     {
         return $this->redirect(['index']);
     }
+    public function beforeRenderEdit( &$model )
+    {
+
+    }
 
     public function actionCreate()
     {

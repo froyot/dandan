@@ -46,10 +46,11 @@ class Posts extends \yii\db\ActiveRecord
     {
         return [
             [['post_author', 'post_status', 'comment_status', 'post_parent', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended'], 'integer'],
-            [['post_date', 'post_modified'], 'safe'],
+            [['post_date', 'post_modified'], 'default','value'=>date('Y-m-d H:i:s')],
             [['post_content', 'post_title', 'post_excerpt', 'post_content_filtered', 'smeta','post_type'], 'string'],
             [['post_keywords', 'post_source'], 'string', 'max' => 150],
-            [['post_mime_type'], 'string', 'max' => 100]
+            [['post_mime_type'], 'string', 'max' => 100],
+
         ];
     }
 

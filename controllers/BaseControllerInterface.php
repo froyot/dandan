@@ -13,4 +13,6 @@ interface BaseControllerInterface
      function afterUpdate( $model );
 
      function afterDelete( $model );
+
+     function beforeRenderEdit( &$model );
 }

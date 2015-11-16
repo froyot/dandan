@@ -19,9 +19,12 @@ class Post extends Posts
     {
         return ArrayHelper::merge(parent::rules(),[
             ['cat_id','required','on'=>'post','message'=>Yii::t('app','cat').' '.Yii::t('app','not allow empty')],
-            [['post_title','post_content'],'required','on'=>'post'],
+            [['post_title','post_content'],'required','on'=>['post','page']],
             ['post_type','default','value'=>'post','on'=>'post'],
-            [['post_author', 'post_status', 'comment_status', 'post_parent', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended'], 'integer','on'=>'post']
+            ['post_type','default','value'=>'page','on'=>'page'],
+            [['post_author', 'post_status', 'comment_status', 'post_parent', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended'], 'integer','on'=>'post'],
+            [['recommended','comment_status','istop'],'default','value'=>0,'on'=>'post'],
+            [['post_status','istop'],'default','value'=>0],
 
         ]);
     }
@@ -54,7 +57,7 @@ class Post extends Posts
         $this->on(self::EVENT_AFTER_DELETE,[$this,'afterDataDelete']);
     }
 
-    //保存文章
+    //保存文章和页面
     public function saveTextPost()
     {
         $this->getAbstructTxt();
@@ -97,12 +100,15 @@ class Post extends Posts
      */
     public function afterDataInsert( $event )
     {
-        $termRelationship = new TermRelationship();
-        $termRelationship->attributes = [
-            'object_id'=>$event->sender->getPrimaryKey(),
-            'term_id'=>$event->sender->cat_id,
-        ];
-        $termRelationship->save();
+        if( $this->getScenario() == 'post' )
+        {
+            $termRelationship = new TermRelationship();
+            $termRelationship->attributes = [
+                'object_id'=>$event->sender->getPrimaryKey(),
+                'term_id'=>$event->sender->cat_id,
+            ];
+            $termRelationship->save();
+        }
     }
 
     /**
@@ -112,15 +118,18 @@ class Post extends Posts
      */
     public function afterDataUpdate( $event )
     {
-        $termRelationship = TermRelationship::find()
-                            ->where(['object_id'=>$event->sender->getPrimaryKey()])
-                            ->select(['term_id'])
-                            ->one();
-        if( $termRelationship && $termRelationship->term_id != $event->sender->cat_id )
+        if( $this->getScenario() == 'post' )
         {
-            $termRelationship->term_id = $event->sender->cat_id;
+            $termRelationship = TermRelationship::find()
+                                ->where(['object_id'=>$event->sender->getPrimaryKey()])
+                                ->select(['term_id'])
+                                ->one();
+            if( $termRelationship && $termRelationship->term_id != $event->sender->cat_id )
+            {
+                $termRelationship->term_id = $event->sender->cat_id;
+            }
+            $termRelationship->save();
         }
-        $termRelationship->save();
     }
     /**
      * 更新后，更新分类关联表
@@ -129,13 +138,16 @@ class Post extends Posts
      */
     public function afterDataDelete( $event )
     {
-        $termRelationship = TermRelationship::find()
-                            ->where(['object_id'=>$event->sender->getPrimaryKey()])
-                            ->select(['tid','term_id'])
-                            ->one();
-        if( $termRelationship )
+        if( $this->getScenario() == 'post' )
         {
-            $termRelationship->delete();
+            $termRelationship = TermRelationship::find()
+                                ->where(['object_id'=>$event->sender->getPrimaryKey()])
+                                ->select(['tid','term_id'])
+                                ->one();
+            if( $termRelationship )
+            {
+                $termRelationship->delete();
+            }
         }
     }
 }

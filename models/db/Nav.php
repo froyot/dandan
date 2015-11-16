@@ -34,11 +34,11 @@ class Nav extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cid', 'label', 'href','parentid'], 'required'],
+            [['cid', 'label', 'href'], 'required'],
             [['cid', 'parentid', 'status', 'listorder'], 'integer'],
             [['label', 'href', 'icon', 'path'], 'string', 'max' => 255],
             [['target'], 'string', 'max' => 50],
-            ['listorder','default','value'=>0],
+            [['parentid','listorder'],'default','value'=>0],
 
         ];
     }

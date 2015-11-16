@@ -50,7 +50,6 @@ class ViewHelper extends Model{
             $childs = $this->getMenuChild( $item->childs );
             if( $childs )
             {
-                $menu['url'] = '#';
                 $menu['items'] = $childs;
             }
             elseif( !$item->model->href )
@@ -59,6 +58,7 @@ class ViewHelper extends Model{
             }
             else
             {
+
                 $href = json_decode($item->model->href,true);
                 $url = '#';
                 if( is_array( $href ) )
@@ -76,11 +76,13 @@ class ViewHelper extends Model{
                             ));
                     }
                 }
-                elseif(is_string($href))
+                elseif( !$href && is_string( $item->model->href ))
                 {
-                    $url = $href;
-                    $menu['linkOptions']['target'] = '_blank';
+                    $url = $item->model->href;
+                    if( strpos("http", $item->model->href) === 0 )
+                        $menu['linkOptions']['target'] = '_blank';
                 }
+
                 $menu['url'] = $url;
             }
             $menus[] = $menu;

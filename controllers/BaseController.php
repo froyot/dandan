@@ -9,10 +9,11 @@ use yii\base\Model;
 use yii\web\ForbiddenHttpException;
 use yii\web\ServerErrorHttpException;
 use yii\web\Controller;
-
+use yii\helpers\ArrayHelper;
 
 class BaseController extends Controller
 {
+    protected $addParams = [];
     public static $SCENARIO_INSERT = Model::SCENARIO_DEFAULT;
     public static $SCENARIO_UPDATE = Model::SCENARIO_DEFAULT;
 
@@ -60,7 +61,8 @@ class BaseController extends Controller
     public function actionIndex()
     {
         $searchModel = Yii::createObject($this->modelFormClass);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(
+            ArrayHelper::merge(Yii::$app->request->queryParams,$this->addParams));
         return $this->render('index',[
                                     'dataProvider'=>$dataProvider,
                                     'searchModel'=>$searchModel
@@ -91,6 +93,7 @@ class BaseController extends Controller
                 throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
             }
         }
+
         return $this->render('create',['model'=>$model]);
     }
 
@@ -102,6 +105,7 @@ class BaseController extends Controller
     public function actionEdit( $id )
     {
         $model = $this->findModel($id);
+        $this->beforeRenderEdit( $model );
         return $this->render('edit',['model'=>$model]);
     }
 
@@ -143,7 +147,7 @@ class BaseController extends Controller
     public function actionUpdate( $id )
     {
         $model = $this->findModel($id);
-        $model->scenario = self::SCENARIO_UPDATE;
+        $model->scenario = static::$SCENARIO_UPDATE;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         // var_dump($model->toArray());die;
         if ($model->save() === false && !$model->hasErrors()) {
