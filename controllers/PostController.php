@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controllers;
+namespace app\controllers;
 
 use Yii;
 use app\models\action\Post;
@@ -8,42 +8,34 @@ use app\models\form\PostForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\action\TermRelationship;
+use yii\helpers\ArrayHelper;
 
-/**
- * PostController implements the CRUD actions for Post model.
- */
-class PostController extends BaseController implements BaseControllerInterface
+
+
+class PostController  extends Controller
 {
-    public static $SCENARIO_INSERT = 'post';
-    public static $SCENARIO_UPDATE = 'post';
-    public $modelClass = "app\models\action\Post";
-    public $modelFormClass = "app\models\\form\PostForm";
-
-    public function afterCreate( $model )
+    //列表显示
+    public function actionIndex()
     {
-        return $this->redirect(['index']);
+        $searchModel = new PostForm();
+        $dataProvider = $searchModel->search(
+            ArrayHelper::merge(
+                Yii::$app->request->queryParams,
+                ['post_type'=>'post']
+            )
+        );
+
+        return $this->render('index',[
+                                    'dataProvider'=>$dataProvider,
+                                    'searchModel'=>$searchModel
+                                    ]
+                            );
     }
 
-    public function afterUpdate( $model )
+    //查看详情
+    public function actionView()
     {
-        return $this->redirect(['index']);
-    }
-
-    public function afterDelete( $model )
-    {
-        return $this->redirect(['index']);
-    }
-
-    public function beforeRenderEdit( &$model )
-    {
-        $cat = TermRelationship::find()
-                ->where(['object_id'=>$model->getPrimaryKey()])
-                ->select(['term_id'])->one();
-        if( $cat )
-        {
-            $model->cat_id = $cat->term_id;
-        }
 
     }
+
 }

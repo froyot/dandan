@@ -97,7 +97,9 @@ return[
     'category'=>'分类',
     'add sub cat'=>'添加子分类',
     'page'=>'页面',
-    'href type'=>'链接类型'
+    'href type'=>'链接类型',
+    'post list'=>'文章列表',
+    'search {_keywords}:'=>'搜索关键字{_keywords}'
 
 
 

@@ -7,13 +7,15 @@ use yii\widgets\ListView;
 /* @var $searchModel app\models\form\Content */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = \Yii::t('app','post list');
+$this->title = \Yii::t('app','search {_keywords}:', [
+    '_keywords' => Yii::$app->request->get('_keywords'),
+]);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="content-index">
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemView'=>'@app/views/content/listItem',
+        'itemView'=>'@app/views/content/listItemSearch',
         'layout' => "{items}\n{pager}"
     ]); ?>
 

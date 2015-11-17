@@ -13,8 +13,4 @@ use yii\widgets\DetailView;
     <div class="abstruct-content">
         <?=$model->post_excerpt;?>
     </div>
-    <div class="other-info">
-        <label class="author"><?=Yii::t('app','author');?>:<?=$model->author->user_login;?></label>
-        <label class="date"><?=Yii::t('app','Date');?>:<?=$model->post_date;?></label>
-    </div>
 </div>

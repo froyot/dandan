@@ -92,6 +92,13 @@ class PostForm extends Post
             ->andFilterWhere(['like', 'post_content_filtered', $this->post_content_filtered])
             ->andFilterWhere(['like', 'post_mime_type', $this->post_mime_type])
             ->andFilterWhere(['like', 'smeta', $this->smeta]);
+        $query->andFilterWhere(['or',
+                                ['like','post_keywords',$this->_keywords],
+                                ['like','post_title',$this->_keywords],
+                                ['like','post_content',$this->_keywords],
+                                ['like','post_excerpt',$this->_keywords],
+                            ]);
+
 
         $dataProvider->sort->attributes['cat_name'] = [
             'asc' => [$postExtraTbName.'.term_id' => SORT_ASC],

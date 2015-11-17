@@ -54,10 +54,10 @@ $bundle = DefaultAsset::register($this);
                     ],
                 ]);
         ?>
-        <?= Html::beginForm(Url::to(['site/search']));?>
+        <?= Html::beginForm(Url::to(['site/search']),'GET');?>
         <div class="navbar-form navbar-right">
             <div class="form-group">
-                <input id="searchbox" type="text" class="form-control" placeholder="搜索问题、话题或人,,,">
+                <input id="searchbox" type="text" class="form-control" placeholder="搜索问题、话题或人,,," name="_keywords" value="<?=Yii::$app->request->get('_keywords');?>">
             </div>
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app','search'), ['class' => 'btn btn-primary']) ?>

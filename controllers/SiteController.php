@@ -10,6 +10,8 @@ use app\models\form\LoginForm;
 use app\models\form\RegisterForm;
 use yii\base\InvalidParamException;
 use app\models\action\User;
+use app\models\form\PostForm;
+
 class SiteController extends Controller
 {
     public function behaviors()
@@ -130,6 +132,25 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    /**
+     * 搜索文章，页面
+     * @return [type] [description]
+     */
+    public function actionSearch()
+    {
+        $searchModel = new PostForm();
+        $dataProvider = $searchModel->search(
+                Yii::$app->request->queryParams
+               );
+
+        return $this->render('search',[
+                                    'dataProvider'=>$dataProvider,
+                                    'searchModel'=>$searchModel,
+                                    '_keywords'=>Yii::$app->request->get('_keywords')
+                                    ]
+                            );
     }
 
 
