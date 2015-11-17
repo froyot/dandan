@@ -70,6 +70,35 @@ return[
     'post_date'=>'日期',
     'post_status'=>'状态',
     'cat'=>'分类',
-    'not allow empty'=>'不允许为空'
+    'not allow empty'=>'不允许为空',
+
+    'adminHome'=>'首页',
+    'postManage'=>'文章管理',
+    'pageManage'=>'页面管理',
+    'catManage'=>'分类管理',
+    'navManage'=>'菜单管理',
+    'setting'=>'设置',
+    'siteSetting'=>'网站设置',
+    'smtpSetting'=>'smtp设置',
+    'add submenu'=>'添加子菜单',
+    'edit'=>'编辑',
+
+    'post pass'=>'审核通过',
+    'wait view'=>'待审核',
+    'allow'=>'允许',
+    'deny'=>'不允许',
+    'recommend'=>'推荐',
+    'un recommend'=>'不推荐',
+    'istop'=>'是否置顶',
+    'top'=>'置顶',
+    'no top'=>'不置顶',
+    'comment_status'=>'评论状态',
+    'recommended'=>'是否推荐',
+    'category'=>'分类',
+    'add sub cat'=>'添加子分类',
+    'page'=>'页面',
+    'href type'=>'链接类型'
+
+
 
 ];

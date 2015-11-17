@@ -150,4 +150,9 @@ class Post extends Posts
             }
         }
     }
+
+    public static function getPages()
+    {
+        return self::find()->where(['post_type'=>'page'])->all();
+    }
 }

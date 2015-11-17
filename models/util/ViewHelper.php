@@ -7,9 +7,11 @@ namespace app\models\util;
 use yii\base\Model;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use app\models\action\Option;
 use Yii;
 
 class ViewHelper extends Model{
+    private static $SITEOPTION;
     /**
      * 生成前台导航菜单
      * @return array 数据格式兼容bootstrap nav 扩展
@@ -88,5 +90,45 @@ class ViewHelper extends Model{
             $menus[] = $menu;
         }
         return $menus;
+    }
+
+    /**
+     * 获取网站配置
+     * @param  string $key [description]
+     * @return [type]      [description]
+     */
+    public static function getSiteOption($key = '')
+    {
+        if( self::$SITEOPTION )
+        {
+            $site_option = self::$SITEOPTION;
+        }
+        else
+        {
+            $site_option = Yii::$app->cacheManage->site_option;
+            if( !$site_option )
+            {
+                $options = Option::getSiteOption();
+                if( !$options )
+                {
+                    $site_option = Yii::$app->params['siteConf'];
+                }
+                else
+                {
+                    $site_option = ArrayHelper::merge(
+                                                        Yii::$app->params['siteConf'],
+                                                        $options
+                                                    );
+                }
+                Yii::$app->cacheManage->site_option = $site_option;
+            }
+            self::$SITEOPTION = $site_option;
+        }
+        if( $key )
+        {
+            return isset($site_option[$key])?$site_option[$key]:null;
+        }
+
+        return $site_option;
     }
 }

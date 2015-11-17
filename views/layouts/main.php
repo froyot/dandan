@@ -23,6 +23,7 @@ $bundle = DefaultAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+
     <?php $this->head() ?>
 </head>
 <body>
@@ -31,7 +32,7 @@ $bundle = DefaultAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => Yii::$app->name,
+                'brandLabel' => ViewHelper::getSiteOption('site_name'),
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
@@ -82,8 +83,12 @@ $bundle = DefaultAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-            <p class="pull-right"><?= Yii::powered() ?></p>
+            <p class="pull-left">&copy; <?=ViewHelper::getSiteOption('copyright');?><?= date('Y') ?></p>
+            <p class="pull-right"><?=ViewHelper::getSiteOption('powerBy');?></p>
+
+        </div>
+        <div class="container">
+            <p class="pull"><?=ViewHelper::getSiteOption('site_icp');?></p>
         </div>
     </footer>
 

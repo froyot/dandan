@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace app\admin\controllers;
 use yii\base\Model;
 use Yii;
 use yii\web\ServerErrorHttpException;

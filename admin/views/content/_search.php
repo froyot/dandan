@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\admin\models\ContentForm */
+/* @var $model app\models\form\Content */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,12 +15,10 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, '_keyword',[]) ?>
-
+    <?= $form->field($model, '_keyword',['template'=> "{input}\n{hint}\n{error}","inputOptions"=>["placeholder"=>Yii::t('app','search keyword')]]) ?>
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(\Yii::t('app','search'), ['class' => 'btn btn-primary']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>
