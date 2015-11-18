@@ -138,20 +138,20 @@ class ViewHelper extends Model{
         $index_slide = Yii::$app->cacheManage->index_slide;
         if( !$index_slide )
         {
-            $index_slide = Slide::find()->where(['slide_cid'=>1])->all();
-            if( !$index_slide )
+            $slides = Slide::find()->where(['slide_cid'=>1])->all();
+            if( !$slides )
             {
                 $index_slide = Yii::$app->params['siteConf']['indexSlide'];
             }
             else
             {
                 $index_slide = [];
-                foreach($slide as $item)
+                foreach($slides as $item)
                 {
                     $index_slide[] = [
                         'img'=>$item->slide_pic,
                         'des'=>$item->slide_des,
-                        'url'=>Url::to(['post/view','id'=>$item->value])
+                        'url'=>Url::to(['post/view','id'=>$item->slide_value])
                     ];
                 }
 
