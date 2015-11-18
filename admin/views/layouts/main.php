@@ -111,6 +111,22 @@ $bundle = DefaultAsset::register($this);
                                   'active'=>Yii::$app->controller->id == 'term'?true:false,
                                   'url' => ['term/index'],
                               ],
+                              [
+                                  'label' => Yii::t('app','slide Manage'),
+                                  'items' => [
+                                       [
+                                       'label' => Yii::t('app','slide-cat'),
+                                       'url' => ['slide-cat/index'],
+                                       'active'=>Yii::$app->controller->id == 'slide-cat'?true:false,
+                                       ],
+                                       [
+                                       'label' => Yii::t('app','slide'),
+                                       'url' => ['slide/index'],
+                                       'active'=>Yii::$app->controller->id == 'slide'?true:false,
+                                       ],
+                                  ],
+
+                              ],
                           ],
                           'options'=>['id'=>'']
                       ]);

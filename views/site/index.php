@@ -3,6 +3,7 @@ use yii\web\View;
 use yii\helpers\Url;
 use app\assets\DefaultAsset;
 use app\models\util\ViewHelper;
+use app\common\widgets\PostWidget;
 
 /* @var $this yii\web\View */
 $this->title = ViewHelper::getSiteOption('site_seo_title');
@@ -43,19 +44,15 @@ $this->registerCss('
 ?>
 <ul id="homeslider" class="unstyled">
 
+    <?php foreach(ViewHelper::getIndexSlide() as $item):?>
+    <li>
+        <div class="caption-wraper">
+            <div class="caption"><?=$item['des'];?></div>
+        </div>
+        <a href="<?=$item['url'];?>"><img src="<?=$item['img'];?>" alt=""></a>
+    </li>
+    <?php endforeach;?>
 
-    <li>
-        <div class="caption-wraper">
-            <div class="caption">test</div>
-        </div>
-        <a href="http://www.baidu.com"><img src="http://imgs.focus.cn/upload/pics/37300/a_372997589.jpg" alt=""></a>
-    </li>
-    <li>
-        <div class="caption-wraper">
-            <div class="caption">test222</div>
-        </div>
-        <a href="http://www.baidu.com?rt=123"><img src="http://imgs.focus.cn/upload/pics/37300/b_372997586.jpg" alt=""></a>
-    </li>
 
 
 </ul>
@@ -97,6 +94,12 @@ $this->registerCss('
     <div>
         <h1 class="text-center">最新资讯</h1>
         <h3 class="text-center">Last News</h3>
+        <?php
+            echo PostWidget::widget([
+                'condition'=>['istop'=>1],
+                'order'=>['id desc']
+            ]);
+        ?>
     </div>
 </div>
 <?php

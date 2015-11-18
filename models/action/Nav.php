@@ -13,6 +13,9 @@ class Nav extends NavDb
     public $href_page;
     public $href_type;
 
+    const CAT_NAV = 1;
+    const PAGE_NAV = 2;
+    const DEFAULT_NAV = 0;
 
     public function rules()
     {
@@ -29,7 +32,7 @@ class Nav extends NavDb
     {
         if(!$this->hasErrors())
         {
-            if( $this->href_type == 0 )
+            if( $this->href_type == self::DEFAULT_NAV )
             {
                 if( $this->href_txt == '' )
                 {
@@ -37,23 +40,23 @@ class Nav extends NavDb
                 }
                 $this->href= $this->href_txt;
             }
-            elseif( $this->href_type == 1 )
+            elseif( $this->href_type == self::CAT_NAV )
             {
                 $this->href_cat = intval( $this->href_cat );
                 if( !$this->href_cat )
                 {
                     $this->addError('href_cat',Yii::t('app','not allow empty'));
                 }
-                $this->href= json_encode(['c'=>'post','a'=>'cat','p'=>['id'=>$this->href_cat]]);
+                $this->href= json_encode(['c'=>'post','a'=>'cat','p'=>['id'=>$this->href_cat],'t'=>self::CAT_NAV]);
             }
-            elseif( $this->href_type == 2 )
+            elseif( $this->href_type == self::PAGE_NAV )
             {
                 $this->href_page = intval( $this->href_page );
                 if( !$this->href_page )
                 {
                     $this->addError('href_page',Yii::t('app','not allow empty'));
                 }
-                $this->href= json_encode(['c'=>'page','a'=>'view','p'=>['id'=>$this->href_page]]);
+                $this->href= json_encode(['c'=>'post','a'=>'view','p'=>['id'=>$this->href_page],'t'=>self::PAGE_NAV]);
             }
         }
 
@@ -62,11 +65,13 @@ class Nav extends NavDb
     public function init()
     {
         parent::init();
+        $this->on(self::EVENT_AFTER_FIND,[$this,'afterDataFind']);
         $this->on(self::EVENT_BEFORE_VALIDATE, 'beforeValidate');
         $this->on(self::EVENT_AFTER_INSERT,[$this,'afterDataSave']);
         $this->on(self::EVENT_AFTER_UPDATE,[$this,'afterDataSave']);
         $this->on(self::EVENT_AFTER_DELETE,[$this,'afterDataDelete']);
     }
+
     public function attributeLabels()
     {
         $label = parent::attributeLabels();
@@ -77,6 +82,28 @@ class Nav extends NavDb
         return $label;
     }
 
+    public function afterDataFind( $event )
+    {
+        $href = json_decode($event->sender->href,true);
+        if( $href && is_array($href) && isset($href['t']))
+        {
+            if( $href['t'] == self::PAGE_NAV)
+            {
+                $this->href_type = self::PAGE_NAV;
+                $this->href_page = $href['p']['id'];
+            }
+            elseif( $href['t'] == self::CAT_NAV)
+            {
+                $this->href_type = self::CAT_NAV;
+                $this->href_cat= $href['p']['id'];
+            }
+        }
+        else
+        {
+            $this->href_type = self::DEFAULT_NAV;
+            $this->href_txt = $event->sender->href;
+        }
+    }
 
     public function afterDataSave( $event )
     {

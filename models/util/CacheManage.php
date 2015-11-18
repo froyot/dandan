@@ -11,7 +11,8 @@ use Yii;
 class CacheManage extends Model{
     public static $cache_key = [
         'site_menu' => 'site_menu',
-        'site_option'=>'site_option'
+        'site_option'=>'site_option',
+        'index_slide'=>'index_slide'
     ];
     public function __get( $name )
     {

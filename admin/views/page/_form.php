@@ -10,7 +10,7 @@ use app\models\util\Tree;
 
 <div class="post-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin($option); ?>
 
 
     <?= $form->field($model, 'post_title')->textInput(['maxlength' => true,'name'=>'post_title']) ?>

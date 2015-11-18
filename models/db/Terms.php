@@ -74,4 +74,9 @@ class Terms extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+
+    public static function getCategory( $id )
+    {
+        return self::findOne(['term_id'=>$id]);
+    }
 }

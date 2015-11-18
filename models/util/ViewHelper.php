@@ -8,6 +8,7 @@ use yii\base\Model;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use app\models\action\Option;
+use app\models\action\Slide;
 use Yii;
 
 class ViewHelper extends Model{
@@ -130,5 +131,33 @@ class ViewHelper extends Model{
         }
 
         return $site_option;
+    }
+
+    public static function getIndexSlide()
+    {
+        $index_slide = Yii::$app->cacheManage->index_slide;
+        if( !$index_slide )
+        {
+            $index_slide = Slide::find()->where(['slide_cid'=>1])->all();
+            if( !$index_slide )
+            {
+                $index_slide = Yii::$app->params['siteConf']['indexSlide'];
+            }
+            else
+            {
+                $index_slide = [];
+                foreach($slide as $item)
+                {
+                    $index_slide[] = [
+                        'img'=>$item->slide_pic,
+                        'des'=>$item->slide_des,
+                        'url'=>Url::to(['post/view','id'=>$item->value])
+                    ];
+                }
+
+            }
+            Yii::$app->cacheManage->index_slide = $index_slide;
+        }
+        return $index_slide;
     }
 }

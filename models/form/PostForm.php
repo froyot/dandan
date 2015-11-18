@@ -18,6 +18,7 @@ class PostForm extends Post
     public $_keywords;
     public $listorder;
     public $cat_name;
+    public $cat_id;
 
     public function attributes()
     {
@@ -30,7 +31,7 @@ class PostForm extends Post
     public function rules()
     {
         return [
-            [['id', 'post_author', 'post_status', 'comment_status', 'post_parent', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended'], 'integer'],
+            [['id', 'post_author', 'post_status', 'comment_status', 'post_parent', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended','cat_id'], 'integer'],
             ['post_type','string'],
             [['post_keywords', 'post_source', 'post_date', 'post_content', 'post_title', 'post_excerpt', 'post_modified', 'post_content_filtered', 'post_mime_type', 'smeta','_keywords'], 'safe'],
         ];
@@ -98,6 +99,12 @@ class PostForm extends Post
                                 ['like','post_content',$this->_keywords],
                                 ['like','post_excerpt',$this->_keywords],
                             ]);
+        $query->orderBy('post_date desc');
+        //过滤分类
+        if( $this->cat_id )
+        {
+             $query->andFilterWhere([$postExtraTbName.'.term_id'=>$this->cat_id]);
+        }
 
 
         $dataProvider->sort->attributes['cat_name'] = [

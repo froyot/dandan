@@ -163,4 +163,12 @@ class User extends UserDb implements \yii\web\IdentityInterface
         }
         return false;
     }
+
+    public function getNickName()
+    {
+        if( $this->user_nicename )
+            return $this->user_nicename;
+        else
+            return $this->user_login;
+    }
 }

@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'edit');
 <div class="post-update">
     <?= $this->render('_form', [
         'model' => $model,
+        'option'=>['action'=>['update','id'=>$model->id]]
     ]) ?>
 
 </div>

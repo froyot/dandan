@@ -10,7 +10,7 @@ use app\models\util\Tree;
 
 <div class="post-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin($option); ?>
 
     <?= $form->field($model, 'cat_id')->dropDownList(Tree::makeDropDown( [
             'model'=> 'app\models\action\term',
@@ -43,8 +43,8 @@ use app\models\util\Tree;
                                                 1=>Yii::t('app','deny')
                                             ],['name'=>'comment_status']) ?>
     <?= $form->field($model, 'istop')->radioList([
-                                                0=>Yii::t('app','top'),
-                                                1=>Yii::t('app','no top')
+                                                1=>Yii::t('app','top'),
+                                                0=>Yii::t('app','no top')
                                             ],['name'=>'istop']) ?>
     <?= $form->field($model, 'recommended')->radioList([
                                                 0=>Yii::t('app','recommend'),
