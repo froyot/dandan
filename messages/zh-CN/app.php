@@ -113,7 +113,31 @@ return[
     'role list'=>'角色列表',
     'permission'=>'权限',
     'user_role'=>'普通用户',
-    'admin_role'=>'管理员'
+    'admin_role'=>'管理员',
+
+    'site_name'=>'网站名称',
+    'site_icp'=>'备案信息',
+    'site_admin_email'=>'管理员邮箱',
+    'site_seo_title'=>'seo标题',
+    'site_seo_keywords'=>'seo关键字',
+    'site_tongji'=>'统计代码',
+    'site_seo_description'=>'seo 描述',
+    'comment_need_check'=>'评论是否需要审核',
+    'comment_time_interval'=>'评论间隔限制',
+
+    'Cat name'=>'分类',
+    'cat_idname'=>'分类码',
+    'cat_remark'=>'描述',
+    'cat_status'=>'状态',
+    'slide_id'=>'ID',
+    'slide_cid'=>'分类',
+    'slide_name'=>'名称',
+    'slide_pic'=>'图片',
+    'slide_type'=>'幻灯片类型',
+    'slide_value'=>'文章或页面ID',
+    'slide_des'=>'描述',
+    'slide_status'=>'状态',
+    'Slides'=>'幻灯片'
 
 
 

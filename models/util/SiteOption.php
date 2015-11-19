@@ -6,8 +6,6 @@ use Yii;
 
 class SiteOption extends Model{
     public $site_name;
-    public $site_host;
-    public $site_root;
     public $site_icp;
     public $site_admin_email;
     public $site_tongji;
@@ -22,12 +20,27 @@ class SiteOption extends Model{
     public function rules()
     {
         return[
-        [['site_name','site_host','site_root','site_icp','site_admin_email',
+        [['site_name','site_icp','site_admin_email',
           'site_tongji','site_copyright','site_seo_title','site_seo_keywords',
           'site_seo_description'],'string'],
         ['site_admin_email','email'],
         [['comment_need_check'],'in','range'=>[0,1]],
         [['comment_need_check','comment_time_interval'],'integer'],
+        ];
+    }
+    public function attributeLabels()
+    {
+        return [
+            'site_name' => Yii::t('app','site_name'),
+            'site_icp' => Yii::t('app','site_icp'),
+            'site_admin_email' => Yii::t('app','site_admin_email'),
+            'site_tongji' => Yii::t('app','site_tongji'),
+            'site_copyright' => Yii::t('app','site_copyright'),
+            'site_seo_title' => Yii::t('app','site_seo_title'),
+            'site_seo_keywords' => Yii::t('app','site_seo_keywords'),
+            'site_seo_description' => Yii::t('app','site_seo_description'),
+            'comment_need_check' => Yii::t('app','comment_need_check'),
+            'comment_time_interval' => Yii::t('app','comment_time_interval'),
         ];
     }
 

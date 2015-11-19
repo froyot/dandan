@@ -8,6 +8,10 @@ use yii\web\UploadedFile;
 
 class Slide extends SlideDb
 {
+    /**
+     * 添加文件验证
+     * @return [type] [description]
+     */
     public function rules()
     {
         return ArrayHelper::merge(parent::rules(),[
@@ -15,11 +19,52 @@ class Slide extends SlideDb
             ]);
     }
 
+    /**
+     * 绑定数据变更事件
+     * @return [type] [description]
+     */
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_AFTER_INSERT,[$this,'afterDataChange']);
+        $this->on(self::EVENT_AFTER_UPDATE,[$this,'afterDataChange']);
+        $this->on(self::EVENT_AFTER_DELETE,[$this,'afterDataChange']);
+    }
+
+    /**
+     * 数据变更操作
+     * @param  [type] $event [description]
+     * @return [type]        [description]
+     */
+    public function afterDataChange( $event )
+    {
+        Yii::$app->cacheManage->index_slide = null;
+    }
+
+    /**
+     * label语言使用语言包
+     * @return [type] [description]
+     */
+    public function attributeLabels()
+    {
+        $label = parent::attributeLabels();
+        foreach( $label as $key => $item )
+        {
+            $label[$key] = Yii::t('app',$key);
+        }
+        return $label;
+    }
+
+    /**
+     * 保存前数据处理
+     * @param  [type] $insert [description]
+     * @return [type]         [description]
+     */
     public function beforeSave( $insert )
     {
         if (parent::beforeSave($insert)) {
 
-            $image = UploadedFile::getInstance($this,'slide_pic');
+            $image = UploadedFile::getInstanceByName('slide_pic');
             if( $image )
             {
                 $ext = $image->getExtension();

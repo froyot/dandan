@@ -18,8 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'site_name')->textInput(['maxlength' => true,'name'=>'site_name']) ?>
-    <?= $form->field($model, 'site_host')->textInput(['maxlength' => true,'name'=>'site_host']) ?>
-    <?= $form->field($model, 'site_root')->textInput(['maxlength' => true,'name'=>'site_root']) ?>
     <?= $form->field($model, 'site_icp')->textInput(['name'=>'site_icp']) ?>
     <?= $form->field($model, 'site_admin_email')->textInput(['rows' => 6,'name'=>'site_admin_email']) ?>
     <?= $form->field($model, 'site_seo_title')->textInput(['name'=>'site_seo_title']) ?>

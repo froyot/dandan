@@ -18,8 +18,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
     <?= $this->render('_form', [
         'model' => $model,
-        'option'=>['action'=>['slide/update','id'=>$model->id],
-                   'option'=>['enctype' => 'multipart/form-data']]
+        'option'=>['action'=>['slide/update','id'=>$model->getPrimaryKey()],
+                   'options'=>['enctype' => 'multipart/form-data']]
     ]) ?>
 
 </div>

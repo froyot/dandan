@@ -83,7 +83,7 @@ class BaseController extends Controller
 
         if( Yii::$app->getRequest()->getIsPost() )
         {
-            $res = $model->load(Yii::$app->getRequest()->post());
+            $res = $model->load(Yii::$app->getRequest()->post(),'');
 
             if ( $model->save() )
             {
