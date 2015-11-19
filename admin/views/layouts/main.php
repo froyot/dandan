@@ -86,7 +86,7 @@ $bundle = DefaultAsset::register($this);
                                   'label' => Yii::t('app','setting'),
                                   'active'=>Yii::$app->controller->id == 'setting'?true:false,
                                   'items' => [
-                                       ['label' => Yii::t('app','siteSetting'), 'url' => '#'],
+                                       ['label' => Yii::t('app','siteSetting'), 'url' => ['setting/site']],
                                        ['label' => Yii::t('app','smtpSetting'), 'url' => '#'],
                                   ],
                               ],
@@ -125,7 +125,11 @@ $bundle = DefaultAsset::register($this);
                                        'active'=>Yii::$app->controller->id == 'slide'?true:false,
                                        ],
                                   ],
-
+                              ],
+                              [
+                                  'label' => Yii::t('app','Manage rbac'),
+                                   'url' => ['rbac/roles'],
+                                   'active'=>Yii::$app->controller->id == 'rbac'?true:false,
                               ],
                           ],
                           'options'=>['id'=>'']

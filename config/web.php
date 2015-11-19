@@ -79,8 +79,16 @@ $config = [
             require(__DIR__ . '/db.php'),
             require(__DIR__.'/db-local.php')
             ),
+        'authManager' => [
+            'class' => 'app\models\util\RbacDbManager',
+            'itemTable' => 'auth_item',
+            'itemChildTable' => 'auth_item_child',
+            'assignmentTable' => 'auth_assignment',
+            'ruleTable' => 'auth_rule',
+        ],
 
     ],
+
     'aliases' => [
         '@allon/yii2/ueditor' => '@app/tmp-extensions/yii2-ueditor/src',
     ],

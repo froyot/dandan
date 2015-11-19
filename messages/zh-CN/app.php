@@ -99,7 +99,22 @@ return[
     'page'=>'页面',
     'href type'=>'链接类型',
     'post list'=>'文章列表',
-    'search {_keywords}:'=>'搜索关键字{_keywords}'
+    'search {_keywords}:'=>'搜索关键字{_keywords}',
+
+    'slide Manage'=>'幻灯片管理',
+    'slide-cat'=>'幻灯片分类',
+    'slide'=>'幻灯片',
+    'update post'=>'更新文章',
+    'Create comment'=>'添加评论',
+    'Create post'=>'添加文章',
+    'Delete post'=>'删除文章',
+    'Init rbac'=>'初始化权限',
+    'Manage rbac'=>'管理权限',
+    'role list'=>'角色列表',
+    'permission'=>'权限',
+    'user_role'=>'普通用户',
+    'admin_role'=>'管理员'
+
 
 
 

@@ -26,7 +26,10 @@ array_merge(
             ['img'=>'http://bpic.588ku.com/back_pic/00/00/69/40/a17c0b224a1ed6a21597aa892f553c06.jpg!qianku1198',
             'des'=>'测试slide3',
             'url'=>'#'],
-
+        ],
+        'userRole'=>[
+            'admin'=>'admin',
+            'user'=>'user'
         ]
     ]
 
