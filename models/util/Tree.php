@@ -14,6 +14,7 @@ public $model;
 public $parentKey;
 public $primaryKey;
 public $rootParent;
+public $orderBy;
 
 public $tree = [];
 
@@ -27,7 +28,10 @@ private $data;
 
     private function getDatas()
     {
-        $this->data = $this->model->find()->all();
+        $query = $this->model->find();
+        if( $this->orderBy )
+            $query = $query->orderBy($this->orderBy);
+        $this->data = $query->all();
     }
 
     private function makeTree( $parent, $level = 0 )

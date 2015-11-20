@@ -15,6 +15,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $_description]);
 $this->registerMetaTag(['name' => 'description', 'content' => $_keywords]);
 $bundle->addPageCssFile($this,'css/slippry/slippry.css');
 $this->registerCss('
+
 .caption-wraper{position: absolute;left:50%;bottom:2em;}
             .caption-wraper .caption{
             position: relative;left:-50%;
@@ -58,49 +59,65 @@ $this->registerCss('
 </ul>
 <div>
     <div>
-        <h1 class="text-center">快速了解ThinkCMF</h1>
-        <h3 class="text-center">Quickly understand the ThinkCMF</h3>
+        <h1 class="text-center">了解我们的团队</h1>
+        <h3 class="text-center">Quickly Learn About Our Team</h3>
     </div>
     <div class="row">
          <div class="col-md-4">
-             <h2 class="font-large nospace"><i class="fa fa-bars"></i> MVC分层模式</h2>
-             <p>使用MVC应用程序被分成三个核心部件：模型（M）、视图（V）、控制器（C），他不是一个新的概念，只是ThinkCMF将其发挥到了极致。</p>
+             <h2 class="font-large nospace"><i class="fa fa-bars"></i> 资深开发--Allon</h2>
+             <p>研究生学历<br/>
+                3年从业经验，项目经历丰富<br/>
+                精通网站,Android App开发<br/>
+                负责内容:App 服务器开发，App后台开发
+            </p>
         </div>
         <div class="col-md-4">
-             <h2 class="font-large nospace"><i class="fa fa-group"></i> 用户管理</h2>
-             <p>ThinkCMF内置了灵活的用户管理方式，并可直接与第三方站点进行互联互通，如果你愿意甚至可以对单个用户或群体用户的行为进行记录及分享，为您的运营决策提供有效参考数据。</p>
+             <h2 class="font-large nospace"><i class="fa fa-group"></i> 成熟大叔--鑫哥</h2>
+             <p>研究生学历<br/>
+                项目经历丰富<br/>
+                精通嵌入式，Android开发<br/>
+                负责内容:App，嵌入式开发
+            </p>
         </div>
         <div class="col-md-4">
-              <h2 class="font-large nospace"><i class="fa fa-cloud"></i> 云端部署</h2>
-              <p>通过驱动的方式可以轻松支持云平台的部署，让你的网站无缝迁移，内置已经支持SAE、BAE，正式版将对云端部署进行进一步优化。</p>
+              <h2 class="font-large nospace "><i class="fa fa-cloud"></i>资深PM--刘姐</h2>
+              <p>研究生学历<br/>
+                现工作于高德<br/>
+                精通产品功能分析设计<br/>
+                负责内容:产品功能分析，进度把控
+            </p>
         </div>
     </div>
-
-    <div class="row">
+    <div class="row boder-bottom">
         <div class="col-md-4">
-             <h2 class="font-large nospace"><i class="fa fa-heart"></i> 安全策略</h2>
-             <p>提供的稳健的安全策略，包括备份恢复，容错，防治恶意攻击登陆，网页防篡改等多项安全管理功能，保证系统安全，可靠，稳定的运行。</p>
-        </div>
-        <div class="col-md-4">
-             <h2 class="font-large nospace"><i class="fa fa-cubes"></i> 应用模块化</h2>
-             <p>提出全新的应用模式进行扩展，不管是你开发一个小功能还是一个全新的站点，在ThinkCMF中你只是增加了一个APP，每个独立运行互不影响，便于灵活扩展和二次开发。</p>
-        </div>
-        <div class="col-md-4">
-              <h2 class="font-large nospace"><i class="fa fa-certificate"></i> 免费开源</h2>
-              <p>代码遵循Apache2开源协议，免费使用，对商业用户也无任何限制。</p>
+              <h2 class="font-large nospace"><i class="fa fa-cloud"></i>专业测试--立立</h2>
+              <p>研究生学历<br/>
+                现工作于阿尔卡特,朗讯<br/>
+                精通产品测试<br/>
+                负责内容:对产品测试
+            </p>
         </div>
     </div>
-
     <div>
-        <h1 class="text-center">最新资讯</h1>
-        <h3 class="text-center">Last News</h3>
-        <?php
-            echo PostWidget::widget([
-                'condition'=>['istop'=>1],
-                'order'=>['id desc']
-            ]);
-        ?>
+        <h1 class="text-center">服务领域</h1>
     </div>
+    <div class="row boder-bottom">
+        <div class="col-md-4">
+              <h2 class="font-large nospace text-center"><i class="fa fa-cloud"></i>电子商务</h2>
+              <div class="text-center"><img src="/images/dianzishangwu.png" style="width:14em;height:14em;"></div>
+        </div>
+        <div class="col-md-4">
+              <h2 class="font-large nospace text-center"><i class="fa fa-cloud"></i>教育</h2>
+              <div class="text-center"><img src="/images/jiaoyu.jpg" style="width:14em;height:14em;"></div>
+        </div>
+        <div class="col-md-4">
+              <h2 class="font-large nospace text-center"><i class="fa fa-cloud"></i>农业</h2>
+              <div class="text-center"><img src="/images/nongye.png" style="width:14em;height:14em;"></div>
+        </div>
+    </div>
+        <br/>
+
+
 </div>
 <?php
 $bundle->addPageScript($this,'js/slippry.min.js');

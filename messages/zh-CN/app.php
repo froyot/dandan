@@ -137,7 +137,11 @@ return[
     'slide_value'=>'文章或页面ID',
     'slide_des'=>'描述',
     'slide_status'=>'状态',
-    'Slides'=>'幻灯片'
+    'Slides'=>'幻灯片',
+    'connect to admin'=>'联系站长',
+    'author'=>'作者',
+    'Date'=>'日期',
+    'comment list'=>'评论列表',
 
 
 

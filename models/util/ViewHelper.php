@@ -27,7 +27,8 @@ class ViewHelper extends Model{
                 'model'=> 'app\models\action\Nav',
                 'parentKey'=>'parentid',
                 'primaryKey'=>'id',
-                'rootParent'=>0
+                'rootParent'=>0,
+                'orderBy'=>'listorder desc'
             ];
             $obj = new Tree( $config );
             $tree = $obj->getTree(true);

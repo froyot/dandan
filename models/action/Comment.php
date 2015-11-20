@@ -9,7 +9,7 @@ class Comment extends CommentDb
     {
         return ArrayHelper::merge(parent::rules(),[
                 [['full_name','email'],'required','on'=>'guest'],
-                [['udi'],'required','on'=>'user'],
+                [['uid'],'required','on'=>'user'],
                 ['email','email']
             ]);
     }

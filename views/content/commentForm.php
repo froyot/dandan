@@ -8,7 +8,8 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 ?>
-<?php $form = ActiveForm::begin(['id'=>$model->formName()]);?>
+<?php \yii\widgets\Pjax::begin();?>
+<?php $form = ActiveForm::begin(['id'=>$model->formName(),'action'=>['post/add-comment']]);?>
 
 <?=$form->field($model, 'content')->textarea(['rows' => 6,'name'=>'content'])->label('comment content');?>
 
@@ -19,4 +20,6 @@ use yii\widgets\ActiveForm;
 <?php endif;?>
 <?=Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']);
 ?>
+ <?php ActiveForm::end(); ?>
+<?php \yii\widgets\Pjax::end();?>
 

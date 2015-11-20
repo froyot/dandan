@@ -15,7 +15,7 @@ body {
 }
 
 .footer {
-    height: 60px;
+    height: 7em;
     background-color: #f5f5f5;
     border-top: 1px solid #ddd;
     padding-top: 20px;
@@ -88,4 +88,22 @@ a.desc:after {
     border-left: 3px solid #eed3d7;
     padding: 10px 20px;
     margin: 0 0 15px 0;
+}
+.boder-bottom{
+    border-bottom: 1px solid #c4c4c4;
+    padding-bottom: 2em;
+    margin-bottom: 2em;
+}
+.content-item .other-info{
+    margin:0.5em 0px;
+
+}
+.content-item .other-info label{
+    font-weight: normal;
+}
+.content-item .other-info .author{
+    margin-right: 2em;
+}
+.comment{
+    margin-top:2em;
 }

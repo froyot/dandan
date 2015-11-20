@@ -11,8 +11,6 @@ $this->title = Yii::t('app', 'Slides');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="slide-index">
-
-
     <?php  echo $this->render('/public/_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([

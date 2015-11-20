@@ -6,6 +6,7 @@ array_merge(
     'adminEmail' => 'admin@example.com',
     'uploadPath'=>'./upload/',
     'siteConf' =>[
+        'site_admin_email'=>'1035308417@qq.com',
         'site_name'=>'DanDan CMS',
         'site_icp'=>'',
         'site_seo_title'=>'DanDan CMS, Yii2 CMS',

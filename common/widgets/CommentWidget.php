@@ -7,14 +7,14 @@ use app\models\action\Comment;
 use app\models\action\User;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use app\models\form\CommentForm;
+use yii\helpers\ArrayHelper;
 use Yii;
 class CommentWidget extends Widget
 {
 
-    public $commentUrl;
-    public $postId;
+    public $postId;//文章id
     public $postTable;
-    private $renderContent;
     public $options = [];
 
     public function init()
@@ -30,38 +30,28 @@ class CommentWidget extends Widget
      */
     public function run()
     {
+        //判断评论是否采用本站评论
+
         $comments = $this->renderItems();
-        return $comments.$this->renderCommentContent();
+        \yii\widgets\Pjax::begin();
+        echo $comments;
+        \yii\widgets\Pjax::end();
+        echo $this->renderCommentInputer();
     }
 
-    public function renderItems( $parent = 0, $parentUser = null)
+    public function renderItems()
     {
-        $cmTbl = Comment::tableName();
-        $userTbl = User::tableName();
-        $comments = Comment::find()->where([
-            $cmTbl.'.post_table'=>$this->postTable,
-            $cmTbl.'.post_id'=>$this->postId,
-            $cmTbl.'.parentid'=>$parent
-            ])
-            ->joinWith(['user'])->orderBy($cmTbl.'.createTime desc')->all();
-        $str =  '';
-        foreach( $comments as $comment)
-        {
-            $str .= $this->render('/content/commentItem',[
-                                'model'=>$comment,
-                                'parentUser'=>$parentUser
-                            ]);
-            $str .= $this->renderItems( $comment->id, $comment->user );
-        }
-        return $str;
+        $commentForm = new CommentForm();
+        $data['post_id'] = $this->postId;
+        $listDataProvider = $commentForm->search($data);
+
+        return '<div class="comment"><div>'.Yii::t('app','comment list').'</div>'.$this->render('/content/commentList',['dataProvider'=>$listDataProvider]).'</div>';
     }
 
-    public function renderCommentContent()
+    public function renderCommentInputer()
     {
         $model = new Comment();
         $model->post_id = $this->postId;
-        return $this->render('/content/commentForm',['model'=>$model,'commentUrl'=>$this->commentUrl]);
-        // $str .= ActiveForm::end();
-       // return $str;
+        return $this->render('/content/commentForm',['model'=>$model]);
     }
 }

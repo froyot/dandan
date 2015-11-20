@@ -19,7 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 
 echo CommentWidget::widget([
-    'commentUrl'=>Url::to(['post/add-comment']),
     'postId'=>$post->id,
     'postTable'=>'posts'
 ]);
