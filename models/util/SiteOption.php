@@ -17,6 +17,10 @@ class SiteOption extends Model{
     public $comment_need_check;
     public $comment_time_interval;
 
+    public $comment_type;//评论类型
+    public $comment_appid;
+    public $comment_appkey;
+
     public function rules()
     {
         return[
@@ -26,7 +30,27 @@ class SiteOption extends Model{
         ['site_admin_email','email'],
         [['comment_need_check'],'in','range'=>[0,1]],
         [['comment_need_check','comment_time_interval'],'integer'],
+        ['comment_type','in','range'=>[0,1,2]],
+        [['comment_appid','comment_appkey','comment_type'],'validateOtherComment'],
         ];
+    }
+
+    public function validateOtherComment( $attribute, $params )
+    {
+        if( !$this->hasErrors() )
+        {
+            if($this->comment_type !=0 )
+            {
+                if( !$this->comment_appid )
+                {
+                    $this->addError('comment_appid', 'not allow empty');
+                }
+                if( !$this->comment_appkey )
+                {
+                    $this->addError('comment_appkey', 'not allow empty');
+                }
+            }
+        }
     }
     public function attributeLabels()
     {
@@ -41,6 +65,9 @@ class SiteOption extends Model{
             'site_seo_description' => Yii::t('app','site_seo_description'),
             'comment_need_check' => Yii::t('app','comment_need_check'),
             'comment_time_interval' => Yii::t('app','comment_time_interval'),
+            'comment_type'=>'评论系统',
+            'comment_appid'=>'评论AppId',
+            'comment_appkey'=>'评论Key'
         ];
     }
 

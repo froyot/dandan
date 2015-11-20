@@ -134,6 +134,7 @@ class ViewHelper extends Model{
         return $site_option;
     }
 
+
     public static function getIndexSlide()
     {
         $index_slide = Yii::$app->cacheManage->index_slide;

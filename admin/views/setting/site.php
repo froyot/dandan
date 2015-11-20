@@ -26,6 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'site_seo_description')->textarea(['rows' => 6,'name'=>'site_seo_description']) ?>
     <?= $form->field($model, 'comment_need_check')->checkbox(['name'=>'comment_need_check']) ?>
     <?= $form->field($model, 'comment_time_interval')->textInput(['name'=>'comment_time_interval']) ?>
+    <?= $form->field($model, 'comment_type')->dropDownList([
+                                                0=>Yii::t('app','site comment'),
+                                                1=>Yii::t('app','shoucs comment'),
+                                                ]
+                                                ,['name'=>'comment_type']) ?>
+    <?= $form->field($model, 'comment_appid')->textInput(['name'=>'comment_appid']) ?>
+    <?= $form->field($model, 'comment_appkey')->textInput(['name'=>'comment_appkey']) ?>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class'=>'btn btn-primary']) ?>
     </div>

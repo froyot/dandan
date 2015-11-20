@@ -9,6 +9,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use app\models\form\CommentForm;
 use yii\helpers\ArrayHelper;
+use app\models\util\ViewHelper;
 use Yii;
 class CommentWidget extends Widget
 {
@@ -31,12 +32,27 @@ class CommentWidget extends Widget
     public function run()
     {
         //判断评论是否采用本站评论
+        if( ViewHelper::getSiteOption('comment_type') == 0)
+        {
+            $comments = $this->renderItems();
+            \yii\widgets\Pjax::begin();
+            echo $comments;
+            \yii\widgets\Pjax::end();
+            echo $this->renderCommentInputer();
+        }
+        elseif(ViewHelper::getSiteOption('comment_type') == 1)
+        {
+            echo '<div id="SOHUCS" sid="'.$this->postId.'" ></div>';
+            $this->getView()->registerJsFile('http://changyan.sohu.com/upload/changyan.js');
+            $this->getView()->registerJs('
+                    window._config = { showScore: true };
+                    window.changyan.api.config({
+                        appid: "'.ViewHelper::getSiteOption('comment_appid').'",
+                        conf: "'.ViewHelper::getSiteOption('commet_key').'"
+                    });
+            ');
+        }
 
-        $comments = $this->renderItems();
-        \yii\widgets\Pjax::begin();
-        echo $comments;
-        \yii\widgets\Pjax::end();
-        echo $this->renderCommentInputer();
     }
 
     public function renderItems()

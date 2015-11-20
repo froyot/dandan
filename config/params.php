@@ -16,6 +16,7 @@ array_merge(
         'comment_time_interval'=>100,
         'copyright'=>'<a href="http://froyot.github.io" target="_blank">Allon</a>2014-',
         'powerBy'=>' Power By Allon with YiiFramwork ',
+        'comment_type'=>1,//0本站，1畅言，2
 
         'indexSlide'=>[
             ['img'=>'http://bpic.588ku.com/back_pic/00/01/77/51/6adf978d27fc92e165a5be81395d366f.jpg',

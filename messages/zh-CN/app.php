@@ -145,7 +145,9 @@ return[
     'you comment too faster'=>'您评论太频繁了',
     'comment_content'=>'评论内容',
     'full_name'=>'名称',
-    'email'=>'邮箱'
+    'email'=>'邮箱',
+    'site comment'=>'站内评论',
+    'shoucs comment'=>'畅言'
 
 
 
