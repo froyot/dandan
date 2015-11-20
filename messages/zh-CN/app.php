@@ -142,6 +142,10 @@ return[
     'author'=>'作者',
     'Date'=>'日期',
     'comment list'=>'评论列表',
+    'you comment too faster'=>'您评论太频繁了',
+    'comment_content'=>'评论内容',
+    'full_name'=>'名称',
+    'email'=>'邮箱'
 
 
 

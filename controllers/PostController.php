@@ -112,7 +112,7 @@ class PostController  extends Controller
     //添加评论
     public function actionAddComment()
     {
-
+            \Yii::$app->response->format = Response::FORMAT_JSON;
             $model = new Comment();
             $model->post_table = 'posts';
             $model->load(Yii::$app->request->post(),'');
@@ -128,12 +128,35 @@ class PostController  extends Controller
             if( $model->validate() && $model->save() )
             {
 
+                return ['success'=>true];
             }
             else
             {
-
+                 return $this->renderAjax('/content/commentForm', [
+                    'model' => $model,
+                ]);
             }
             return $this->redirect(['view','id'=>$model->post_id]);
+    }
+
+    public function actionValidateComment()
+    {
+        if (Yii::$app->request->isPost ) {
+            $model = new Comment();
+            $model->post_table = 'posts';
+            $model->load(Yii::$app->request->post(),'');
+            if( Yii::$app->user->isGuest )
+            {
+                $model->scenario = 'guest';
+            }
+            else
+            {
+                $model->scenario = 'user';
+                $model->uid = Yii::$app->user->id;
+            }
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
     }
 
 }

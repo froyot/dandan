@@ -44,7 +44,7 @@ class CommentWidget extends Widget
         $commentForm = new CommentForm();
         $data['post_id'] = $this->postId;
         $listDataProvider = $commentForm->search($data);
-
+        $listDataProvider->pagination->setPageSize(5);
         return '<div class="comment"><div>'.Yii::t('app','comment list').'</div>'.$this->render('/content/commentList',['dataProvider'=>$listDataProvider]).'</div>';
     }
 

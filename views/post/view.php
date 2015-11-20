@@ -14,6 +14,12 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'post list'), 'url' =
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="post-page-view">
+    <?php if($post->post_type == 'post'):?>
+        <p style="TEXT-ALIGN: center" align="center"><font size="3"><b><?=$post->post_title;?></b><span lang="EN-US" xml:lang="EN-US">&nbsp;<wbr></span></font></p>
+
+        <p style="TEXT-ALIGN: center" align="center"><font size="3"><?=$post->author->user_login;?>
+            <?php if($post->post_source):?>／<?=$post->post_source;?><?php endif;?><span lang="EN-US" xml:lang="EN-US">&nbsp;<wbr></span></font></p>
+    <?php endif;?>
     <?=$post->post_content;?>
 </div>
 <?php

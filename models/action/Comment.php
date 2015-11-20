@@ -2,7 +2,7 @@
 namespace app\models\action;
 use app\models\db\Comments as CommentDb;
 use yii\helpers\ArrayHelper;
-
+use Yii;
 class Comment extends CommentDb
 {
     public function rules()
@@ -10,11 +10,54 @@ class Comment extends CommentDb
         return ArrayHelper::merge(parent::rules(),[
                 [['full_name','email'],'required','on'=>'guest'],
                 [['uid'],'required','on'=>'user'],
-                ['email','email']
+                ['email','email'],
+                [['content'],'validateFrequence'],//验证频率
+                ['createtime','default','value'=>date('Y-m-d H:i:s')],
+                ['post_table','default','value'=>'post'],
             ]);
+    }
+    public function attributeLabels()
+    {
+        $label = parent::attributeLabels();
+        foreach( $label as $key => $item )
+        {
+            $label[$key] = Yii::t('app',$key);
+        }
+        return $label;
     }
     public function getUser()
     {
         return $this->hasOne(User::className(),['id'=>'uid']);
+    }
+
+    public function validateFrequence($attribute, $params)
+    {
+        if( !$this->hasErrors() )
+        {
+            if($this->uid)
+            {
+                $map = ['uid'=>$this->uid];
+            }
+            else
+            {
+                $map = ['email'=>$this->email];
+            }
+            $map['post_id'] = $this->post_id;
+
+            $lastComment = Comment::find()
+            ->where($map)
+            ->orderBy('createtime desc')
+            ->select(['createtime'])
+            ->one();
+            if( $lastComment )
+            {
+                $siteOption = Yii::$app->cacheManage->site_option;
+                $commentInterval = $siteOption['comment_time_interval'];
+                if( time() - strtotime($lastComment->createtime) < $commentInterval )
+                {
+                    $this->addError('content',Yii::t('app','you comment too faster'));
+                }
+            }
+        }
     }
 }
