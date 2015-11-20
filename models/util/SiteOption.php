@@ -21,17 +21,24 @@ class SiteOption extends Model{
     public $comment_appid;
     public $comment_appkey;
 
+    public $smtp_username;
+    public $smtp_password;
+    public $smtp_port;
+    public $smtp_host;
+    public $smtp_label;
+
     public function rules()
     {
         return[
         [['site_name','site_icp','site_admin_email',
           'site_tongji','site_copyright','site_seo_title','site_seo_keywords',
-          'site_seo_description'],'string'],
-        ['site_admin_email','email'],
+          'site_seo_description','smtp_password','smtp_label','smtp_host'],'string'],
+        [['site_admin_email','smtp_username'],'email'],
         [['comment_need_check'],'in','range'=>[0,1]],
-        [['comment_need_check','comment_time_interval'],'integer'],
+        [['comment_need_check','comment_time_interval','smtp_port'],'integer'],
         ['comment_type','in','range'=>[0,1,2]],
         [['comment_appid','comment_appkey','comment_type'],'validateOtherComment'],
+
         ];
     }
 
@@ -67,7 +74,12 @@ class SiteOption extends Model{
             'comment_time_interval' => Yii::t('app','comment_time_interval'),
             'comment_type'=>'评论系统',
             'comment_appid'=>'评论AppId',
-            'comment_appkey'=>'评论Key'
+            'comment_appkey'=>'评论Key',
+            'smtp_username'=>'注册邮件发送邮箱',
+            'smtp_password'=>'邮箱密码',
+            'smtp_port'=>'端口',
+            'stmm_label'=>'发信人昵称',
+            'smtp_host'=>'发信服务器'
         ];
     }
 

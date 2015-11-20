@@ -16,7 +16,6 @@ $config = [
             'social' => [
                 // the module class
                 'class' => 'kartik\social\Module',
-
                 // the global settings for the disqus widget
                 'disqus' => [
                     'settings' => ['shortname' => 'dandancms'] // default settings
@@ -40,26 +39,7 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => false,
-            'transport' => [
-               'class' => 'Swift_SmtpTransport',
-               'host' => 'smtp.sina.com',  //每种邮箱的host配置不一样
-               'username' => 'inwatch_mail@sina.com',
-               'password' => 'inwatch',
-               'port' => '25',
-               'encryption' => 'tls',
 
-                           ],
-            'messageConfig'=>[
-               'charset'=>'UTF-8',
-               'from'=>['inwatch_mail@sina.com'=>'admin']
-               ],
-        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

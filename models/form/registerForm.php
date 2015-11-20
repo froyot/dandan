@@ -9,7 +9,7 @@ use yii\base\Event;
 
 use app\compoments\EventHandler;
 use app\compoments\MyEvent;
-
+use app\models\util\Mailer;
 /**
  * LoginForm is the model behind the login form.
  */
@@ -67,7 +67,7 @@ class RegisterForm extends Model
     {
         if( !$this->hasErrors() )
         {
-            if( User::checkEmailExist( $this->username ) )
+            if( User::checkEmailExist( $this->email ) )
             {
                 $this->addError( $attribute, Yii::t( 'app','email exist' ) );
 

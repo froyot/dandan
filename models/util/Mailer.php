@@ -13,7 +13,26 @@ class Mailer extends Model{
     public function init()
     {
         parent::init();
-        $this->mail = Yii::$app->mailer->compose();
+        $config = [
+            'useFileTransport' => true,
+            'messageConfig'=>[
+               'charset'=>'UTF-8',
+               'from'=>[
+                        ViewHelper::getSiteOption('smtp_username') =>
+                        ViewHelper::getSiteOption('smtp_label')
+                    ]
+               ],
+        ];
+        $mailer = Yii::createObject('yii\swiftmailer\Mailer',$config);
+        $mailer->setTransport([
+               'class' => 'Swift_SmtpTransport',
+               'host' => ViewHelper::getSiteOption('smtp_host'),  //每种邮箱的host配置不一样
+               'username' => ViewHelper::getSiteOption('smtp_username'),
+               'password' => ViewHelper::getSiteOption('smtp_password'),
+               'port' => ViewHelper::getSiteOption('smtp_port'),
+               'encryption' => 'tls',
+            ]);
+        $this->mail = $mailer->compose();
     }
 
     /**
@@ -25,6 +44,10 @@ class Mailer extends Model{
      */
     public function sendRegisterMail( $email, $username, $code )
     {
+        if(!$this->mail)
+        {
+            return;
+        }
         Yii::trace('sendRegisterMail send mail');
         $this->mail->setTo( $email );
         $this->mail->setSubject( Yii::t('app','active email') );
@@ -34,13 +57,15 @@ class Mailer extends Model{
             Yii::$app->request->hostInfo.Url::to(['site/active','code'=>$code]).
             '">'.Yii::t('app','link').'</a>,'.Yii::t('app','or_copy_link').':'.Yii::$app->request->hostInfo.Url::to(['site/active','code'=>$code])
         );    //发布可以带html标签的文本
+        set_time_limit(30);
         if( $this->mail->send() )
         {
+            Yii::trace('sendRegisterMail send mail ok');
             return true;
         }
         else
         {
-            Yii::error($this->mail->errors);
+            Yii::error('sendRegisterMail send mail error');
             return false;
         }
 

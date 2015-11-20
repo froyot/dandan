@@ -87,10 +87,11 @@ class SiteController extends Controller
         $model = new RegisterForm();
         if ( $model->load(Yii::$app->request->post()) )
         {
-            switch( $model->register() )
+            $res = $model->register();
+            switch( $res )
             {
-                case 1: $this->goHome();return;break;
-                case 0: $this->goHome();
+                case 1: return $this->goHome();
+                case 0: return  $this->goHome();
             }
         }
         return $this->render('register', [

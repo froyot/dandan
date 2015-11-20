@@ -33,6 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ,['name'=>'comment_type']) ?>
     <?= $form->field($model, 'comment_appid')->textInput(['name'=>'comment_appid']) ?>
     <?= $form->field($model, 'comment_appkey')->textInput(['name'=>'comment_appkey']) ?>
+
+    <?= $form->field($model, 'smtp_host')->textInput(['name'=>'smtp_host']) ?>
+    <?= $form->field($model, 'smtp_username')->textInput(['name'=>'smtp_username']) ?>
+    <?= $form->field($model, 'smtp_password')->textInput(['name'=>'smtp_password']) ?>
+    <?= $form->field($model, 'smtp_port')->textInput(['name'=>'smtp_port']) ?>
+    <?= $form->field($model, 'smtp_label')->textInput(['name'=>'smtp_label']) ?>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Update'), ['class'=>'btn btn-primary']) ?>
     </div>

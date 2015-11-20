@@ -151,12 +151,20 @@ $bundle = DefaultAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; <?=ViewHelper::getSiteOption('copyright');?><?= date('Y') ?></p>
+            <p class="pull-left">&copy; <?=ViewHelper::getSiteOption('copyright');?><?= date('Y') ?>
+                &nbsp;&nbsp;&nbsp;<?php if(ViewHelper::getSiteOption('site_admin_email')):?>
+                <?=Yii::t('app','connect to admin');?><a href="mailto:<?=ViewHelper::getSiteOption('site_admin_email');?>"><?=ViewHelper::getSiteOption('site_admin_email');?></a><?php endif;?>
+            </p>
             <p class="pull-right"><?=ViewHelper::getSiteOption('powerBy');?></p>
 
         </div>
         <div class="container">
-            <p class="pull"><?=ViewHelper::getSiteOption('site_icp');?></p>
+
+            <p class="pull">
+                <?php if(ViewHelper::getSiteOption('site_tongji')):?>
+                <?=ViewHelper::getSiteOption('site_tongji');?>
+                <?php endif;?>
+                <?=ViewHelper::getSiteOption('site_icp');?></p>
         </div>
     </footer>
 

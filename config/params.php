@@ -18,6 +18,12 @@ array_merge(
         'powerBy'=>' Power By Allon with YiiFramwork ',
         'comment_type'=>1,//0本站，1畅言，2
 
+        'stmp_host'=>'test@qq.com',
+        'stmp_username'=>'test',
+        'stmp_password'=>'xxxxxxx',
+        'stmp_port'=>'21',
+        'stmp_label'=>'admin',
+
         'indexSlide'=>[
             ['img'=>'http://bpic.588ku.com/back_pic/00/01/77/51/6adf978d27fc92e165a5be81395d366f.jpg',
             'des'=>'测试slide1',
