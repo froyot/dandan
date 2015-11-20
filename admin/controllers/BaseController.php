@@ -13,11 +13,55 @@ use yii\helpers\ArrayHelper;
 
 class BaseController extends Controller
 {
+    /**
+     * 模板设定
+     * @var string
+     */
     public $layout = 'main';
+    /**
+     * @var string the model class name. This property must be set.
+     */
+
+    /**
+     * 当前操作类
+     * @var [type]
+     */
+    public $modelClass;
+
+    /**
+     * 当前搜索类
+     * @var [type]
+     */
+    public $modelFormClass;
+
+    /**
+     * 获取的对象
+     * @var [type]
+     */
+    public $findModel;
+
+    /**
+     * 额外搜索添加
+     * @var array
+     */
     protected $addParams = [];
+
+    /**
+     * 插入场景
+     * @var [type]
+     */
     public static $SCENARIO_INSERT = Model::SCENARIO_DEFAULT;
+
+    /**
+     * 数据更新场景
+     * @var [type]
+     */
     public static $SCENARIO_UPDATE = Model::SCENARIO_DEFAULT;
 
+    /**
+     * 登陆验证
+     * @return [type] [description]
+     */
     public function behaviors()
     {
         return [
@@ -37,19 +81,17 @@ class BaseController extends Controller
             ],
         ];
     }
-    /**
-     * @var string the model class name. This property must be set.
-     */
-    public $modelClass;
-    public $modelFormClass;
-    public $findModel;
+
 
     /**
-     * @inheritdoc
+     * 验证modelClass,FormClass是否设置
      */
     public function init()
     {
         parent::init();
+        if ($this->modelFormClass === null) {
+            throw new InvalidConfigException('The "modelFormClass" property must be set.');
+        }
         if ($this->modelClass === null) {
             throw new InvalidConfigException('The "modelClass" property must be set.');
         }
@@ -162,6 +204,11 @@ class BaseController extends Controller
         return $this->afterUpdate( $model );
     }
 
+    /**
+     * 根据主键获取模型
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
     private function findModel($id)
     {
         if ($this->findModel !== null) {

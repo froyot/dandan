@@ -72,14 +72,14 @@ class SiteOption extends Model{
             'site_seo_description' => Yii::t('app','site_seo_description'),
             'comment_need_check' => Yii::t('app','comment_need_check'),
             'comment_time_interval' => Yii::t('app','comment_time_interval'),
-            'comment_type'=>'评论系统',
-            'comment_appid'=>'评论AppId',
-            'comment_appkey'=>'评论Key',
-            'smtp_username'=>'注册邮件发送邮箱',
-            'smtp_password'=>'邮箱密码',
-            'smtp_port'=>'端口',
-            'stmm_label'=>'发信人昵称',
-            'smtp_host'=>'发信服务器'
+            'comment_type'=>Yii::t('app','comment_type'),
+            'comment_appid'=>Yii::t('app','comment_appid'),
+            'comment_appkey'=>Yii::t('app','comment_appkey'),
+            'smtp_username'=>Yii::t('app','smtp_username'),
+            'smtp_password'=>Yii::t('app','smtp_password'),
+            'smtp_port'=>Yii::t('app','smtp_port'),
+            'stmm_label'=>Yii::t('app','stmm_label'),
+            'smtp_host'=>Yii::t('app','smtp_host'),
         ];
     }
 
