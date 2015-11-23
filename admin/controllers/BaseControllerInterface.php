@@ -2,17 +2,13 @@
 
 namespace app\admin\controllers;
 
-use Yii;
+interface BaseControllerInterface {
 
+    function afterCreate($model);
 
-interface BaseControllerInterface
-{
+    function afterUpdate($model);
 
-     function afterCreate( $model );
+    function afterDelete($model);
 
-     function afterUpdate( $model );
-
-     function afterDelete( $model );
-
-     function beforeRenderEdit( &$model );
+    function beforeRenderEdit(&$model);
 }

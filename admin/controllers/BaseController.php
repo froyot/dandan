@@ -3,16 +3,14 @@
 namespace app\admin\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
-use yii\web\ForbiddenHttpException;
-use yii\web\ServerErrorHttpException;
-use yii\web\Controller;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
+use yii\web\Controller;
+use yii\web\ServerErrorHttpException;
 
-class BaseController extends Controller
-{
+class BaseController extends Controller {
     /**
      * 模板设定
      * @var string
@@ -45,7 +43,6 @@ class BaseController extends Controller
      * @var array
      */
     protected $addParams = [];
-
     /**
      * 插入场景
      * @var [type]
@@ -62,14 +59,13 @@ class BaseController extends Controller
      * 登陆验证
      * @return [type] [description]
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index','view'],
+                        'actions' => ['index', 'view'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -82,12 +78,10 @@ class BaseController extends Controller
         ];
     }
 
-
     /**
      * 验证modelClass,FormClass是否设置
      */
-    public function init()
-    {
+    public function init() {
         parent::init();
         if ($this->modelFormClass === null) {
             throw new InvalidConfigException('The "modelFormClass" property must be set.');
@@ -101,44 +95,38 @@ class BaseController extends Controller
      * 首页列表数据
      * @return [type] [description]
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = Yii::createObject($this->modelFormClass);
         $dataProvider = $searchModel->search(
-            ArrayHelper::merge(Yii::$app->request->queryParams,$this->addParams));
-        return $this->render('index',[
-                                    'dataProvider'=>$dataProvider,
-                                    'searchModel'=>$searchModel
-                                    ]
-                            );
+            ArrayHelper::merge(Yii::$app->request->queryParams, $this->addParams));
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+        ]
+        );
     }
 
     /**
      * 创建数据
      * @return [type] [description]
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new $this->modelClass([
             'scenario' => static::$SCENARIO_INSERT,
         ]);
 
-        if( Yii::$app->getRequest()->getIsPost() )
-        {
-            $res = $model->load(Yii::$app->getRequest()->post(),'');
+        if (Yii::$app->getRequest()->getIsPost()) {
+            $res = $model->load(Yii::$app->getRequest()->post(), '');
 
-            if ( $model->save() )
-            {
-               return $this->afterCreate( $model );
-            }
-            elseif (!$model->hasErrors())
-            {
+            if ($model->save()) {
+                return $this->afterCreate($model);
+            } elseif (!$model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
             }
 
         }
 
-        return $this->render('create',['model'=>$model]);
+        return $this->render('create', ['model' => $model]);
     }
 
     /**
@@ -146,11 +134,10 @@ class BaseController extends Controller
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    public function actionEdit( $id )
-    {
+    public function actionEdit($id) {
         $model = $this->findModel($id);
-        $this->beforeRenderEdit( $model );
-        return $this->render('edit',['model'=>$model]);
+        $this->beforeRenderEdit($model);
+        return $this->render('edit', ['model' => $model]);
     }
 
     /**
@@ -158,15 +145,13 @@ class BaseController extends Controller
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    public function actionView( $id )
-    {
+    public function actionView($id) {
         $userid = 0;
-        if( !Yii::$app->user->isGuest )
-        {
+        if (!Yii::$app->user->isGuest) {
             $userid = Yii::$app->user->id;
         }
         $model = $this->findModel($id);
-        return $this->render('view',['model'=>$model,'user_id'=>$userid]);
+        return $this->render('view', ['model' => $model, 'user_id' => $userid]);
     }
 
     /**
@@ -174,34 +159,30 @@ class BaseController extends Controller
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    public function actionDelete( $id )
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
 
         if ($model->delete() === false) {
             throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
         }
-        return $this->afterDelete( $model );
+        return $this->afterDelete($model);
     }
 
     /**
      * 更新数据
      * @return [type] [description]
      */
-    public function actionUpdate( $id )
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
         $model->scenario = static::$SCENARIO_UPDATE;
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         // var_dump($model->toArray());die;
         if ($model->save() === false && !$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
+        } elseif ($model->hasErrors()) {
+            return $this->render('view', ['model' => $model]);
         }
-        elseif($model->hasErrors())
-        {
-            return $this->render('view',['model'=>$model]);
-        }
-        return $this->afterUpdate( $model );
+        return $this->afterUpdate($model);
     }
 
     /**
@@ -209,8 +190,7 @@ class BaseController extends Controller
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    private function findModel($id)
-    {
+    private function findModel($id) {
         if ($this->findModel !== null) {
             return call_user_func($this->findModel, $id, $this);
         }
@@ -237,8 +217,7 @@ class BaseController extends Controller
     /**
      * @inheritdoc
      */
-    protected function verbs()
-    {
+    protected function verbs() {
         return [
             'index' => ['GET', 'HEAD'],
             'view' => ['GET', 'HEAD'],
