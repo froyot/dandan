@@ -134,7 +134,10 @@ class ViewHelper extends Model{
         return $site_option;
     }
 
-
+    /**
+     * 获取首页幻灯片
+     * @return [type] [description]
+     */
     public static function getIndexSlide()
     {
         $index_slide = Yii::$app->cacheManage->index_slide;
@@ -162,4 +165,54 @@ class ViewHelper extends Model{
         }
         return $index_slide;
     }
+
+    /**
+     * 获取主题设置
+     * @return [type] [description]
+     */
+    public static function getThemeList()
+    {
+        $themeList = Yii::$app->cacheManage->theme_list;
+        if( $themeList )
+            return $themeList;
+        $themeList = [];
+        $themeDir = Yii::getAlias('@app').'/themes';
+        if ( $handle = opendir($themeDir) )
+        {
+            while ( ($file = readdir($handle)) !== false )
+            {
+                if ( $file != ".." && $file != "." )
+                {
+                    if ( is_dir($themeDir . "/" . $file) )
+                    {
+                        $themeList[$file] = $file;
+                    }
+                }
+            }
+            closedir($handle);
+            Yii::$app->cacheManage->theme_list = $themeList;
+        }
+        return $themeList;
+
+    }
+
+    /**
+     * 获取友情链接
+     * @return [type] [description]
+     */
+    public static function getLinks()
+    {
+        $links = Yii::$app->cacheManage->links;
+        if( $links )
+            return $links;
+        $links = LinkOption::getAllLinks();
+        if( $links )
+        {
+            Yii::$app->cacheManage->links = $links;
+        }
+        return $links;
+    }
+
+
+
 }

@@ -13,6 +13,10 @@ $config = [
             'admin' => [
                 'class' => 'app\admin\Module',
             ],
+
+            'fronted' => [
+                'class' => 'app\fronted\Module',
+            ],
             'social' => [
                 // the module class
                 'class' => 'kartik\social\Module',

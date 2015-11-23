@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\Menu;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use app\common\helper\ViewHelper;
+use app\models\util\ViewHelper;
 /**
  * @var $this \yii\base\View
  * @var $content string
@@ -65,14 +65,14 @@ AppAsset::register($this);
           <div class="right col s12 m4 l3"> <!-- Note that "m4 l3" was added -->
             <div class="card">
               <div class="card-image">
-                <img src="<?=ViewHelper::getLeftAd('img');?>">
-                <span class="card-title"><?=ViewHelper::getLeftAd('title');?></span>
+                <img src="">
+                <span class="card-title"></span>
               </div>
               <div class="card-content">
-                <p><?=ViewHelper::getLeftAd('tips');?></p>
+
               </div>
               <div class="card-action">
-                <?=ViewHelper::getLeftAd('url');?>
+
               </div>
             </div>
           </div>
@@ -83,20 +83,19 @@ AppAsset::register($this);
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
-                <h5 class="grey-text"><?=ViewHelper::getFooter('title');?></h5>
-                <p class="grey-text text-lighten-1"><?=ViewHelper::getFooter('tips');?></p>
+                <h5 class="grey-text"></h5>
+                <p class="grey-text text-lighten-1">ViewHelper::getFooter('tips')</p>
               </div>
               <div class="col l4 offset-l2 s12">
-                <h5 class="white-text"><?=\Yii::t('app','links');?></h5>
-                 <?php foreach ( ViewHelper::getLinks() as $item ): ?>
-                  <li><a class="white-text" href="<?= $item['link'];?>" target="_blank"><?=$item['text'];?></a></li>
-                <?php endforeach;?>
+                <h5 class="white-text">Yii::t('app','links');</h5>
+
+
               </div>
             </div>
           </div>
           <div class="footer-copyright">
             <div class="container grey-text center">
-            <?=ViewHelper::getCopyright()?>
+            ViewHelper::getCopyright()
             </div>
           </div>
         </footer>

@@ -27,12 +27,14 @@ class SiteOption extends Model{
     public $smtp_host;
     public $smtp_label;
 
+    public $site_themes;
+
     public function rules()
     {
         return[
         [['site_name','site_icp','site_admin_email',
           'site_tongji','site_copyright','site_seo_title','site_seo_keywords',
-          'site_seo_description','smtp_password','smtp_label','smtp_host'],'string'],
+          'site_seo_description','smtp_password','smtp_label','smtp_host','site_themes'],'string'],
         [['site_admin_email','smtp_username'],'email'],
         [['comment_need_check'],'in','range'=>[0,1]],
         [['comment_need_check','comment_time_interval','smtp_port'],'integer'],
@@ -80,6 +82,8 @@ class SiteOption extends Model{
             'smtp_port'=>Yii::t('app','smtp_port'),
             'stmm_label'=>Yii::t('app','stmm_label'),
             'smtp_host'=>Yii::t('app','smtp_host'),
+            'smtp_label'=>Yii::t('app','smtp_label'),
+            'site_themes'=>Yii::t('app','site_themes')
         ];
     }
 

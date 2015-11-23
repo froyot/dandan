@@ -87,7 +87,8 @@ $bundle = DefaultAsset::register($this);
                                   'active'=>Yii::$app->controller->id == 'setting'?true:false,
                                   'items' => [
                                        ['label' => Yii::t('app','siteSetting'), 'url' => ['setting/site']],
-                                       ['label' => Yii::t('app','smtpSetting'), 'url' => '#'],
+                                       ['label' => Yii::t('app','adSetting'), 'url' => ['setting/ad']],
+                                       ['label' => Yii::t('app','friendLink'), 'url' => ['setting/links']],
                                   ],
                               ],
                               [
@@ -158,6 +159,13 @@ $bundle = DefaultAsset::register($this);
             <p class="pull-right"><?=ViewHelper::getSiteOption('powerBy');?></p>
 
         </div>
+        <?php if(ViewHelper::getLinks()):?>
+          <div >
+                <?php foreach(ViewHelper::getLinks() as $link):?>
+                  <li><a href="<?=$link->site_url;?>" target="<?=$link->open_type;?>"><?=$link->site_name;?></li>
+                <?php endforeach;?>
+          </div>
+        <?php endif;?>
         <div class="container">
 
             <p class="pull">

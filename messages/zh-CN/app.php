@@ -156,7 +156,18 @@ return[
     'smtp_password'         =>'邮箱密码',
     'smtp_port'             =>'端口',
     'stmm_label'            =>'发信人昵称',
-    'smtp_host'             =>'发信服务器'
+    'smtp_host'             =>'发信服务器',
+    'basic setting'         =>'基本设置',
+    'seo setting'           =>'seo设置',
+    'comment setting'       =>'评论设置',
+    'smtp setting'          =>'smtp设置',
+    'site_themes'           =>'网站主题',
+    'smtp_label'            =>'发件人显示',
+    'adSetting'             =>'广告设置',
+    'adCode'                =>'广告代码',
+    'adPosition'            =>'广告位置',
+    'friendLink'            =>'友情链接',
+    'create friendLink'    =>'添加友情链接'
 
 
 
