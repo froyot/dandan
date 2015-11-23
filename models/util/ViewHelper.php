@@ -74,10 +74,7 @@ class ViewHelper extends Model{
                             $href['p'] = [];
                         }
 
-                        $url = Url::to(ArrayHelper::merge(
-                            [$href['c'].'/'.$href['a']]
-                            ,$href['p']
-                            ));
+                        $url = ArrayHelper::merge([$href['c'].'/'.$href['a']],$href['p']);;
                     }
                 }
                 elseif( !$href && is_string( $item->model->href ))

@@ -62,6 +62,7 @@ class PostController  extends Controller
             }
             elseif( $post->post_type == 'page' )
             {
+
                 $view = 'page';
             }
             return $this->render($view,['post'=>$post]);

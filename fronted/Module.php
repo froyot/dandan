@@ -12,6 +12,7 @@ class Module extends \yii\base\Module
     {
         parent::init();
         $themes = ViewHelper::getSiteOption('site_themes');
+        // var_dump($themes);die;
         // custom initialization code goes here
         //主题
         Yii::$app->view->theme = Yii::createObject([

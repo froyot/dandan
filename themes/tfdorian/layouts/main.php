@@ -3,21 +3,22 @@
 use yii\helpers\Html;
 use yii\widgets\Menu;
 use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
+use app\themes\tfdorian\ThemeAsset;
 use app\models\util\ViewHelper;
 /**
  * @var $this \yii\base\View
  * @var $content string
  */
-AppAsset::register($this);
+$bundle = ThemeAsset::register($this);
+$assetBaseUrl = $this->assetManager->getAssetUrl($bundle,'');
 ?>
 <?php $this->beginPage(); ?>
 
 <html>
     <head>
       <!--Import materialize.css-->
-   <!--    <link type="text/css" rel="stylesheet" href="<?php echo $this->theme->baseUrl ?>/css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="<?php echo $this->theme->baseUrl ?>/css/style.css"  media="screen,projection"/> -->
+   <!--    <link type="text/css" rel="stylesheet" href="<?php echo $assetBaseUrl ?>/css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="<?php echo $assetBaseUrl ?>/css/style.css"  media="screen,projection"/> -->
 
     	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta name="author" content="Imre Mehesz">
@@ -34,19 +35,17 @@ AppAsset::register($this);
 
         <nav>
           <div class="nav-wrapper">
-            <a href="#" class="brand-logo right"><?php echo Html::encode(\Yii::$app->name); ?></a>
+          <a href="<?=Yii::$app->homeUrl;?>" class="brand-logo right">
+              <?php echo Html::encode(ViewHelper::getSiteOption('site_name')); ?>
+          </a>
+
   					<?php
 	  					echo Menu::widget([
 	  					  'options' => [
 	  					    "id"  => "nav-mobile",
 	  					    "class" => "left side-nav"
 	  					  ],
-						    'items' => [
-						        ['label' => Yii::t('app','Home'), 'url' => ['site/index']],
-                    ['label' => Yii::t('app','Contents'), 'url' => ['content/index']],
-						        ['label' => Yii::t('app','About'), 'url' => ['site/about']],
-						        ['label' => Yii::t('app','Admin'), 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-						    ],
+						    'items' => ViewHelper::getSiteMenu(),
 		  				]);
 			  		?>
             <a class="button-collapse" href="#" data-activates="nav-mobile"><i class="mdi-navigation-menu"></i></a>
@@ -65,8 +64,10 @@ AppAsset::register($this);
           <div class="right col s12 m4 l3"> <!-- Note that "m4 l3" was added -->
             <div class="card">
               <div class="card-image">
-                <img src="">
-                <span class="card-title"></span>
+                <a href="#">
+                <img src="<?=$assetBaseUrl.'/images/ecto.jpg';?>">
+                <span class="card-title"> TestAd </span>
+                </a>
               </div>
               <div class="card-content">
 
@@ -84,18 +85,20 @@ AppAsset::register($this);
             <div class="row">
               <div class="col l6 s12">
                 <h5 class="grey-text"></h5>
-                <p class="grey-text text-lighten-1">ViewHelper::getFooter('tips')</p>
+                <p class="grey-text text-lighten-1"><?ViewHelper::getAd('footer');?></p>
               </div>
               <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Yii::t('app','links');</h5>
-
+                <h5 class="white-text"><?=Yii::t('app','friendLink');?></h5>
+                  <?php foreach(ViewHelper::getLinks() as $link):?>
+                    <li><a class="white-text" href="<?=$link->site_url;?>" target="<?=$link->open_type;?>"><?=$link->site_name;?></a></li>
+                  <?php endforeach;?>
 
               </div>
             </div>
           </div>
           <div class="footer-copyright">
             <div class="container grey-text center">
-            ViewHelper::getCopyright()
+            &copy; <?=ViewHelper::getSiteOption('copyright');?><?= date('Y') ?>
             </div>
           </div>
         </footer>

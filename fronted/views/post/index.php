@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="content-index">
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemView'=>'@app/views/content/listItem',
+        'itemView'=>'/content/listItem',
         'layout' => "{items}\n{pager}"
     ]); ?>
 

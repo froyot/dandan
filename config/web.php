@@ -72,7 +72,7 @@ $config = [
         ],
 
     ],
-
+    'defaultRoute'=>'fronted/site/index',
     'aliases' => [
         '@allon/yii2/ueditor' => '@app/tmp-extensions/yii2-ueditor/src',
     ],

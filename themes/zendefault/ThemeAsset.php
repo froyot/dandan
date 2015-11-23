@@ -19,5 +19,9 @@ class ThemeAsset extends AssetBundle
     public $css = [
         'css/style.css',
     ];
+    public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset'
+    ];
 
 }

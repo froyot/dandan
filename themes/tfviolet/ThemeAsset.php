@@ -25,5 +25,9 @@ class ThemeAsset extends AssetBundle
     public $js = [
         'js/materialize.min.js'
     ];
+    public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset'
+    ];
 
 }
