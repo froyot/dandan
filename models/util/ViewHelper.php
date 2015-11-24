@@ -1,36 +1,35 @@
 <?php
 /**
- * 视图文件辅助操作
+ * display helper model,
+ * all method called by static method
  *
  */
 namespace app\models\util;
-use yii\base\Model;
-use yii\helpers\Url;
-use yii\helpers\ArrayHelper;
 use app\models\action\Option;
 use app\models\action\Slide;
 use Yii;
+use yii\base\Model;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
-class ViewHelper extends Model{
+class ViewHelper extends Model {
     private static $SITEOPTION;
     /**
-     * 生成前台导航菜单
-     * @return array 数据格式兼容bootstrap nav 扩展
+     * create front menu array data
+     * @return array can used in yii2 nav
      */
-    public static function getSiteMenu()
-    {
+    public static function getSiteMenu() {
         $menu = Yii::$app->cacheManage->site_menu;
-        if( !$menu )
-        {
+        if (!$menu) {
             $context = new ViewHelper();
             $config = [
-                'model'=> 'app\models\action\Nav',
-                'parentKey'=>'parentid',
-                'primaryKey'=>'id',
-                'rootParent'=>0,
-                'orderBy'=>'listorder desc'
+                'model' => 'app\models\action\Nav',
+                'parentKey' => 'parentid',
+                'primaryKey' => 'id',
+                'rootParent' => 0,
+                'orderBy' => 'listorder desc',
             ];
-            $obj = new Tree( $config );
+            $obj = new Tree($config);
             $tree = $obj->getTree(true);
             $menu = $context->getMenuChild($tree);
             Yii::$app->cacheManage->site_menu = $menu;
@@ -39,49 +38,42 @@ class ViewHelper extends Model{
     }
 
     /**
-     * 递归生成菜单
-     * @param  [type] $tree [description]
-     * @return [type]       [description]
+     * make menu item in tree
+     * @param  Model $tree tree mode
+     * @return array       menu item array
      */
-    private function getMenuChild($tree)
-    {
+    private function getMenuChild($tree) {
         $menus = [];
-        foreach ($tree as $key => $item)
-        {
+        foreach ($tree as $key => $item) {
             $menu = [];
             $menu['label'] = $item->model->label;
-            $menu['linkOptions'] = ['target'=>$item->model->target];
-            $childs = $this->getMenuChild( $item->childs );
-            if( $childs )
-            {
+            $menu['linkOptions'] = ['target' => $item->model->target];
+            $childs = $this->getMenuChild($item->childs);
+            if ($childs) {
                 $menu['items'] = $childs;
-            }
-            elseif( !$item->model->href )
-            {
+            } elseif (!$item->model->href) {
                 $menu['url'] = '#';
-            }
-            else
-            {
+            } else {
 
-                $href = json_decode($item->model->href,true);
+                $href = json_decode($item->model->href, true);
                 $url = '#';
-                if( is_array( $href ) )
-                {
-                    if(isset($href['a']) && isset($href['c']))
-                    {
-                        if(!isset($href['p']))
-                        {
+                if (is_array($href)) {
+                    if (isset($href['a']) && isset($href['c'])) {
+                        if (!isset($href['p'])) {
                             $href['p'] = [];
                         }
 
-                        $url = ArrayHelper::merge([$href['c'].'/'.$href['a']],$href['p']);;
+                        $url = ArrayHelper::merge(
+                            [$href['c'] . '/' . $href['a']],
+                            $href['p']
+                        );
                     }
-                }
-                elseif( !$href && is_string( $item->model->href ))
-                {
+                } elseif (!$href && is_string($item->model->href)) {
                     $url = $item->model->href;
-                    if( strpos("http", $item->model->href) === 0 )
+                    if (strpos("http", $item->model->href) === 0) {
                         $menu['linkOptions']['target'] = '_blank';
+                    }
+
                 }
 
                 $menu['url'] = $url;
@@ -92,68 +84,56 @@ class ViewHelper extends Model{
     }
 
     /**
-     * 获取网站配置
-     * @param  string $key [description]
-     * @return [type]      [description]
+     * get site option,
+     * if key is empty,will return all options array
+     * @param  string $key the key want to get
+     * @return maxid    site option
      */
-    public static function getSiteOption($key = '')
-    {
-        if( self::$SITEOPTION )
-        {
+    public static function getSiteOption($key = '') {
+        if (self::$SITEOPTION) {
             $site_option = self::$SITEOPTION;
-        }
-        else
-        {
+        } else {
             $site_option = Yii::$app->cacheManage->site_option;
-            if( !$site_option )
-            {
+            if (!$site_option) {
                 $options = Option::getSiteOption();
-                if( !$options )
-                {
+                if (!$options) {
                     $site_option = Yii::$app->params['siteConf'];
-                }
-                else
-                {
+                } else {
                     $site_option = ArrayHelper::merge(
-                                                        Yii::$app->params['siteConf'],
-                                                        $options
-                                                    );
+                        Yii::$app->params['siteConf'],
+                        $options
+                    );
                 }
                 Yii::$app->cacheManage->site_option = $site_option;
             }
             self::$SITEOPTION = $site_option;
         }
-        if( $key )
-        {
-            return isset($site_option[$key])?$site_option[$key]:null;
+        if ($key) {
+            return isset($site_option[$key]) ? $site_option[$key] : null;
         }
 
         return $site_option;
     }
 
     /**
-     * 获取首页幻灯片
-     * @return [type] [description]
+     * index slider info
+     * @return array slide info
      */
-    public static function getIndexSlide()
-    {
+    public static function getIndexSlide() {
         $index_slide = Yii::$app->cacheManage->index_slide;
-        if( !$index_slide )
-        {
-            $slides = Slide::find()->where(['slide_cid'=>1])->all();
-            if( !$slides )
-            {
+        if (!$index_slide) {
+            $slides = Slide::find()->where(['slide_cid' => 1])->all();
+            if (!$slides) {
                 $index_slide = Yii::$app->params['siteConf']['indexSlide'];
-            }
-            else
-            {
+            } else {
                 $index_slide = [];
-                foreach($slides as $item)
-                {
+                foreach ($slides as $item) {
                     $index_slide[] = [
-                        'img'=>$item->slide_pic,
-                        'des'=>$item->slide_des,
-                        'url'=>Url::to(['post/view','id'=>$item->slide_value])
+                        'img' => $item->slide_pic,
+                        'des' => $item->slide_des,
+                        'url' => Url::to(
+                            ['post/view', 'id' => $item->slide_value]
+                        ),
                     ];
                 }
 
@@ -164,24 +144,21 @@ class ViewHelper extends Model{
     }
 
     /**
-     * 获取主题设置
-     * @return [type] [description]
+     * get site theme
+     * @return string theme floder
      */
-    public static function getThemeList()
-    {
+    public static function getThemeList() {
         $themeList = Yii::$app->cacheManage->theme_list;
-        if( $themeList )
+        if ($themeList) {
             return $themeList;
+        }
+
         $themeList = [];
-        $themeDir = Yii::getAlias('@app').'/themes';
-        if ( $handle = opendir($themeDir) )
-        {
-            while ( ($file = readdir($handle)) !== false )
-            {
-                if ( $file != ".." && $file != "." )
-                {
-                    if ( is_dir($themeDir . "/" . $file) )
-                    {
+        $themeDir = Yii::getAlias('@app') . '/themes';
+        if ($handle = opendir($themeDir)) {
+            while (($file = readdir($handle)) !== false) {
+                if ($file != ".." && $file != ".") {
+                    if (is_dir($themeDir . "/" . $file)) {
                         $themeList[$file] = $file;
                     }
                 }
@@ -194,22 +171,20 @@ class ViewHelper extends Model{
     }
 
     /**
-     * 获取友情链接
-     * @return [type] [description]
+     * get site friend links
+     * @return array
      */
-    public static function getLinks()
-    {
+    public static function getLinks() {
         $links = Yii::$app->cacheManage->links;
-        if( $links )
+        if ($links) {
             return $links;
+        }
+
         $links = LinkOption::getAllLinks();
-        if( $links )
-        {
+        if ($links) {
             Yii::$app->cacheManage->links = $links;
         }
         return $links;
     }
-
-
 
 }
