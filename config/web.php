@@ -1,30 +1,29 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
-
+$params = require __DIR__ . '/params.php';
 
 $config = [
-    'timeZone'=>'Asia/Chongqing',
-    'name'=>'DanDan',
+    'timeZone' => 'Asia/Chongqing',
+    'name' => 'DanDan',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'modules' => [
-            'admin' => [
-                'class' => 'app\admin\Module',
-            ],
+        'admin' => [
+            'class' => 'app\admin\Module',
+        ],
 
-            'fronted' => [
-                'class' => 'app\fronted\Module',
+        'fronted' => [
+            'class' => 'app\fronted\Module',
+        ],
+        'social' => [
+            // the module class
+            'class' => 'kartik\social\Module',
+            // the global settings for the disqus widget
+            'disqus' => [
+                'settings' => ['shortname' => 'dandancms'], // default settings
             ],
-            'social' => [
-                // the module class
-                'class' => 'kartik\social\Module',
-                // the global settings for the disqus widget
-                'disqus' => [
-                    'settings' => ['shortname' => 'dandancms'] // default settings
-                ],
-            ],
+        ],
     ],
     'language' => 'zh-CN',
     'components' => [
@@ -38,7 +37,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\action\User',
             'enableAutoLogin' => true,
-            'on afterLogin' => ['app\compoments\EventHandler','afterLogin']
+            'on afterLogin' => ['app\compoments\EventHandler', 'afterLogin'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -53,16 +52,16 @@ $config = [
                 ],
             ],
         ],
-        'myEvent' =>[
-            'class'=>'app\compoments\EventHandler'
+        'myEvent' => [
+            'class' => 'app\compoments\EventHandler',
         ],
-        'cacheManage'=>[
-            'class'=>'app\models\util\CacheManage'
+        'cacheManage' => [
+            'class' => 'app\models\util\CacheManage',
         ],
         'db' => array_merge(
-            require(__DIR__ . '/db.php'),
-            require(__DIR__.'/db-local.php')
-            ),
+            require (__DIR__ . '/db.php'),
+            require (__DIR__ . '/db.config.php')
+        ),
         'authManager' => [
             'class' => 'app\models\util\RbacDbManager',
             'itemTable' => 'auth_item',
@@ -72,7 +71,7 @@ $config = [
         ],
 
     ],
-    'defaultRoute'=>'fronted/site/index',
+    'defaultRoute' => 'fronted/site/index',
     'aliases' => [
         '@allon/yii2/ueditor' => '@app/tmp-extensions/yii2-ueditor/src',
     ],
@@ -84,14 +83,14 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] =
     [
-    'class'=>'yii\debug\Module',
-        'allowedIPs' => ['*', '127.0.0.1', '::1']
+        'class' => 'yii\debug\Module',
+        'allowedIPs' => ['*', '127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-    'class'=>'yii\gii\Module',
-        'allowedIPs' => ['*', '127.0.0.1', '::1']
+        'class' => 'yii\gii\Module',
+        'allowedIPs' => ['*', '127.0.0.1', '::1'],
     ];
 }
 

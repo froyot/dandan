@@ -223,7 +223,8 @@ class SiteOption extends Model {
 
         $option = Option::findOne(['option_name' => 'site_options']);
         if (!$option) {
-            return false;
+            $option = new Option();
+            $option->option_name = 'site_options';
         }
         $option->option_value = $this->toString();
         $res = $option->save();

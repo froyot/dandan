@@ -53,4 +53,8 @@ class CacheManage extends Model {
     public static function unpackage($data) {
         return unserialize($data);
     }
+
+    public static function deleteAll() {
+        Yii::$app->cache->gc(true, false);
+    }
 }
