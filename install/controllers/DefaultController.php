@@ -30,7 +30,8 @@ class DefaultController extends Controller {
             $model->load(Yii::$app->request->post());
             if ($model->validate() && $model->save()) {
                 Tool::makeInstallLock();
-                return $this->redirect(['/fronted/site/index']);
+                // return $this->redirect(['/fronted/site/index']);
+                return $this->render('success');
             }
         }
         return $this->render('install-form', ['model' => $model]);

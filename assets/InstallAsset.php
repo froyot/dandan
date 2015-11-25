@@ -13,15 +13,14 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AppAsset extends AssetBundle
-{
+class InstallAsset extends AssetBundle {
 
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@webroot/static';
+    public $css = [
+        'css/install.css',
+    ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
-        // 'app\themes\tfdorian\ThemeAsset',
-        'app\themes\tfviolet\ThemeAsset'
     ];
 }

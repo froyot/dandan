@@ -1,50 +1,9 @@
 <?php
 use app\install\models\Tool;
+use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
-<style type="text/css">
-body{
-    font: 12px/1.5 Arial,Microsoft Yahei,Simsun;
-    color: #333;
-}
-.step {
-    border-bottom: 1px solid #dce1e5;
-    height: 60px;
-    background-color: #fff;
-}
-.step li {
-    background: url(/install/images/step.png) repeat-x;
-}
-.step li.current {
-    background-position: right -106px;
-    background-repeat: no-repeat;
-    color: #246ea5;
-}
-.step li {
-    float: left;
-    height: 60px;
-    line-height: 60px;
-    width: 33%;
-    text-align: center;
-    font-size: 14px;
-    color: #6f7885;
-    font-weight: 700;
-}
 
-.server {padding: 20px 20px 10px 65px;}
-
-.correct_span, .error_span {
-    display: block;
-    float: left;
-    width: 20px;
-    height: 16px;
-    text-indent: -2000em;
-    overflow: hidden;
-    background: url(/install/images/icon.png) no-repeat;
-    margin-right: 5px;
-}
-
-</style>
 <div class="install-default-index">
 <div class="header">
     <h1 class="logo">logo</h1>
@@ -132,6 +91,11 @@ foreach ($folder as $dir) {
 ?>
       </table>
     </div>
-    <div class="bottom tac"> <a href="<?=Url::to(['default/check']);?>" class="btn">重新检测</a><a href="<?=Url::to(['default/install-data']);?>" class="btn">下一步</a> </div>
+    <div class="bottom tac">
+
+      <a href="<?=Url::to(['default/check']);?>"><?=Html::Button(\Yii::t('app', 'recheck'), ['class' => 'btn btn-primary'])?></a>
+      <a href="<?=Url::to(['default/install-data']);?>" ><?=Html::Button(\Yii::t('app', 'next'), ['class' => 'btn btn-success'])?></a>
+
+    </div>
   </section>
 </div>

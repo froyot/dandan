@@ -15,9 +15,9 @@ class InstallForm extends Model {
     public $site_seo_keywords;
     public $site_seo_description;
 
-    public $dbname;
-    public $dbhost;
-    public $dbport;
+    public $dbname = 'dandan';
+    public $dbhost = 'localhost';
+    public $dbport = 3360;
     public $db_user_name;
     public $db_password;
     public $db_prefix = '';
@@ -38,6 +38,23 @@ class InstallForm extends Model {
         ];
     }
 
+    public function attributeLabels() {
+        return [
+            'admin' => Yii::t('app', 'admin'),
+            'password' => Yii::t('app', 'password'),
+            'repeatPassword' => Yii::t('app', 'repeatPassword'),
+            'email' => Yii::t('app', 'email'),
+            'site_name' => Yii::t('app', 'site_name'),
+            'site_seo_keywords' => Yii::t('app', 'site_seo_keywords'),
+            'site_seo_description' => Yii::t('app', 'site_seo_description'),
+            'dbname' => Yii::t('app', 'dbname'),
+            'dbhost' => Yii::t('app', 'dbhost'),
+            'dbport' => Yii::t('app', 'dbport'),
+            'db_user_name' => Yii::t('app', 'db_user_name'),
+            'db_password' => Yii::t('app', 'db_password'),
+            'db_prefix' => Yii::t('app', 'db_prefix'),
+        ];
+    }
     public function checkDatabase($attributes, $params) {
         //验证数据库
         if (!$this->hasErrors() && $this->dbname &&

@@ -11,6 +11,7 @@ $config = require __DIR__ . '/../config/web.php';
 
 //check if installed
 if (file_exists(__DIR__ . "/../install") && !file_exists(__DIR__ . "/../install/install.lock")) {
+    // make sure the module config when install.lock not exist
     $config['modules']['install'] = [
         'class' => 'app\install\Module',
     ];

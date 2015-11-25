@@ -1,13 +1,12 @@
 <?php
-use app\assets\DefaultAsset;
+use app\assets\InstallAsset;
 use yii\bootstrap\NavBar;
 use yii\helpers\Html;
-
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 // AppAsset::register($this);
-$bundle = DefaultAsset::register($this);
+$bundle = InstallAsset::register($this);
 ?>
 <?php $this->beginPage()?>
 <!DOCTYPE html>
