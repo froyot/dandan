@@ -2,20 +2,18 @@
 
 namespace app\fronted\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use app\models\form\LoginForm;
-use app\models\form\RegisterForm;
-use yii\base\InvalidParamException;
 use app\models\action\User;
+use app\models\form\LoginForm;
 use app\models\form\PostForm;
+use app\models\form\RegisterForm;
+use Yii;
+use yii\base\InvalidParamException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\Controller;
 
-class SiteController extends Controller
-{
-    public function behaviors()
-    {
+class SiteController extends Controller {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -37,8 +35,7 @@ class SiteController extends Controller
         ];
     }
 
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -50,13 +47,11 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionIndex()
-    {
+    public function actionIndex() {
         return $this->render('index');
     }
 
-    public function actionLogin()
-    {
+    public function actionLogin() {
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -78,20 +73,17 @@ class SiteController extends Controller
      * @param string $password
      * @param string $email
      */
-    public function actionRegister()
-    {
+    public function actionRegister() {
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new RegisterForm();
-        if ( $model->load(Yii::$app->request->post()) )
-        {
+        if ($model->load(Yii::$app->request->post())) {
             $res = $model->register();
-            switch( $res )
-            {
-                case 1: return $this->goHome();
-                case 0: return  $this->goHome();
+            switch ($res) {
+                case 1:return $this->goHome();
+                case 0:return $this->goHome();
             }
         }
         return $this->render('register', [
@@ -103,33 +95,26 @@ class SiteController extends Controller
      * 激活用户
      * @return [type] [description]
      */
-    public function actionActive()
-    {
+    public function actionActive() {
         $code = Yii::$app->request->get('code');
-        if( !$code || strlen($code) < 32 )
-        {
-            throw new InvalidParamException(Yii::t('app',"invalid params"));
+        if (!$code || strlen($code) < 32) {
+            throw new InvalidParamException(Yii::t('app', "invalid params"));
             exit;
         }
-        $hash = substr($code,32);
-        if( substr(md5($hash),0,16) != substr($code,0,16) )
-        {
-            throw new InvalidParamException(Yii::t('app',"invalid params"));
+        $hash = substr($code, 32);
+        if (substr(md5($hash), 0, 16) != substr($code, 0, 16)) {
+            throw new InvalidParamException(Yii::t('app', "invalid params"));
             exit;
         }
-        if( User::activeUser( $code) )
-        {
+        if (User::activeUser($code)) {
             $this->goHome();
-        }
-        else
-        {
-            Yii::error('active user error '.$code);
+        } else {
+            Yii::error('active user error ' . $code);
             return 'error';
         }
     }
 
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -139,20 +124,18 @@ class SiteController extends Controller
      * 搜索文章，页面
      * @return [type] [description]
      */
-    public function actionSearch()
-    {
+    public function actionSearch() {
         $searchModel = new PostForm();
         $dataProvider = $searchModel->search(
-                Yii::$app->request->queryParams
-               );
+            Yii::$app->request->queryParams
+        );
 
-        return $this->render('search',[
-                                    'dataProvider'=>$dataProvider,
-                                    'searchModel'=>$searchModel,
-                                    '_keywords'=>Yii::$app->request->get('_keywords')
-                                    ]
-                            );
+        return $this->render('search', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            '_keywords' => Yii::$app->request->get('_keywords'),
+        ]
+        );
     }
-
 
 }

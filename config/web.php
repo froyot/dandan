@@ -40,7 +40,7 @@ $config = [
             'on afterLogin' => ['app\compoments\EventHandler', 'afterLogin'],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => '/fronted/site/error',
         ],
 
         'log' => [

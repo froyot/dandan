@@ -223,7 +223,7 @@ p {
   -moz-border-radius: 2px;
   -o-border-radius: 2px;
 
-  content: "D";
+  /*content: "D";*/
   font-size: 16px;
   text-indent: 0;
 
@@ -998,7 +998,7 @@ footer a::before {
 		url('verdemoderna.svg#verdemoderna') format('svg');
 	font-weight: normal;
 	font-style: normal;
-}                                                                                                               
+}
 /* 1000 lines?! */
 
 /* Yii2 custom by ThemeFactory.net */

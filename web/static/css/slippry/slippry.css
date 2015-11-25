@@ -174,7 +174,7 @@
 /* element that wraps the slides */
 .sy-slides-wrap {
   position: relative;
-  height: 100%;
+  max-height: 400px;
   width: 100%;
 }
 .sy-slides-wrap:hover .sy-controls {
