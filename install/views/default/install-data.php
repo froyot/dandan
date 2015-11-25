@@ -45,7 +45,10 @@ function installConfig()
       if(data.status == true)
       {
         $("#tips").append("配置完成");
-
+      }
+      else
+      {
+        alert("保存配置出错!!");return false;
       }
     }
 
@@ -72,6 +75,10 @@ function installData(id)
           installConfig();
           $("#tips").append("数据库安装完成<br/>");
         }
+      }
+      else
+      {
+        alert("保存配置出错!!");return false;
       }
     }
 

@@ -67,6 +67,7 @@ class DefaultController extends Controller {
         }
     }
 
+    //配置数据写入数据库
     public function actionInstallConfig() {
         if (Yii::$app->request->isPost) {
             $data = unserialize(Yii::$app->cache->get('tmpConfig'));
@@ -74,9 +75,13 @@ class DefaultController extends Controller {
             $model->load($data);
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             if ($model->save()) {
+                CacheManage::deleteAll();
                 return [
                     'status' => true,
-
+                ];
+            } else {
+                return [
+                    'status' => true,
                 ];
             }
         }
