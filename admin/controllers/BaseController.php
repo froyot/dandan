@@ -65,8 +65,8 @@ class BaseController extends Controller {
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view'],
-                        'allow' => true,
+                        'actions' => [],
+                        'allow' => false,
                         'roles' => ['?'],
                     ],
                     [
@@ -77,7 +77,16 @@ class BaseController extends Controller {
             ],
         ];
     }
+    public function beforeAction($action) {
 
+        if (parent::beforeAction($action)) {
+
+            if (Yii::$app->user->isGuest) {
+                return $this->redirect(['login']);exit;
+            }
+            return true;
+        }
+    }
     /**
      * 验证modelClass,FormClass是否设置
      */
@@ -174,15 +183,27 @@ class BaseController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-        $model->scenario = static::$SCENARIO_UPDATE;
-        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
-        // var_dump($model->toArray());die;
-        if ($model->save() === false && !$model->hasErrors()) {
-            throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
-        } elseif ($model->hasErrors()) {
-            return $this->render('view', ['model' => $model]);
+        if (Yii::$app->request->isPost) {
+
+            $model = $this->findModel($id);
+            $model->scenario = static::$SCENARIO_UPDATE;
+            $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+            // var_dump($model->toArray());die;
+            if ($model->save() === false && !$model->hasErrors()) {
+                throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
+            } elseif (!$model->hasErrors()) {
+                return $this->afterUpdate($model);
+
+            }
+
         }
-        return $this->afterUpdate($model);
+        $userid = 0;
+        if (!Yii::$app->user->isGuest) {
+            $userid = Yii::$app->user->id;
+        }
+        $this->beforeRenderEdit($model);
+        return $this->render('edit', ['model' => $model]);
+
     }
 
     /**

@@ -10,12 +10,10 @@ use Yii;
  * @property string $id
  * @property string $post_author
  * @property string $post_keywords
- * @property string $post_source
  * @property string $post_date
  * @property string $post_content
  * @property string $post_title
  * @property string $post_excerpt
- * @property integer $post_status
  * @property integer $comment_status
  * @property string $post_modified
  * @property string $post_content_filtered
@@ -23,33 +21,25 @@ use Yii;
  * @property integer $post_type
  * @property string $post_mime_type
  * @property string $comment_count
- * @property string $smeta
- * @property integer $post_hits
- * @property integer $post_like
  * @property integer $istop
  * @property integer $recommended
  */
-class Posts extends \yii\db\ActiveRecord
-{
+class Posts extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%posts}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['post_author', 'post_status', 'comment_status', 'post_parent', 'comment_count', 'post_hits', 'post_like', 'istop', 'recommended'], 'integer'],
-            [['post_date', 'post_modified'], 'default','value'=>date('Y-m-d H:i:s')],
-            [['post_content', 'post_title', 'post_excerpt', 'post_content_filtered', 'smeta','post_type'], 'string'],
-            [['post_keywords', 'post_source'], 'string', 'max' => 150],
-            [['post_mime_type'], 'string', 'max' => 100],
+            [['post_author', 'post_status', 'comment_status', 'post_parent', 'comment_count', 'istop', 'recommended'], 'integer'],
+            [['post_date', 'post_modified'], 'default', 'value' => date('Y-m-d H:i:s')],
+            [['post_content', 'post_title', 'post_excerpt', 'post_content_filtered', 'post_type'], 'string'],
 
         ];
     }
@@ -57,13 +47,10 @@ class Posts extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'post_author' => 'Post Author',
-            'post_keywords' => 'Post Keywords',
-            'post_source' => 'Post Source',
             'post_date' => 'Post Date',
             'post_content' => 'Post Content',
             'post_title' => 'Post Title',
@@ -76,9 +63,6 @@ class Posts extends \yii\db\ActiveRecord
             'post_type' => 'Post Type',
             'post_mime_type' => 'Post Mime Type',
             'comment_count' => 'Comment Count',
-            'smeta' => 'Smeta',
-            'post_hits' => 'Post Hits',
-            'post_like' => 'Post Like',
             'istop' => 'Istop',
             'recommended' => 'Recommended',
         ];

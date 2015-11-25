@@ -6,14 +6,18 @@
 namespace app\admin\controllers;
 
 class PageController extends BaseController implements BaseControllerInterface {
+
     public static $SCENARIO_INSERT = 'page';
     public static $SCENARIO_UPDATE = 'page';
     public $modelClass = "app\models\action\Post";
     public $modelFormClass = "app\models\\form\PostForm";
 
     public function beforeAction($action) {
-        if ($action->id == 'index') {
-            $this->addParams['post_type'] = 'page';
+        if (parent::beforeAction($action)) {
+
+            if ($action->id == 'index') {
+                $this->addParams['post_type'] = 'page';
+            }
         }
         return true;
     }

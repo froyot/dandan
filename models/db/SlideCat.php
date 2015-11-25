@@ -11,42 +11,38 @@ use Yii;
  * @property string $cat_name
  * @property string $cat_idname
  * @property string $cat_remark
- * @property integer $cat_status
+ * @property integer $cat_is_defualt
  */
-class SlideCat extends \yii\db\ActiveRecord
-{
+class SlideCat extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%slide_cat}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['cat_name', 'cat_idname'], 'required'],
             [['cat_remark'], 'string'],
-            [['cat_status'], 'integer'],
-            [['cat_name', 'cat_idname'], 'string', 'max' => 255]
+            [['cat_is_default'], 'integer'],
+            [['cat_name', 'cat_idname'], 'string', 'max' => 255],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'cid' => 'Cid',
             'cat_name' => 'Cat Name',
             'cat_idname' => 'Cat Idname',
             'cat_remark' => 'Cat Remark',
-            'cat_status' => 'Cat Status',
+            'cat_is_default' => 'Cat Is Default',
         ];
     }
 }

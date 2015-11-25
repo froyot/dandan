@@ -14,7 +14,7 @@ class PostController extends BaseController implements BaseControllerInterface {
     public static $SCENARIO_UPDATE = 'post';
     public $modelClass = "app\models\action\Post";
     public $modelFormClass = "app\models\\form\PostForm";
-
+    public $addParams = ['post_type' => 'post'];
     public function afterCreate($model) {
         return $this->redirect(['index']);
     }

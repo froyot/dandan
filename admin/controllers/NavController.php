@@ -60,6 +60,7 @@ class NavController extends BaseController implements BaseControllerInterface {
             } elseif (!$model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
             }
+
         }
         return $this->render('create', ['model' => $model]);
     }

@@ -45,7 +45,7 @@ class Nav extends NavDb {
             ['href_txt', 'string'],
             [['href_cat', 'href_page'], 'integer'],
             ['href_type', 'in', 'range' => [0, 1, 2]],
-            ['href_type', 'default', 'value' => 0],
+
         ]);
     }
 
@@ -69,8 +69,7 @@ class Nav extends NavDb {
     //handle data before validate
     public function beforeValidate() {
         if (!$this->hasErrors()) {
-
-            if ($this->href_type == self::DEFAULT_NAV) {
+            if ($this->href_type !== null && $this->href_type == self::DEFAULT_NAV) {
                 if ($this->href_txt == '') {
                     $this->addError('href_txt', Yii::t('app', 'not allow empty'));
                 }
@@ -138,26 +137,6 @@ class Nav extends NavDb {
      * @param    [type]                   $event [description]
      */
     public function afterDataSave($event) {
-        //update path
-        if (!$event->sender->parentid) {
-            $this->parentid = 0;
-        }
-        $parent = Nav::find()
-            ->where(['id' => $event->sender->parentid])
-            ->select(['path'])
-            ->one();
-        if ($parent) {
-            $event->sender->path = $parent->path . '-' .
-            $event->sender->getPrimaryKey();
-        } else {
-            $event->sender->path = '0-' . $event->sender->getPrimaryKey();
-        }
-
-        // is important to off envent before save
-        $event->sender->off(self::EVENT_AFTER_INSERT);
-        $event->sender->off(self::EVENT_AFTER_UPDATE);
-        $event->sender->save();
-
         //删除菜单缓存
         Yii::$app->cacheManage->site_menu = null;
     }

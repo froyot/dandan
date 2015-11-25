@@ -2,24 +2,21 @@
 namespace app\admin\controllers;
 
 use Yii;
-use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\rbac\Item as AuthItem;
 
-class RbacController extends Controller
-{
+class RbacController extends Controller {
     public $layout = 'main';
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index','view'],
-                        'allow' => true,
+                        'actions' => [],
+                        'allow' => false,
                         'roles' => ['?'],
                     ],
                     [
@@ -31,11 +28,9 @@ class RbacController extends Controller
         ];
     }
     //权限重置
-    public function actionInit()
-    {
+    public function actionInit() {
 
-        if(Yii::$app->user->can('initRbac'))
-        {
+        if (Yii::$app->user->can('initRbac')) {
             $auth = Yii::$app->authManager;
             $auth->removeAll();
             $initRbac = $auth->createPermission('initRbac');
@@ -77,74 +72,54 @@ class RbacController extends Controller
             $auth->addChild($admin, $author);
             $auth->assign($admin, Yii::$app->user->id);
 
-        }
-        else
-        {
+        } else {
             throw new ForbiddenHttpException();
         }
     }
 
     //角色列表
-    public function actionRoles()
-    {
-        if(Yii::$app->user->can('manageRbac'))
-        {
+    public function actionRoles() {
+        if (Yii::$app->user->can('manageRbac')) {
             return $this->render('roles');
-        }
-        else
-        {
+        } else {
             throw new ForbiddenHttpException();
         }
     }
 
     //分配角色权限
-    public function actionGetRules()
-    {
-        if(Yii::$app->user->can('manageRbac'))
-        {
+    public function actionGetRules() {
+        if (Yii::$app->user->can('manageRbac')) {
             $role = Yii::$app->request->get('role');
-            if( isset( Yii::$app->params['siteConf']['userRole'][$role] ) )
-            {
+            if (isset(Yii::$app->params['siteConf']['userRole'][$role])) {
                 $auth = Yii::$app->authManager;
                 $permissions = $auth->getPermissionsByRole($role);
                 $allPermissions = $auth->getAllPermissions();
-                return $this->render('get-rules',[
-                    'role'=>$role,
-                    'permissions'=>$permissions,
-                    'allpermissions'=>$allPermissions
+                return $this->render('get-rules', [
+                    'role' => $role,
+                    'permissions' => $permissions,
+                    'allpermissions' => $allPermissions,
                 ]);
-            }
-            else
-            {
+            } else {
                 throw new NotFoundHttpException();
             }
-        }
-        else
-        {
+        } else {
             throw new ForbiddenHttpException();
         }
     }
 
     //分配权限
-    public function actionAsignRules()
-    {
-        if(Yii::$app->user->can('manageRbac'))
-        {
+    public function actionAsignRules() {
+        if (Yii::$app->user->can('manageRbac')) {
             $auth = Yii::$app->authManager;
             $role = Yii::$app->request->post('role');
-            if( isset( Yii::$app->params['siteConf']['userRole'][$role] ) )
-            {
+            if (isset(Yii::$app->params['siteConf']['userRole'][$role])) {
                 $names = Yii::$app->request->post('names');
-                $res = $auth->updateRolePermission( $names, $role );
-                return $this->redirect(['get-rules','role'=>$role]);
-            }
-            else
-            {
+                $res = $auth->updateRolePermission($names, $role);
+                return $this->redirect(['get-rules', 'role' => $role]);
+            } else {
                 throw new NotFoundHttpException();
             }
-        }
-        else
-        {
+        } else {
             throw new ForbiddenHttpException();
         }
     }

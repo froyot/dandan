@@ -186,5 +186,14 @@ return [
     'login' => '登录',
     'logout' => '退出',
     'fronted' => '前台',
+    'create category' => '添加分类',
+    'parent cat' => '上级分类',
+    'seo_keywords' => 'seo关键字',
+    'seo_description' => 'seo描述',
+    'seo_title' => 'seo标题',
+    'select page' => '选择页面',
+    'update' => '更新',
+    'post_content' => '内容',
+    'type' => '类型',
 
 ];

@@ -2,47 +2,43 @@
 
 namespace app\models\form;
 
+use app\models\action\Term;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\action\Term;
 use yii\helpers\ArrayHelper;
+
 /**
  * TermForm represents the model behind the search form about `app\models\action\Term`.
  */
-class TermForm extends Term
-{
+class TermForm extends Term {
     public $_keywords;
-    public function attributes()
-    {
-       // add related fields to searchable attributes
-      return ArrayHelper::merge(parent::attributes(), ['_keywords']);
+    public function attributes() {
+        // add related fields to searchable attributes
+        return ArrayHelper::merge(parent::attributes(), ['_keywords']);
     }
 
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return ArrayHelper::merge(parent::attributeLabels(),
-          [
-              '_keywords' => Yii::t('app','keyword'),
-          ]
+            [
+                '_keywords' => Yii::t('app', 'keyword'),
+            ]
         );
     }
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['term_id', 'parent', 'count', 'listorder', 'status'], 'integer'],
-            [['name', 'slug', 'taxonomy', 'description', 'path', 'seo_title', 'seo_keywords', 'seo_description', 'list_tpl', 'one_tpl','_keywords'], 'safe'],
+            [['term_id', 'parent', 'count', 'listorder'], 'integer'],
+            [['name', 'slug', 'taxonomy', 'description', '_keywords'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -54,15 +50,14 @@ class TermForm extends Term
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Term::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $this->load($params, '');
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -79,16 +74,17 @@ class TermForm extends Term
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'slug', $this->slug])
-            ->andFilterWhere(['like', 'taxonomy', $this->taxonomy])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'path', $this->path])
-            ->andFilterWhere(['like', 'seo_title', $this->seo_title])
-            ->andFilterWhere(['like', 'seo_keywords', $this->seo_keywords])
-            ->andFilterWhere(['like', 'seo_description', $this->seo_description])
-            ->andFilterWhere(['like', 'list_tpl', $this->list_tpl])
-            ->andFilterWhere(['like', 'one_tpl', $this->one_tpl]);
+              ->andFilterWhere(['like', 'slug', $this->slug])
+              ->andFilterWhere(['like', 'taxonomy', $this->taxonomy])
+              ->andFilterWhere(['like', 'description', $this->description]);
+        if ($this->_keywords) {
 
+            $query->andFilterWhere([
+                'or',
+                ['like', 'name', $this->_keywords],
+                ['like', 'description', $this->_keywords],
+            ]);
+        }
         return $dataProvider;
     }
 }

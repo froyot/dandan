@@ -153,7 +153,7 @@ class ViewHelper extends Model {
             return $themeList;
         }
 
-        $themeList = [];
+        $themeList = ['' => 'default'];
         $themeDir = Yii::getAlias('@app') . '/themes';
         if ($handle = opendir($themeDir)) {
             while (($file = readdir($handle)) !== false) {
