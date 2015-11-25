@@ -76,16 +76,13 @@ class InstallForm extends Model {
     }
 
     public function save() {
-        if ($this->writeDatabseConfig()) {
-            $adminId = $this->saveAdmin();
-            if ($adminId) {
-                $this->initPermission($adminId);
+        $adminId = $this->saveAdmin();
+        if ($adminId) {
+            $this->initPermission($adminId);
 
-            }
-            $this->saveSiteOption();
-            return true;
         }
-        return false;
+        $this->saveSiteOption();
+        return true;
 
     }
 
@@ -190,36 +187,30 @@ class InstallForm extends Model {
         $auth->addChild($admin, $author);
         $auth->assign($admin, $adminId);
     }
-    private function installSqlData() {
+    public function installData($id = 0) {
         $conn = @mysql_connect($this->dbhost, $this->db_user_name, $this->db_password);
         if (!$conn) {
-            $arr['msg'] = "连接数据库失败!";
-            echo json_encode($arr);
-            exit;
+            $this->addError('tips', '连接数据库失败!');
+            return null;
         }
 
         if (!mysql_select_db($this->dbname, $conn)) {
             //创建数据时同时设置编码
             if (!mysql_query("CREATE DATABASE IF NOT EXISTS `" . $this->dbname . "` DEFAULT CHARACTER SET utf8;", $conn)) {
-                $arr['msg'] = '数据库 ' . $this->dbname . ' 不存在，也没权限创建新的数据库！';
-                echo json_encode($arr);
-                exit;
-            }
-            if (empty($n)) {
-                $arr['n'] = 1;
-                $arr['msg'] = "成功创建数据库:{$this->dbname}<br>";
-                echo json_encode($arr);
-                exit;
+                $this->addError('tips', '数据库 ' . $this->dbname . ' 不存在，也没权限创建新的数据库！');
+                return null;
             }
             mysql_select_db($dbName, $conn);
         }
         //读取数据文件
         $sqldata = file_get_contents(Yii::getAlias('@app') . '/install/data/data.sql');
         $sqls = explode(";\r", $sqldata);
-        foreach ($sqls as $key => $sql) {
+        if ($id < count($sqls)) {
+            $sql = $sqls[$id];
             $pattern = '/DROP TABLE IF\sEXISTS `(.*?)`/is';
             $patternCreate = '/CREATE TABLE `(.*?)`/is';
             $patternReference = '/REFERENCES `(.*?)`/';
+            $patternConstraint = '/CONSTRAINT `(.*?)`/';
             if (preg_match($pattern, $sql, $match)) {
                 $sql = 'DROP TABLE IF EXISTS `' . $this->db_prefix . $match[1] . '`;';
             } else {
@@ -231,10 +222,16 @@ class InstallForm extends Model {
 
                     return str_replace($match[1], $this->db_prefix . $match[1], $match[0]);
                 }, $sql);
+                $sql = preg_replace_callback($patternConstraint, function ($match) {
+
+                    return str_replace($match[1], $this->db_prefix . $match[1], $match[0]);
+                }, $sql);
+
                 $sql .= ";";
             }
             $res = mysql_query($sql);
-
+            $next = $id < count($sqls) - 1 ? $id + 1 : $id;
+            return [$next, $sql];
         }
 
     }

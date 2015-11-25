@@ -82,7 +82,8 @@ class User extends UserDb implements \yii\web\IdentityInterface {
      */
     public function beforeSave($insert) {
         if (parent::beforeSave($insert)) {
-
+            //设置默认用户昵称
+            $this->user_nicename = $this->user_login;
             //判断用户密码是否编码
             if ($this->password) {
                 $this->user_pass =

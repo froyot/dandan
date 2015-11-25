@@ -94,7 +94,7 @@ foreach ($folder as $dir) {
     <div class="bottom tac">
 
       <a href="<?=Url::to(['default/check']);?>"><?=Html::Button(\Yii::t('app', 'recheck'), ['class' => 'btn btn-primary'])?></a>
-      <a href="<?=Url::to(['default/install-data']);?>" ><?=Html::Button(\Yii::t('app', 'next'), ['class' => 'btn btn-success'])?></a>
+      <a href="<?=Url::to(['default/config']);?>" ><?=Html::Button(\Yii::t('app', 'next'), ['class' => 'btn btn-success'])?></a>
 
     </div>
   </section>
