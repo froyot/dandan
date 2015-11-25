@@ -84,7 +84,7 @@ echo SideNavWidget::widget([
                 'active' => Yii::$app->controller->id == 'setting' ? true : false,
                 'items' => [
                     ['label' => Yii::t('app', 'siteSetting'), 'url' => ['setting/site']],
-                    ['label' => Yii::t('app', 'adSetting'), 'url' => ['setting/ad']],
+
                     ['label' => Yii::t('app', 'friendLink'), 'url' => ['setting/links']],
                 ],
             ],

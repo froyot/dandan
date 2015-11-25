@@ -4,6 +4,7 @@
  */
 namespace app\models\util;
 use app\models\action\Option;
+use Yii;
 use yii\base\Model;
 
 class LinkOption extends Model {
@@ -25,6 +26,13 @@ class LinkOption extends Model {
      */
     public $open_type;
 
+    public function attributeLabels() {
+        return [
+            'site_name' => Yii::t('app', 'site_name'),
+            'site_url' => Yii::t('app', 'site_url'),
+            'open_type' => Yii::t('app', 'open_type'),
+        ];
+    }
     /**
      * link option rules
      * @author Allon<xianlong300@sina.com>

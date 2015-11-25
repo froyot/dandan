@@ -3,8 +3,8 @@
 /* @var $this yii\web\View */
 /* @var $model app\models\action\slideCat */
 
-$this->title = Yii::t('app', 'Create Slide Cat');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Slide Cats'), 'url' => ['index']];
+$this->title = Yii::t('app', 'create') . Yii::t('app', 'Slides') . Yii::t('app', 'category');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Slides') . Yii::t('app', 'category'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="slide-cat-create">

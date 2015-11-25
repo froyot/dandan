@@ -77,7 +77,11 @@ class InstallForm extends Model {
 
     public function save() {
         if ($this->writeDatabseConfig()) {
-            $this->saveAdmin();
+            $adminId = $this->saveAdmin();
+            if ($adminId) {
+                $this->initPermission($adminId);
+
+            }
             $this->saveSiteOption();
             return true;
         }
@@ -94,7 +98,7 @@ class InstallForm extends Model {
         ];
         if ($user->save()) {
 
-            return true;
+            return $user->getPrimaryKey();
         } else {
 
             $this->addError('admin', 'create account error');
@@ -144,6 +148,48 @@ class InstallForm extends Model {
         return $res;
     }
 
+    private function initPermission($adminId) {
+        $auth = Yii::$app->authManager;
+        $auth->removeAll();
+        $initRbac = $auth->createPermission('initRbac');
+        $initRbac->description = 'Init rbac';
+        $auth->add($initRbac);
+
+        $manageRbac = $auth->createPermission('manageRbac');
+        $manageRbac->description = 'Manage rbac';
+        $auth->add($manageRbac);
+
+        $author = $auth->createRole('user');
+        $auth->add($author);
+
+        $createPost = $auth->createPermission('createPost');
+        $createPost->description = 'Create post';
+        $auth->add($createPost);
+        $auth->addChild($author, $createPost);
+
+        $updatePost = $auth->createPermission('updatePost');
+        $updatePost->description = 'update post';
+        $auth->add($updatePost);
+        $auth->addChild($author, $updatePost);
+
+        $deletePost = $auth->createPermission('deletePost');
+        $deletePost->description = 'Delete post';
+        $auth->add($deletePost);
+        $auth->addChild($author, $deletePost);
+
+        $createComment = $auth->createPermission('createComment');
+        $createComment->description = 'Create comment';
+        $auth->add($createComment);
+        $auth->addChild($author, $createComment);
+
+        $admin = $auth->createRole('admin');
+        $auth->add($admin);
+
+        $auth->addChild($admin, $manageRbac);
+        $auth->addChild($admin, $initRbac);
+        $auth->addChild($admin, $author);
+        $auth->assign($admin, $adminId);
+    }
     private function installSqlData() {
         $conn = @mysql_connect($this->dbhost, $this->db_user_name, $this->db_password);
         if (!$conn) {

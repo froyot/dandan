@@ -195,5 +195,10 @@ return [
     'update' => '更新',
     'post_content' => '内容',
     'type' => '类型',
+    'site_url' => '链接',
+    'open_type' => '打开方式',
+    'default' => '默认',
+    'new window' => '新窗口',
+    'post' => '文章',
 
 ];
