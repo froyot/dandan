@@ -1,9 +1,7 @@
 <?php
-use yii\web\View;
-use yii\helpers\Url;
 use app\assets\DefaultAsset;
 use app\models\util\ViewHelper;
-use app\common\widgets\PostWidget;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 $this->title = ViewHelper::getSiteOption('site_seo_title');
@@ -13,91 +11,45 @@ $_keywords = ViewHelper::getSiteOption('site_seo_keywords');
 $bundle = DefaultAsset::register($this);
 $this->registerMetaTag(['name' => 'description', 'content' => $_description]);
 $this->registerMetaTag(['name' => 'description', 'content' => $_keywords]);
-$bundle->addPageCssFile($this,'css/slippry/slippry.css');
-$this->registerCss('
-
-.caption-wraper{position: absolute;left:50%;bottom:2em;}
-            .caption-wraper .caption{
-            position: relative;left:-50%;
-            background-color: rgba(0, 0, 0, 0.54);
-            padding: 0.4em 1em;
-            color:#fff;
-            -webkit-border-radius: 1.2em;
-            -moz-border-radius: 1.2em;
-            -ms-border-radius: 1.2em;
-            -o-border-radius: 1.2em;
-            border-radius: 1.2em;
-            }
-            @media (max-width: 767px){
-                .sy-box{margin: 12px -20px 0 -20px;}
-                .caption-wraper{left:0;bottom: 0.4em;}
-                .caption-wraper .caption{
-                left: 0;
-                padding: 0.2em 0.4em;
-                font-size: 0.92em;
-                -webkit-border-radius: 0;
-                -moz-border-radius: 0;
-                -ms-border-radius: 0;
-                -o-border-radius: 0;
-                border-radius: 0;}
-            }
-');
+$bundle->addPageCssFile($this, 'css/sb-slider.css');
 ?>
-<ul id="homeslider" class="unstyled">
-
-    <?php foreach(ViewHelper::getIndexSlide() as $item):?>
-    <li>
-        <div class="caption-wraper">
-            <div class="caption"><?=$item['des'];?></div>
-        </div>
-        <a href="<?=$item['url'];?>"><img src="<?=$item['img'];?>" alt=""></a>
-    </li>
-    <?php endforeach;?>
 
 
+<div id="slides">
 
-</ul>
-<div>
+
+        <?php foreach (ViewHelper::getIndexSlide() as $item): ?>
+        <li>
+            <a href="<?=$item['url'];?>" ><img src="<?=$item['img'];?>" alt=""></a>
+
+        </li>
+        <?php endforeach;?>
+</div>
+
     <div>
-        <h1 class="text-center">了解我们的团队</h1>
-        <h3 class="text-center">Quickly Learn About Our Team</h3>
+        <h1 class="text-center">了解DanDan Cms</h1>
+        <h3 class="text-center">Quickly Learn About DanDan Cms</h3>
     </div>
     <div class="row">
          <div class="col-md-4">
-             <h2 class="font-large nospace"><i class="fa fa-bars"></i> 资深开发--Allon</h2>
-             <p>研究生学历<br/>
-                3年从业经验，项目经历丰富<br/>
-                精通网站,Android App开发<br/>
-                负责内容:App 服务器开发，App后台开发
+             <h2 class="font-large nospace"><i class="fa fa-bars"></i> 开发基础Yii2.0 </h2>
+             <p>
+                Yii是一个PHP框架，用于开发各种类型的Web应用。Yii官方将其定义为高性能、基于组件的框架。Yii开发团队一直关注业内Web开发的最新技术，很注意吸收当下最为流行的技术。就Web开发而言，无论是哪种类型的应用、无论是哪个开发阶段的常见问题，Yii都有成熟、高效、可靠的解决方案。 由于Yii架构合理，Web开发中常用的思路和模式都可以很顺地套上使用。 在Web开发中经常遇到的一些细节上的问题，Yii也提供了许多现成解决方案，拿来就可以使用，非常高效、方便。
+
             </p>
         </div>
         <div class="col-md-4">
-             <h2 class="font-large nospace"><i class="fa fa-group"></i> 成熟大叔--鑫哥</h2>
-             <p>研究生学历<br/>
-                项目经历丰富<br/>
-                精通嵌入式，Android开发<br/>
-                负责内容:App，嵌入式开发
+             <h2 class="font-large nospace"><i class="fa fa-group"></i> Yii2 特色</h2>
+             <p>Yii2.0格外重视安全性，采取一系列手段有效防止SQL注入、XSS攻击、CSRF攻击、cookie篡改等。运用了PHP命名空间、Trait、 PSR标准 、Composer和Bower包管理器。支持各类SQL和NOSQL数据库，高效实现了Active Record等数据库查询、操作界面，提供数据库迁移、复制、 读写分离等功能。支持Bootstrap，jQuery UI，提供了丰富的Widget挂件供使用。提供多种认证和授权手段基于cookie和基于令牌的认证。
             </p>
         </div>
         <div class="col-md-4">
-              <h2 class="font-large nospace "><i class="fa fa-cloud"></i>资深PM--刘姐</h2>
-              <p>研究生学历<br/>
-                现工作于高德<br/>
-                精通产品功能分析设计<br/>
-                负责内容:产品功能分析，进度把控
+              <h2 class="font-large nospace "><i class="fa fa-cloud"></i>DanDan CMS</h2>
+              <p>以 Yii2 基础版为基础进行开发，默认有前台fronted,后台admin,安装install三个模块。DanDan CMS支持多主题切换，只需要将下载的主题(推荐使用themefactory.net进行下载),参照默认layout进行修改即可。所有需要在模板视图中用到的函数推荐写在app\models\util\ViewHelper类当中。后台采用rbac进行权限管理,默认使用安装时的用户作为超级用户。
             </p>
         </div>
     </div>
-    <div class="row boder-bottom">
-        <div class="col-md-4">
-              <h2 class="font-large nospace"><i class="fa fa-cloud"></i>专业测试--立立</h2>
-              <p>研究生学历<br/>
-                现工作于阿尔卡特,朗讯<br/>
-                精通产品测试<br/>
-                负责内容:对产品测试
-            </p>
-        </div>
-    </div>
+
     <div>
         <h1 class="text-center">服务领域</h1>
     </div>
@@ -120,16 +72,29 @@ $this->registerCss('
 
 </div>
 <?php
-$bundle->addPageScript($this,'js/slippry.min.js');
-$this->registerJs('
-    var demo1 = $("#homeslider").slippry({
-        transition: "fade",
-        useCSS: true,
-        captions: false,
-        speed: 1000,
-        pause: 3000,
-        auto: true,
-        preload: "visible"
+$bundle->addPageScript($this, 'js/jquery.slides.min.js');
+
+$this->registerJs(
+    "
+$(function() {
+      $('#slides').slidesjs({
+        width: 800,
+        height: 200,
+        navigation: {
+            active: false
+        },
+        pagination: {
+          active: true,
+
+          effect: 'slide'
+        },
+        play: {
+          active: false,
+          auto: true,
+          interval: 5000,
+          swap: true
+        }
+      });
     });
-',View::POS_LOAD);
+", View::POS_LOAD);
 ?>
