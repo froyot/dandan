@@ -35,11 +35,8 @@ array_merge(
                     'des' => '测试slide3',
                     'url' => '#'],
             ],
-            'userRole' => [
-                'admin' => 'admin',
-                'user' => 'user',
-            ],
         ],
+
         'defaultPermision' => [
             'index post' => 'Index Post',
             'create post' => 'Create Post',

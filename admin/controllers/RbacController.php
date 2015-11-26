@@ -3,6 +3,7 @@ namespace app\admin\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -90,7 +91,8 @@ class RbacController extends Controller {
     public function actionGetRules() {
         if (Yii::$app->user->can('manageRbac')) {
             $role = Yii::$app->request->get('role');
-            if (isset(Yii::$app->params['siteConf']['userRole'][$role])) {
+            $allRoles = ArrayHelper::map(Yii::$app->authManager->getAllRoles(), 'name', 'name');
+            if (isset($allRoles[$role])) {
                 $auth = Yii::$app->authManager;
                 $permissions = $auth->getPermissionsByRole($role);
                 $allPermissions = $auth->getAllPermissions();

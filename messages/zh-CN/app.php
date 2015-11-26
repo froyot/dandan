@@ -206,4 +206,5 @@ return [
     'reset {user_login} password' => '重置 {user_login} 密码',
     'reset password' => '重置密码',
     'user_login' => '登录名',
+    'editor_role' => '编辑',
 ];
