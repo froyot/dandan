@@ -39,6 +39,7 @@ class UserController extends BaseController implements BaseControllerInterface {
     }
 
     public function actionResetPassword() {
+
         $id = intval(Yii::$app->request->get('id'));
         $model = new ResetPasswordForm();
         $model->userId = $id;
@@ -53,5 +54,21 @@ class UserController extends BaseController implements BaseControllerInterface {
         }
 
         return $this->render('resetPassword', ['model' => $model]);
+    }
+
+    /**
+     * CheckOwnPermission
+     * @author Allon<xianlong300@sina.com>
+     * @dateTime 2015-11-26T15:56:41+0800
+     * @param    boolean        if edit own data
+     */
+    protected function CheckOwnPermission($action) {
+        if ($action->id == 'reset-password') {
+            $id = intval(Yii::$app->request->get('id'));
+            if (!$id || $id == Yii::$app->user->id) {
+                return true;
+            }
+            return false;
+        }
     }
 }

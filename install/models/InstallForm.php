@@ -86,6 +86,13 @@ class InstallForm extends Model {
 
     }
 
+    /**
+     * create admin config in data base
+     * make sure you are create db.config.php file
+     * @author Allon<xianlong300@sina.com>
+     * @dateTime 2015-11-26T15:58:48+0800
+     * @return   [type]                   [description]
+     */
     public function saveAdmin() {
         $user = new User();
         $user->attributes = [
@@ -102,6 +109,11 @@ class InstallForm extends Model {
         }
     }
 
+    /**
+     * save other site option to databse
+     * @author Allon<xianlong300@sina.com>
+     * @dateTime 2015-11-26T15:59:36+0800
+     */
     public function saveSiteOption() {
         $option = new SiteOption();
         $option->attributes = [
@@ -113,6 +125,12 @@ class InstallForm extends Model {
         $option->save();
     }
 
+    /**
+     * write databse config to db.config.php
+     * @author Allon<xianlong300@sina.com>
+     * @dateTime 2015-11-26T15:59:56+0800
+     * @return   boolean   is write success
+     */
     public function writeDatabseConfig() {
         $configFormat =
         "<?php\n" .
@@ -142,6 +160,12 @@ class InstallForm extends Model {
         return $res;
     }
 
+    /**
+     * init users permission
+     * @author Allon<xianlong300@sina.com>
+     * @dateTime 2015-11-26T16:00:28+0800
+     * @param    int                   $adminId super admin user id
+     */
     private function initPermission($adminId) {
         $auth = Yii::$app->authManager;
         $auth->removeAll();
@@ -165,7 +189,9 @@ class InstallForm extends Model {
         $auth->addChild($admin, $author);
         $auth->addChild($admin, $editor);
 
-        foreach (Yii::$app->params['defaultPermision'] as $key => $description) {
+        $defaultPemission = Yii::$app->controller->module->params['defaultPermision'];
+
+        foreach ($defaultPemission as $key => $description) {
             $permission = $auth->createPermission($key);
             $permission->description = $description;
             $auth->add($permission);
@@ -173,6 +199,13 @@ class InstallForm extends Model {
         }
         $auth->assign($admin, $adminId);
     }
+
+    /**
+     * load data from install/data/data.sql file
+     * @author Allon<xianlong300@sina.com>
+     * @dateTime 2015-11-26T16:01:02+0800
+     * @param    integer                  $id index of sql command
+     */
     public function installData($id = 0) {
         $conn = @mysql_connect($this->dbhost, $this->db_user_name, $this->db_password);
         if (!$conn) {
@@ -182,8 +215,12 @@ class InstallForm extends Model {
 
         if (!mysql_select_db($this->dbname, $conn)) {
             //创建数据时同时设置编码
-            if (!mysql_query("CREATE DATABASE IF NOT EXISTS `" . $this->dbname . "` DEFAULT CHARACTER SET utf8;", $conn)) {
-                $this->addError('tips', '数据库 ' . $this->dbname . ' 不存在，也没权限创建新的数据库！');
+            if (!mysql_query(
+                "CREATE DATABASE IF NOT EXISTS `" .
+                $this->dbname . "` DEFAULT CHARACTER SET utf8;", $conn)) {
+                $this->addError(
+                    'tips', '数据库 ' . $this->dbname .
+                    ' 不存在，也没权限创建新的数据库！');
                 return null;
             }
             mysql_select_db($dbName, $conn);

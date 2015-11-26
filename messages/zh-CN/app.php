@@ -207,4 +207,7 @@ return [
     'reset password' => '重置密码',
     'user_login' => '登录名',
     'editor_role' => '编辑',
+    'role' => '角色',
+    'user' => '用户',
+    'create user' => '添加用户',
 ];

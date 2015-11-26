@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 'user_email:email',
 [
 'attribute' => 'role',
+'label' => Yii::t('app', 'role'),
 'value' => 'authAssignment.item_name',
 ],
 

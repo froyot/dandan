@@ -64,6 +64,7 @@ class User extends UserDb implements \yii\web\IdentityInterface {
         foreach ($label as $key => $item) {
             $label[$key] = Yii::t('app', $key);
         }
+        $label['password'] = Yii::t('app', 'password');
         return $label;
     }
     /**

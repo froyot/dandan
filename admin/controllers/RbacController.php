@@ -28,55 +28,6 @@ class RbacController extends Controller {
             ],
         ];
     }
-    //权限重置
-    public function actionInit() {
-
-        if (Yii::$app->user->can('initRbac')) {
-            $auth = Yii::$app->authManager;
-            $auth->removeAll();
-            $initRbac = $auth->createPermission('initRbac');
-            $initRbac->description = 'Init rbac';
-            $auth->add($initRbac);
-
-            $manageRbac = $auth->createPermission('manageRbac');
-            $manageRbac->description = 'Manage rbac';
-            $auth->add($manageRbac);
-
-            $author = $auth->createRole('user');
-            $auth->add($author);
-
-            $createPost = $auth->createPermission('createPost');
-            $createPost->description = 'Create post';
-            $auth->add($createPost);
-            $auth->addChild($author, $createPost);
-
-            $updatePost = $auth->createPermission('updatePost');
-            $updatePost->description = 'update post';
-            $auth->add($updatePost);
-            $auth->addChild($author, $updatePost);
-
-            $deletePost = $auth->createPermission('deletePost');
-            $deletePost->description = 'Delete post';
-            $auth->add($deletePost);
-            $auth->addChild($author, $deletePost);
-
-            $createComment = $auth->createPermission('createComment');
-            $createComment->description = 'Create comment';
-            $auth->add($createComment);
-            $auth->addChild($author, $createComment);
-
-            $admin = $auth->createRole('admin');
-            $auth->add($admin);
-
-            $auth->addChild($admin, $manageRbac);
-            $auth->addChild($admin, $initRbac);
-            $auth->addChild($admin, $author);
-            $auth->assign($admin, Yii::$app->user->id);
-
-        } else {
-            throw new ForbiddenHttpException();
-        }
-    }
 
     //角色列表
     public function actionRoles() {

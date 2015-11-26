@@ -90,7 +90,12 @@ class BaseController extends Controller {
             if (\Yii::$app->user->can($permission)) {
                 return true;
             } else {
-                throw new \yii\web\UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
+                if (method_exists($this, 'checkOwnPermission')) {
+                    if ($this->checkOwnPermission($action)) {
+                        return true;
+                    }
+                }
+                throw new \yii\web\UnauthorizedHttpException("Don't has permission to finish action");
             }
         }
     }

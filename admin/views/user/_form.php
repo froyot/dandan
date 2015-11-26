@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
     <?=$form->field($model, 'user_nicename')->textInput(['maxlength' => true])?>
 
     <?=$form->field($model, 'user_email')->textInput(['maxlength' => true])?>
-    <?=$form->field($model, 'role')->DropDownList(ArrayHelper::map(Yii::$app->authManager->getAllRoles(), 'name', 'name'))?>
+    <?=$form->field($model, 'role')->DropDownList(ArrayHelper::map(Yii::$app->authManager->getAllRoles(), 'name', 'name'))->label(Yii::t('app', 'role'));?>
     <?=$form->field($model, 'sex')->DropDownList([0 => '女', 1 => '男'])?>
     <?=$form->field($model, 'birthday')->textInput()?>
     <?=$form->field($model, 'mobile')->textInput(['maxlength' => true])?>
