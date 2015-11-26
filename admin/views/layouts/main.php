@@ -49,9 +49,15 @@ echo Nav::widget([
     'items' => [
         Yii::$app->user->isGuest ?
         ['label' => Yii::t('app', 'login'), 'url' => Url::to(\Yii::$app->user->loginUrl)] :
-        ['label' => Yii::t('app', 'logout') . '(' . Yii::$app->user->identity->user_nicename . ')',
-            'url' => ['site/logout'],
-            'linkOptions' => ['data-method' => 'post']],
+        [
+            'label' => Yii::$app->user->identity->user_nicename,
+            'items' => [
+                ['label' => Yii::t('app', 'logout') . '(' . Yii::$app->user->identity->user_nicename . ')',
+                    'url' => ['site/logout'],
+                    'linkOptions' => ['data-method' => 'post']],
+                ['label' => Yii::t('app', 'reset password'), 'url' => ['user/reset-password']],
+            ],
+        ],
     ],
 ]);
 ?>

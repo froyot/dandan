@@ -1,6 +1,8 @@
 <?php
 
 namespace app\admin\controllers;
+use app\models\form\ResetPasswordForm;
+use Yii;
 
 class UserController extends BaseController implements BaseControllerInterface {
     public $modelClass = "app\models\action\User";
@@ -34,5 +36,22 @@ class UserController extends BaseController implements BaseControllerInterface {
      */
     public function beforeRenderEdit(&$model) {
 
+    }
+
+    public function actionResetPassword() {
+        $id = intval(Yii::$app->request->get('id'));
+        $model = new ResetPasswordForm();
+        $model->userId = $id;
+        if (!$id) {
+            $model->scenario = 'self-edit';
+        }
+        if (Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            if ($model->validate() && $model->save()) {
+                return $this->redirect(['site/index']);
+            }
+        }
+
+        return $this->render('resetPassword', ['model' => $model]);
     }
 }

@@ -14,14 +14,14 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin();?>
 
     <?=$form->field($model, 'user_login')->textInput(['maxlength' => true])?>
-
-    <?=$form->field($model, 'user_pass')->textInput(['maxlength' => true, 'name' => 'User[password]', 'value' => ''])?>
-
+    <?php if ($model->isNewRecord): ?>
+    <?=$form->field($model, 'password')->textInput(['maxlength' => true])?>
+    <?php endif;?>
     <?=$form->field($model, 'user_nicename')->textInput(['maxlength' => true])?>
 
     <?=$form->field($model, 'user_email')->textInput(['maxlength' => true])?>
     <?=$form->field($model, 'role')->DropDownList(ArrayHelper::map(Yii::$app->authManager->getAllRoles(), 'name', 'name'))?>
-    <?=$form->field($model, 'sex')->textInput()?>
+    <?=$form->field($model, 'sex')->DropDownList([0 => '女', 1 => '男'])?>
     <?=$form->field($model, 'birthday')->textInput()?>
     <?=$form->field($model, 'mobile')->textInput(['maxlength' => true])?>
 

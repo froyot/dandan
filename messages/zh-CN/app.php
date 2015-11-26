@@ -202,5 +202,8 @@ return [
     'post' => '文章',
     'user manage' => '用户管理',
     'user list' => '用户列表',
-
+    'oldPassword' => '旧密码',
+    'reset {user_login} password' => '重置 {user_login} 密码',
+    'reset password' => '重置密码',
+    'user_login' => '登录名',
 ];

@@ -218,7 +218,7 @@ class BaseController extends Controller {
      * @param  [type] $id [description]
      * @return [type]     [description]
      */
-    private function findModel($id) {
+    protected function findModel($id) {
         if ($this->findModel !== null) {
             return call_user_func($this->findModel, $id, $this);
         }

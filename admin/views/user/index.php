@@ -47,7 +47,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 [
 'class' => 'yii\grid\ActionColumn',
-'template' => '{update} | {delete}',
+'template' => '{reset-password} | {update} | {delete}',
+'buttons' => [
+'reset-password' => function ($url, $model, $key) {
+return '<a href="' . $url . '">' . Yii::t('app', 'reset password') . '</a>';
+},
+],
 ],
 ],
 ]);?>
