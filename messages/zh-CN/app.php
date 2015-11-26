@@ -200,5 +200,7 @@ return [
     'default' => '默认',
     'new window' => '新窗口',
     'post' => '文章',
+    'user manage' => '用户管理',
+    'user list' => '用户列表',
 
 ];

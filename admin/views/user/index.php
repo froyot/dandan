@@ -1,23 +1,55 @@
 <?php
-use yii\helpers\Url;
+
+use yii\grid\GridView;
+
 /* @var $this yii\web\View */
-$this->title = 'My Yii Application';
+/* @var $searchModel app\models\form\UserForm */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = Yii::t('app', 'user list');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-index">
-
-    <div class="jumbotron" id="index_slide">
-        <div class="slide-content" style="position: absolute;bottom: 78px;">
+<div class="user-index">
 
 
-
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
+    <?php echo $this->render('/public/_search', ['model' => $searchModel]);?>
 
 
-        </div>
 
-    </div>
+    <?=GridView::widget([
+'dataProvider' => $dataProvider,
+'columns' => [
+['class' => 'yii\grid\SerialColumn'],
+
+'id',
+'user_login',
+'user_nicename',
+'user_email:email',
+[
+'attribute' => 'role',
+'value' => 'authAssignment.item_name',
+],
+
+// 'user_url:url',
+// 'avatar',
+// 'sex',
+// 'birthday',
+// 'signature',
+// 'last_login_ip',
+// 'last_login_time',
+// 'create_time',
+// 'user_activation_key',
+// 'user_status',
+// 'score',
+// 'user_type',
+// 'coin',
+// 'mobile',
+
+[
+'class' => 'yii\grid\ActionColumn',
+'template' => '{update} | {delete}',
+],
+],
+]);?>
+
 </div>

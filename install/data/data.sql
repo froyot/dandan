@@ -15,19 +15,18 @@ Date: 2015-11-25 16:15:53
 
 SET FOREIGN_KEY_CHECKS=0;
 
-
--- ----------------------------
--- Table structure for auth_assignment
--- ----------------------------
-DROP TABLE IF EXISTS `auth_assignment`;
-CREATE TABLE `auth_assignment` (
-  `item_name` varchar(64) NOT NULL,
-  `user_id` varchar(64) NOT NULL,
+DROP TABLE IF EXISTS `auth_rule`;
+CREATE TABLE `auth_rule` (
+  `name` varchar(64) NOT NULL,
+  `data` text,
   `created_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`item_name`,`user_id`),
-  CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- ----------------------------
+-- Records of auth_rule
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for auth_item
@@ -48,6 +47,18 @@ CREATE TABLE `auth_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+-- ----------------------------
+-- Table structure for auth_assignment
+-- ----------------------------
+DROP TABLE IF EXISTS `auth_assignment`;
+CREATE TABLE `auth_assignment` (
+  `item_name` varchar(64) NOT NULL,
+  `user_id` varchar(64) NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`item_name`,`user_id`),
+  CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- ----------------------------
 -- Table structure for auth_item_child
@@ -66,18 +77,6 @@ CREATE TABLE `auth_item_child` (
 
 -- ----------------------------
 -- Table structure for auth_rule
--- ----------------------------
-DROP TABLE IF EXISTS `auth_rule`;
-CREATE TABLE `auth_rule` (
-  `name` varchar(64) NOT NULL,
-  `data` text,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of auth_rule
 -- ----------------------------
 
 -- ----------------------------

@@ -27,25 +27,22 @@ use Yii;
  * @property integer $coin
  * @property string $mobile
  */
-class Users extends \yii\db\ActiveRecord
-{
+class Users extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return '{{%users}}';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['sex', 'user_status', 'score', 'user_type', 'coin'], 'integer'],
-            [['last_login_time', 'create_time'], 'date', 'format'=>'yyyy-MM-dd HH:mm:ss'],
-            ['birthday', 'date', 'format'=>'yyyy-MM-dd'],
+            [['sex', 'user_status', 'user_type'], 'integer'],
+            [['last_login_time', 'create_time'], 'date', 'format' => 'yyyy-MM-dd HH:mm:ss'],
+            ['birthday', 'date', 'format' => 'yyyy-MM-dd'],
             [['user_login', 'user_activation_key'], 'string', 'max' => 60],
             [['user_pass'], 'string', 'max' => 64],
             [['user_nicename'], 'string', 'max' => 50],
@@ -53,15 +50,14 @@ class Users extends \yii\db\ActiveRecord
             [['avatar', 'signature'], 'string', 'max' => 255],
             [['last_login_ip'], 'string', 'max' => 16],
             [['mobile'], 'string', 'length' => 11],
-            ['mobile','match','pattern'=>'/^[0-9]{11}$/']
+            ['mobile', 'match', 'pattern' => '/^[0-9]{11}$/'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'user_login' => 'User Login',

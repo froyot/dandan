@@ -19,6 +19,10 @@ class RbacDbManager extends DbManager {
         return $this->getItems(RbacItem::TYPE_PERMISSION);
     }
 
+    public function getAllRoles() {
+        return $this->getItems(RbacItem::TYPE_ROLE);
+    }
+
     /**
      * update roles permission
      * @author Allon<xianlong300@sina.com>

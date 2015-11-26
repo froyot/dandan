@@ -139,9 +139,6 @@ class InstallForm extends Model {
         }
         $res = fwrite($fp, $config);
         fclose($fp);
-        if ($res) {
-            $this->installSqlData();
-        }
         return $res;
     }
 
@@ -158,33 +155,22 @@ class InstallForm extends Model {
 
         $author = $auth->createRole('user');
         $auth->add($author);
-
-        $createPost = $auth->createPermission('createPost');
-        $createPost->description = 'Create post';
-        $auth->add($createPost);
-        $auth->addChild($author, $createPost);
-
-        $updatePost = $auth->createPermission('updatePost');
-        $updatePost->description = 'update post';
-        $auth->add($updatePost);
-        $auth->addChild($author, $updatePost);
-
-        $deletePost = $auth->createPermission('deletePost');
-        $deletePost->description = 'Delete post';
-        $auth->add($deletePost);
-        $auth->addChild($author, $deletePost);
-
-        $createComment = $auth->createPermission('createComment');
-        $createComment->description = 'Create comment';
-        $auth->add($createComment);
-        $auth->addChild($author, $createComment);
+        $editor = $auth->createRole('editor');
+        $auth->add($editor);
 
         $admin = $auth->createRole('admin');
         $auth->add($admin);
-
         $auth->addChild($admin, $manageRbac);
         $auth->addChild($admin, $initRbac);
         $auth->addChild($admin, $author);
+        $auth->addChild($admin, $editor);
+
+        foreach (Yii::$app->params['defaultPermision'] as $key => $description) {
+            $permission = $auth->createPermission($key);
+            $permission->description = $description;
+            $auth->add($permission);
+            $auth->addChild($admin, $permission);
+        }
         $auth->assign($admin, $adminId);
     }
     public function installData($id = 0) {

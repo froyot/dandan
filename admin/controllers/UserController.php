@@ -4,6 +4,7 @@ namespace app\admin\controllers;
 
 class UserController extends BaseController implements BaseControllerInterface {
     public $modelClass = "app\models\action\User";
+    public $modelFormClass = "app\models\\form\UserForm";
 
     /**
      * @param $model
@@ -18,7 +19,7 @@ class UserController extends BaseController implements BaseControllerInterface {
      * @return mixed
      */
     public function afterUpdate($model) {
-        return $this->redirect(['view', 'id' => $model->id]);
+        return $this->redirect(['index']);
     }
 
     /**

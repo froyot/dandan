@@ -3,14 +3,19 @@
  * 用户操作类，所有对用户的基本操作在该文件中实现
  */
 namespace app\models\action;
+use app\models\db\AuthAssignment;
 use app\models\db\Users as UserDb;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\helpers\ArrayHelper;
 
 class User extends UserDb implements \yii\web\IdentityInterface {
+    public $role;
     public function init() {
         parent::init();
+        $this->on(self::EVENT_AFTER_INSERT, [$this, 'afterDataInsert']);
+        $this->on(self::EVENT_AFTER_UPDATE, [$this, 'afterDataUpdate']);
+        $this->on(self::EVENT_AFTER_DELETE, [$this, 'afterDataDelete']);
     }
     /**
      * unencode password
@@ -21,9 +26,39 @@ class User extends UserDb implements \yii\web\IdentityInterface {
     public function rules() {
         return ArrayHelper::merge(parent::rules(), [
             ['password', 'string'],
+            ['role', 'string'],
+            ['user_status', 'default', 'value' => 1],
         ]);
     }
 
+    public function afterDataInsert($event) {
+        //更新权限
+        $role = Yii::$app->authManager->getRole($event->sender->role);
+        if ($role) {
+            Yii::$app->authManager->assign($role, $event->sender->getPrimaryKey());
+        }
+
+    }
+
+    public function afterDataUpdate($event) {
+
+        //更新权限
+        $role = Yii::$app->authManager->getRole($event->sender->role);
+        $olderRoles = Yii::$app->authManager->getRolesByUser($event->sender->getPrimaryKey());
+        //角色没变化
+        if (isset($olderRoles[$event->sender->role])) {
+            return true;
+        } elseif ($role) {
+            //删除原来的角色分配
+            Yii::$app->authManager->revokeAll($event->sender->getPrimaryKey());
+            Yii::$app->authManager->assign($role, $event->sender->getPrimaryKey());
+        }
+    }
+    public function afterDataDelete($event) {
+
+        Yii::$app->authManager->revokeAll($event->sender->getPrimaryKey());
+
+    }
     public function attributeLabels() {
         $label = parent::attributeLabels();
         foreach ($label as $key => $item) {
@@ -76,6 +111,10 @@ class User extends UserDb implements \yii\web\IdentityInterface {
         return Yii::$app->security->validatePassword($password, $this->user_pass);
     }
 
+    public function getAuthAssignment() {
+        return $this->hasOne(AuthAssignment::className(), ['user_id' => 'id']);
+    }
+
     /**
      * 保存前数据处理
      * @return [type] [description]
@@ -97,6 +136,7 @@ class User extends UserDb implements \yii\web\IdentityInterface {
             //插入前数据处理
             if ($insert) {
                 $this->create_time = date('Y-m-d H:i:s');
+                $this->last_login_time = date('Y-m-d H:i:s');
                 $hash = rand(100, 999);
                 $this->user_activation_key =
                 substr(md5($hash), 0, 16) .

@@ -1,18 +1,18 @@
 <?php
 
-use yii\helpers\Html;
-use yii\helpers\Url;
-
 /* @var $this yii\web\View */
-/* @var $model app\models\db\Content */
+/* @var $model app\models\action\User */
 
-$this->title = Yii::t('app','edit userinfo');
+$this->title = Yii::t('app', 'update');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'user list'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::t('app', 'update');
 ?>
-<div class="content-update">
-    <?= $this->render('_form', [
-        'model' => $model,
-        'option'=>['action'=>Url::to(['user/update','id'=>$model->id])]
-    ]) ?>
+<div class="user-update">
+
+
+
+    <?=$this->render('_form', [
+'model' => $model,
+])?>
 
 </div>
-

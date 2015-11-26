@@ -129,6 +129,11 @@ echo SideNavWidget::widget([
                 'url' => ['rbac/roles'],
                 'active' => Yii::$app->controller->id == 'rbac' ? true : false,
             ],
+            [
+                'label' => Yii::t('app', 'user manage'),
+                'url' => ['user/index'],
+                'active' => Yii::$app->controller->id == 'user' ? true : false,
+            ],
         ],
         'options' => ['id' => ''],
     ]);

@@ -2,16 +2,16 @@
 
 namespace app\models\form;
 
-use app\models\action\Term;
+use app\models\action\User;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 
 /**
- * TermForm represents the model behind the search form about `app\models\action\Term`.
+ * UserForm represents the model behind the search form about `app\models\action\User`.
  */
-class TermForm extends Term {
+class UserForm extends User {
     public $_keywords;
     public function attributes() {
         // add related fields to searchable attributes
@@ -30,8 +30,8 @@ class TermForm extends Term {
      */
     public function rules() {
         return [
-            [['term_id', 'parent', 'count', 'listorder'], 'integer'],
-            [['name', 'slug', 'taxonomy', 'description', '_keywords'], 'safe'],
+            [['id', 'sex', 'user_status', 'score', 'user_type', 'coin'], 'integer'],
+            [['user_login', 'user_pass', 'user_nicename', 'user_email', 'user_url', 'avatar', 'birthday', 'signature', 'last_login_ip', 'last_login_time', 'create_time', 'user_activation_key', 'mobile', '_keywords'], 'safe'],
         ];
     }
 
@@ -51,7 +51,7 @@ class TermForm extends Term {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = Term::find();
+        $query = User::find()->joinWith('authAssignment');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -66,24 +66,31 @@ class TermForm extends Term {
         }
 
         $query->andFilterWhere([
-            'term_id' => $this->term_id,
-            'parent' => $this->parent,
-            'count' => $this->count,
-            'listorder' => $this->listorder,
+            'id' => $this->id,
+            'sex' => $this->sex,
+            'birthday' => $this->birthday,
+            'last_login_time' => $this->last_login_time,
+            'create_time' => $this->create_time,
+            'user_status' => $this->user_status,
+            'score' => $this->score,
+            'user_type' => $this->user_type,
+            'coin' => $this->coin,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-              ->andFilterWhere(['like', 'slug', $this->slug])
-              ->andFilterWhere(['like', 'taxonomy', $this->taxonomy])
-              ->andFilterWhere(['like', 'description', $this->description]);
-        if ($this->_keywords) {
+        $query->andFilterWhere(['like', 'user_login', $this->user_login])
+              ->andFilterWhere(['like', 'user_nicename', $this->user_nicename])
+              ->andFilterWhere(['like', 'user_email', $this->user_email])
+              ->andFilterWhere(['like', 'mobile', $this->mobile]);
 
+        if ($this->_keywords) {
             $query->andFilterWhere([
                 'or',
-                ['like', 'name', $this->_keywords],
-                ['like', 'description', $this->_keywords],
+                ['like', 'user_login', $this->_keywords],
+                ['like', 'user_nicename', $this->_keywords],
+                ['like', 'user_email', $this->_keywords],
             ]);
         }
+
         return $dataProvider;
     }
 }

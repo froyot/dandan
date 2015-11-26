@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\web\ServerErrorHttpException;
 
 class BaseController extends Controller {
+
     /**
      * 模板设定
      * @var string
@@ -84,7 +85,13 @@ class BaseController extends Controller {
             if (Yii::$app->user->isGuest) {
                 return $this->redirect(['login']);exit;
             }
-            return true;
+
+            $permission = $action->id . ' ' . $this->id;
+            if (\Yii::$app->user->can($permission)) {
+                return true;
+            } else {
+                throw new \yii\web\UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
+            }
         }
     }
     /**
@@ -125,7 +132,7 @@ class BaseController extends Controller {
         ]);
 
         if (Yii::$app->getRequest()->getIsPost()) {
-            $res = $model->load(Yii::$app->getRequest()->post(), '');
+            $res = $model->load(Yii::$app->getRequest()->post());
 
             if ($model->save()) {
                 return $this->afterCreate($model);
@@ -187,7 +194,7 @@ class BaseController extends Controller {
 
             $model = $this->findModel($id);
             $model->scenario = static::$SCENARIO_UPDATE;
-            $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+            $model->load(Yii::$app->getRequest()->getBodyParams());
             // var_dump($model->toArray());die;
             if ($model->save() === false && !$model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
