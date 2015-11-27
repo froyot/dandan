@@ -30,7 +30,7 @@ class Terms extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             [['description'], 'string'],
-            [['parent', 'count', 'listorder', 'status'], 'integer'],
+            [['parent', 'count', 'listorder'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 200],
             [['taxonomy'], 'string', 'max' => 32],
             ['taxonomy', 'in', 'range' => ['article', 'img']],

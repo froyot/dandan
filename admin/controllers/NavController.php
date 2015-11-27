@@ -54,7 +54,7 @@ class NavController extends BaseController implements BaseControllerInterface {
             }
 
         } elseif (Yii::$app->getRequest()->getIsPost()) {
-            $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+            $model->load(Yii::$app->getRequest()->getBodyParams());
             if ($model->save()) {
                 return $this->afterCreate($model);
             } elseif (!$model->hasErrors()) {

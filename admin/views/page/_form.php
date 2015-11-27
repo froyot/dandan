@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin($option);?>
 
 
-    <?=$form->field($model, 'post_title')->textInput(['maxlength' => true, 'name' => 'post_title'])?>
+    <?=$form->field($model, 'post_title')->textInput(['maxlength' => true])?>
 
 <?=$form->field($model, 'post_content')->widget('allon\yii2\ueditor\Ueditor', [
 'options' => [
@@ -43,14 +43,13 @@ use yii\widgets\ActiveForm;
 ],
 'inputOptions' => [
 'class' => 'myeditor',
-'name' => 'post_content',
 ],
 // configure additional widget properties here
 ]);?>
     <?=$form->field($model, 'post_status')->radioList([
 0 => Yii::t('app', 'post pass'),
 1 => Yii::t('app', 'wait view'),
-], ['name' => 'post_status'])?>
+])?>
 
     <div class="form-group">
         <?=Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>

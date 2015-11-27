@@ -1,7 +1,5 @@
 <?php
 use yii\grid\GridView;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\form\PostForm */
@@ -49,16 +47,6 @@ return $status . '<br/>' . $top . '<br/>' . $recommended;
 ],
 ['class' => 'yii\grid\ActionColumn',
 'template' => " {update} | {delete}",
-'buttons' => [
-'update' => function ($url, $model, $key) {
-$options = [
-'title' => Yii::t('app', 'add submenu'),
-'aria-label' => Yii::t('app', 'add submenu'),
-'data-pjax' => '0',
-];
-return Html::a(Yii::t('yii', 'Update'), Url::to(['edit', 'id' => $key]), $options);
-},
-],
 ],
 ],
 ]);?>

@@ -42,6 +42,7 @@ echo Menu::widget([
     'items' => ArrayHelper::merge(ViewHelper::getSiteMenu(),
         [['label' => \Yii::t('app', 'Admin'), 'url' => ['/admin/default/index'], 'visible' => Yii::$app->user->isGuest]]),
 ]);
+
 ?>
             <a class="button-collapse" href="#" data-activates="nav-mobile"><i class="mdi-navigation-menu"></i></a>
           </div>
@@ -109,6 +110,17 @@ echo Menu::widget([
       <script type="text/javascript">
         $(function(){
           $(".button-collapse").sideNav();
+          $('.side-nav li').each(function(item,ind){
+            if($(this).find('ul').length >0 )
+            {
+
+                 $(this).mouseover( function() {
+                      $(this).find('ul').show();
+                 }).mouseout( function(){
+                      $(this).find('ul').hide();
+                 });
+            }
+          });
         });
       </script>
     </body>

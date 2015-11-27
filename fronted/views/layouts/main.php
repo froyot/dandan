@@ -88,6 +88,14 @@ NavBar::end();
             <p class="pull-right"><?=ViewHelper::getSiteOption('powerBy');?></p>
 
         </div>
+        <?php if (ViewHelper::getLinks()): ?>
+          <div class="container footer-friend-link">
+            <p><?=Yii::t('app', 'friendLink');?></p>
+                <?php foreach (ViewHelper::getLinks() as $link): ?>
+                  <li><a href="<?=$link->site_url;?>" target="<?=$link->open_type;?>"><?=$link->site_name;?></a></li>
+                <?php endforeach;?>
+          </div>
+        <?php endif;?>
         <div class="container">
 
             <p class="pull">

@@ -91,7 +91,11 @@ class LinkOption extends Model {
         $value = $this->toArray();
         $optionValue[] = $value;
         $option->option_value = json_encode($optionValue);
-        return $option->save();
+        $res = $option->save();
+        if ($res) {
+            Yii::$app->cacheManage->links = null;
+        }
+        return $res;
     }
 
     /**
@@ -112,7 +116,11 @@ class LinkOption extends Model {
                 unset($optionValue[$key]);
 
                 $option->option_value = json_encode($optionValue);
-                return $option->save();
+                $res = $option->save();
+                if ($res) {
+                    Yii::$app->cacheManage->links = null;
+                }
+                return $res;
             }
         }
     }

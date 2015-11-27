@@ -27,14 +27,13 @@ use yii\widgets\ActiveForm;
 'levelChar' => '    ',
 ]
 ), [
-'name' => 'parentid',
 'encodeSpaces' => true,
 'prompt' => '--' . Yii::t('app', 'select') . Yii::t('app', 'parent') . Yii::t('app', 'menu') . '--'])->label(Yii::t('app', 'parent') . Yii::t('app', 'menu'))?>
 
 
-    <?=$form->field($model, 'label')->textInput(['maxlength' => true, 'name' => 'label'])?>
+    <?=$form->field($model, 'label')->textInput(['maxlength' => true])?>
 
-    <?=$form->field($model, 'target')->dropDownList(['_blank' => Yii::t('app', 'new window')], ['prompt' => '--' . Yii::t('app', 'default') . '--', 'name' => 'target'])->label(Yii::t('app', 'open type'));?>
+    <?=$form->field($model, 'target')->dropDownList(['_blank' => Yii::t('app', 'new window')], ['prompt' => '--' . Yii::t('app', 'default') . '--'])->label(Yii::t('app', 'open type'));?>
 
     <div class="row">
         <div class="col-lg-12">
@@ -43,13 +42,13 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
         <div class="col-lg-3">
-        <?=$form->field($model, 'href_type')->radio(['name' => 'href_type', 'value' => 0, 'uncheck' => null], false)->label(Yii::t('app', 'href'));?>
+        <?=$form->field($model, 'href_type')->radio(['value' => 0, 'uncheck' => null], false)->label(Yii::t('app', 'href'));?>
 
-        <?=$form->field($model, 'href_txt')->textInput(['maxlength' => true, 'name' => 'href_txt'])->label(false)?>
+        <?=$form->field($model, 'href_txt')->textInput(['maxlength' => true])->label(false)?>
         </div>
 
         <div class="col-lg-3">
-        <?=$form->field($model, 'href_type')->radio(['name' => 'href_type', 'value' => 1, 'uncheck' => null], false)->label(Yii::t('app', 'category'));?>
+        <?=$form->field($model, 'href_type')->radio(['value' => 1, 'uncheck' => null], false)->label(Yii::t('app', 'category'));?>
         <?=$form->field($model, 'href_cat')->dropDownList(Tree::makeDropDown([
 'model' => 'app\models\action\term',
 'parentKey' => 'parent',
@@ -63,13 +62,13 @@ use yii\widgets\ActiveForm;
 'levelChar' => '    ',
 ]
 ), [
-'name' => 'href_cat',
+
 'encodeSpaces' => true,
 'prompt' => '--' . Yii::t('app', 'select') . Yii::t('app', 'category') . '--'])->label(false)?>
         </div>
 
         <div class="col-lg-3">
-        <?=$form->field($model, 'href_type')->radio(['name' => 'href_type', 'value' => 2, 'uncheck' => null], false)->label(Yii::t('app', 'page'));?>
+        <?=$form->field($model, 'href_type')->radio(['value' => 2, 'uncheck' => null], false)->label(Yii::t('app', 'page'));?>
         <?php
 $pages = Post::find()->where(['post_type' => 'page'])->select(['id', 'post_title'])->asArray()->all();
 if (!$pages) {
@@ -78,13 +77,13 @@ if (!$pages) {
     $pages = ArrayHelper::map($pages, 'id', 'post_title');
 }
 ?>
-        <?=$form->field($model, 'href_page')->dropDownList($pages, ['name' => 'href_page', 'prompt' => Yii::t('app', 'select page')])->label(false)?>
+        <?=$form->field($model, 'href_page')->dropDownList($pages, ['prompt' => Yii::t('app', 'select page')])->label(false)?>
     </div>
 </div>
 
 
 
-    <?=$form->field($model, 'listorder')->textInput(['name' => 'listorder'])->label(Yii::t('app', 'order'))?>
+    <?=$form->field($model, 'listorder')->textInput()->label(Yii::t('app', 'order'))?>
 
     <div class="form-group">
         <?=Html::submitButton($model->isNewRecord ? Yii::t('app', 'create') : Yii::t('app', 'update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>

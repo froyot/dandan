@@ -21,15 +21,15 @@ if ($cid) {
     $cid = [];
 }
 ?>
-    <?=$form->field($model, 'slide_cid')->dropDownList($cid, ['prompt' => Yii::t('app', 'select') . Yii::t('app', 'category'), 'name' => 'slide_cid'])?>
-    <?=$form->field($model, 'slide_name')->textInput(['maxlength' => true, 'name' => 'slide_name'])?>
-    <?=$form->field($model, 'slide_pic')->fileInput(['name' => 'slide_pic'])?>
+    <?=$form->field($model, 'slide_cid')->dropDownList($cid, ['prompt' => Yii::t('app', 'select') . Yii::t('app', 'category')])?>
+    <?=$form->field($model, 'slide_name')->textInput(['maxlength' => true])?>
+    <?=$form->field($model, 'slide_pic')->fileInput()?>
 
-    <?=$form->field($model, 'slide_type')->dropDownList(['page' => Yii::t('app', 'page'), 'post' => Yii::t('app', 'post')], ['prompt' => Yii::t('app', 'select') . Yii::t('app', 'type'), 'name' => 'slide_type']);?>
-    <?=$form->field($model, 'slide_value')->textInput(['maxlength' => true, 'name' => 'slide_value'])?>
-    <?=$form->field($model, 'slide_des')->textInput(['maxlength' => true, 'name' => 'slide_des'])?>
+    <?=$form->field($model, 'slide_type')->dropDownList(['page' => Yii::t('app', 'page'), 'post' => Yii::t('app', 'post')], ['prompt' => Yii::t('app', 'select') . Yii::t('app', 'type')]);?>
+    <?=$form->field($model, 'slide_value')->textInput(['maxlength' => true])?>
+    <?=$form->field($model, 'slide_des')->textInput(['maxlength' => true])?>
 
-    <?=$form->field($model, 'listorder')->textInput(['name' => 'listorder'])?>
+    <?=$form->field($model, 'listorder')->textInput()?>
 
     <div class="form-group">
         <?=Html::submitButton($model->isNewRecord ? Yii::t('app', 'create') : Yii::t('app', 'update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>

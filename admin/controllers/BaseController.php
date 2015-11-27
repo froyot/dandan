@@ -200,7 +200,7 @@ class BaseController extends Controller {
             $model = $this->findModel($id);
             $model->scenario = static::$SCENARIO_UPDATE;
             $model->load(Yii::$app->getRequest()->getBodyParams());
-            // var_dump($model->toArray());die;
+
             if ($model->save() === false && !$model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
             } elseif (!$model->hasErrors()) {

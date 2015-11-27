@@ -58,6 +58,7 @@ class ViewHelper extends Model {
                 $href = json_decode($item->model->href, true);
                 $url = '#';
                 if (is_array($href)) {
+
                     if (isset($href['a']) && isset($href['c'])) {
                         if (!isset($href['p'])) {
                             $href['p'] = [];
@@ -122,7 +123,7 @@ class ViewHelper extends Model {
     public static function getIndexSlide() {
         $index_slide = Yii::$app->cacheManage->index_slide;
         if (!$index_slide) {
-            $slides = Slide::find()->where(['slide_cid' => 1])->all();
+            $slides = Slide::find()->where(['slide_cid' => 1])->orderBy('listorder desc')->all();
             if (!$slides) {
                 $index_slide = Yii::$app->params['siteConf']['indexSlide'];
             } else {

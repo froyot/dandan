@@ -63,7 +63,7 @@ class PostController extends Controller {
     public function actionCat() {
         $this->requestData = ArrayHelper::merge(
             Yii::$app->request->queryParams,
-            ['sort' => '-post_date']
+            ['sort' => '-post_date', 'post_type' => 'post', 'post_status' => 1]
         );
         $id = Yii::$app->request->get('id');
         $breadcrum = Yii::t('app', 'category') . "%s" . Yii::t('app', 'post list');

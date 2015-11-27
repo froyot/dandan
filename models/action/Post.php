@@ -24,7 +24,7 @@ class Post extends Posts {
             ['post_type', 'default', 'value' => 'page', 'on' => 'page'],
 
             [['post_author', 'post_status', 'comment_status',
-                'post_parent', 'comment_count', 'post_hits', 'post_like',
+                'post_parent', 'comment_count',
                 'istop', 'recommended'], 'integer', 'on' => 'post'],
 
             [['recommended', 'comment_status', 'istop'], 'default',

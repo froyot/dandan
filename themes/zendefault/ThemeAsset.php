@@ -13,15 +13,13 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class ThemeAsset extends AssetBundle
-{
+class ThemeAsset extends AssetBundle {
     public $sourcePath = '@app/themes/zendefault/static';
     public $css = [
         'css/style.css',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset'
+        'app\assets\DefaultAsset',
     ];
 
 }

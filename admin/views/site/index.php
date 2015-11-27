@@ -1,6 +1,4 @@
 <?php
-use yii\web\View;
-use yii\helpers\Url;
 use app\assets\DefaultAsset;
 use app\models\util\ViewHelper;
 
@@ -23,11 +21,11 @@ $this->registerMetaTag(['name' => 'description', 'content' => $_keywords]);
     <div class="row">
         <div class="col-md-4">
              <h2 class="font-large nospace"><i class="fa fa-heart"></i> 安全策略</h2>
-             <p>提供的稳健的安全策略，包括备份恢复，容错，防治恶意攻击登陆，网页防篡改等多项安全管理功能，保证系统安全，可靠，稳定的运行。</p>
+             <p>提供的稳健的安全策略，容错，防治恶意攻击登陆，网页防篡改等多项安全管理功能，保证系统安全，可靠，稳定的运行。</p>
         </div>
         <div class="col-md-4">
              <h2 class="font-large nospace"><i class="fa fa-cubes"></i> 应用模块化</h2>
-             <p>提出全新的应用模式进行扩展，不管是你开发一个小功能还是一个全新的站点，在ThinkCMF中你只是增加了一个APP，每个独立运行互不影响，便于灵活扩展和二次开发。</p>
+             <p>提出全新的应用模式进行扩展，不管是你开发一个小功能还是一个全新的站点,DanDan CMS都非常便利</p>
         </div>
         <div class="col-md-4">
               <h2 class="font-large nospace"><i class="fa fa-certificate"></i> 免费开源</h2>

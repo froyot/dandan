@@ -36,21 +36,21 @@ class Term extends Terms {
      * @return [type] [description]
      */
     public function updatePath() {
-        if ($this->parent == 0) {
-            $this->path = '0-' . $this->term_id;
-            $this->save();
-        } else {
-            $parent = self::find()
-                ->where(['term_id' => $this->parent])
-                ->select('path')
-                ->one();
-            if ($parent) {
-                $parentPath = $parent->path;
-                $this->path = $parentPath . '-' . $this->term_id;
-                $this->off(self::EVENT_AFTER_UPDATE);
-                $this->save();
-            }
-        }
+        // if ($this->parent == 0) {
+        //     $this->path = '0-' . $this->term_id;
+        //     $this->save();
+        // } else {
+        //     $parent = self::find()
+        //         ->where(['term_id' => $this->parent])
+        //         ->select('path')
+        //         ->one();
+        //     if ($parent) {
+        //         $parentPath = $parent->path;
+        //         $this->path = $parentPath . '-' . $this->term_id;
+        //         $this->off(self::EVENT_AFTER_UPDATE);
+        //         $this->save();
+        //     }
+        // }
     }
 
     /**

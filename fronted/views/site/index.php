@@ -10,7 +10,7 @@ $_keywords = ViewHelper::getSiteOption('site_seo_keywords');
 
 $bundle = DefaultAsset::register($this);
 $this->registerMetaTag(['name' => 'description', 'content' => $_description]);
-$this->registerMetaTag(['name' => 'description', 'content' => $_keywords]);
+$this->registerMetaTag(['name' => 'keywords', 'content' => $_keywords]);
 $bundle->addPageCssFile($this, 'css/sb-slider.css');
 ?>
 
@@ -56,21 +56,18 @@ $bundle->addPageCssFile($this, 'css/sb-slider.css');
     <div class="row boder-bottom">
         <div class="col-md-4">
               <h2 class="font-large nospace text-center"><i class="fa fa-cloud"></i>电子商务</h2>
-              <div class="text-center"><img src="/images/dianzishangwu.png" style="width:14em;height:14em;"></div>
+              <div class="text-center"><img src="<?=Yii::getAlias('@static');?>/images/dianzishangwu.png" style="width:14em;height:14em;"></div>
         </div>
         <div class="col-md-4">
               <h2 class="font-large nospace text-center"><i class="fa fa-cloud"></i>教育</h2>
-              <div class="text-center"><img src="/images/jiaoyu.jpg" style="width:14em;height:14em;"></div>
+              <div class="text-center"><img src="<?=Yii::getAlias('@static');?>/images/jiaoyu.jpg" style="width:14em;height:14em;"></div>
         </div>
         <div class="col-md-4">
               <h2 class="font-large nospace text-center"><i class="fa fa-cloud"></i>农业</h2>
-              <div class="text-center"><img src="/images/nongye.png" style="width:14em;height:14em;"></div>
+              <div class="text-center"><img src="<?=Yii::getAlias('@static');?>/images/nongye.png" style="width:14em;height:14em;"></div>
         </div>
     </div>
-        <br/>
 
-
-</div>
 <?php
 $bundle->addPageScript($this, 'js/jquery.slides.min.js');
 
@@ -79,7 +76,7 @@ $this->registerJs(
 $(function() {
       $('#slides').slidesjs({
         width: 800,
-        height: 200,
+        height: 380,
         navigation: {
             active: false
         },
