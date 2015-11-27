@@ -1,6 +1,5 @@
 <?php
 
-use yii\helpers\Html;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
@@ -11,10 +10,10 @@ $this->title = $breadcrum;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="content-index">
-    <?= ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemView'=>'/content/listItem',
-        'layout' => "{items}\n{pager}"
-    ]); ?>
+    <?=ListView::widget([
+'dataProvider' => $dataProvider,
+'itemView' => '/content/listItem',
+'layout' => "{items}\n{pager}",
+]);?>
 
 </div>

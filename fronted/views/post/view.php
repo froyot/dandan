@@ -8,6 +8,15 @@ use app\common\widgets\CommentWidget;
 $this->title = $post->post_title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'post list'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+if ($post->post_excerpt) {
+    $this->registerMetaTag(['name' => 'description', 'content' => $post->post_excerpt]);
+} else {
+    $this->registerMetaTag([
+        'name' => 'description',
+        'content' => ViewHelper::getSiteOption('site_seo_description') . ',' . $post->post_title]);
+}
+
+$this->registerMetaTag(['name' => 'keywords', 'content' => implode(',', explode(' ', $post->post_title))]);
 ?>
 <div class="post-page-view">
     <?php if ($post->post_type == 'post'): ?>
