@@ -50,7 +50,7 @@ use yii\widgets\ActiveForm;
         <div class="col-lg-3">
         <?=$form->field($model, 'href_type')->radio(['value' => 1, 'uncheck' => null], false)->label(Yii::t('app', 'category'));?>
         <?=$form->field($model, 'href_cat')->dropDownList(Tree::makeDropDown([
-'model' => 'app\models\action\term',
+'model' => 'app\models\action\Term',
 'parentKey' => 'parent',
 'primaryKey' => 'term_id',
 'rootParent' => 0,

@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin($option);?>
     <?=$form->field($model, 'parent')->dropDownList(Tree::makeDropDown([
-'model' => 'app\models\action\term',
+'model' => 'app\models\action\Term',
 'parentKey' => 'parent',
 'primaryKey' => 'term_id',
 'rootParent' => 0,

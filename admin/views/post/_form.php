@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin($option);?>
     <div class="col-sm-8">
     <?=$form->field($model, 'cat_id')->dropDownList(Tree::makeDropDown([
-'model' => 'app\models\action\term',
+'model' => 'app\models\action\Term',
 'parentKey' => 'parent',
 'primaryKey' => 'term_id',
 'rootParent' => 0,
