@@ -9,6 +9,7 @@ use easydandan\models\form\LoginForm;
  */
 class PublicController extends Controller
 {
+    public $layout = '@easydandan/views/layouts/fullPage';
     /**
      * Renders the index view for the module
      * @return string

@@ -1,5 +1,6 @@
 <?php
 use easydandan\assets\AppAsset;
+use yii\helpers\Url;
 $assert = AppAsset::register($this);
 ?>
 
@@ -15,10 +16,10 @@ $assert = AppAsset::register($this);
                     <span class="icon-bar"></span>
                 </button>
                 <div class="navbar-header pull-left">
-                    <a href="#" class="navbar-brand">
+                    <a href="<?=Url::to(['/admin/site/index']);?>" class="navbar-brand">
                         <small>
                             <i class="fa fa-leaf"></i>
-                            Ace Admin
+                            Ace <?=Yii::t('easydandan','adminManage');?>
                         </small>
                     </a>
                 </div>
@@ -284,7 +285,7 @@ $assert = AppAsset::register($this);
                                 <img class="nav-user-photo" src="<?=$assert->baseUrl;?>/avatars/user.jpg" alt="Jason's Photo" />
                                 <span class="user-info">
                                     <small>Welcome,</small>
-                                    Jason
+                                    <?=Yii::$app->admin->identity->username;?>
                                 </span>
 
                                 <i class="ace-icon fa fa-caret-down"></i>
@@ -308,7 +309,8 @@ $assert = AppAsset::register($this);
                                 <li class="divider"></li>
 
                                 <li>
-                                    <a href="#">
+
+                                    <a href="<?=Url::to(['/admin/public/logout']);?>" data-method="post">
                                         <i class="ace-icon fa fa-power-off"></i>
                                         Logout
                                     </a>
