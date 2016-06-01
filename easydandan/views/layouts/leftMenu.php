@@ -455,7 +455,7 @@ $moduleName = $this->context->module->id;
                         </ul>
                     </li>
 
-                    <li class="active open">
+                    <li class="">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-file-o"></i>
 
@@ -519,33 +519,33 @@ $moduleName = $this->context->module->id;
                     </li>
                                         <!--超级管理员权限-->
                     <?php if(IS_ROOT) : ?>
-                        <li class="">
+                        <li class="<?= ($moduleName == 'admin' && $this->context->id == 'modules') ? 'active' :'' ?>">
 
-                        <a href="<?= Url::to(['/admin/modules']) ?>" class="menu-item <?= ($moduleName == 'admin' && $this->context->id == 'modules') ? 'active' :'' ?>">
+                        <a href="<?= Url::to(['/admin/modules']) ?>" class="menu-item" >
                             <i class="glyphicon glyphicon-folder-close"></i>
                             <?= Yii::t('easydandan', 'Modules') ?>
                         </a>
                         <b class="arrow"></b>
                         </li>
 
-                        <li class="">
-                        <a href="<?= Url::to(['/admin/admins']) ?>" class="menu-item <?= ($moduleName == 'admin' && $this->context->id == 'admins') ? 'active' :'' ?>">
+                        <li class="<?= ($moduleName == 'admin' && $this->context->id == 'admins') ? 'active' :'' ?>">
+                        <a href="<?= Url::to(['/admin/admins']) ?>" class="menu-item">
                             <i class="glyphicon glyphicon-user"></i>
                             <?= Yii::t('easydandan', 'Admins') ?>
                         </a>
                         <b class="arrow"></b>
                         </li>
 
-                        <li class="">
-                        <a href="<?= Url::to(['/admin/system']) ?>" class="menu-item <?= ($moduleName == 'admin' && $this->context->id == 'system') ? 'active' :'' ?>">
+                        <li class="<?= ($moduleName == 'admin' && $this->context->id == 'system') ? 'active' :'' ?>">
+                        <a href="<?= Url::to(['/admin/system']) ?>" class="menu-item">
                             <i class="glyphicon glyphicon-hdd"></i>
                             <?= Yii::t('easydandan', 'System') ?>
                         </a>
                         <b class="arrow"></b>
                         </li>
 
-                        <li class="">
-                        <a href="<?= Url::to(['/admin/logs']) ?>" class="menu-item <?= ($moduleName == 'admin' && $this->context->id == 'logs') ? 'active' :'' ?>">
+                        <li class="<?= ($moduleName == 'admin' && $this->context->id == 'logs') ? 'active' :'' ?>">
+                        <a href="<?= Url::to(['/admin/logs']) ?>" class="menu-item">
                             <i class="glyphicon glyphicon-align-justify"></i>
                             <?= Yii::t('easydandan', 'Logs') ?>
                         </a>
