@@ -25,11 +25,13 @@ class AppAsset extends AssetBundle
 
         "js/ace-elements.min.js",
         "js/ace.min.js",
+        "js/admin.js"
     ];
 
     public $depends = [
 
         'yii\bootstrap\BootstrapPluginAsset',
+
     ];
     // public $jsOptions = array(
     //     'position' => \yii\web\View::POS_HEAD

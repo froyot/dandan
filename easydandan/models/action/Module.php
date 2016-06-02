@@ -4,6 +4,8 @@ namespace easydandan\models\action;
 
 use Yii;
 use easydandan\Helpers\Data;
+use easydandan\behaviors\SortableModel;
+use yii\Helpers\ArrayHelper;
 /**
  * This is the model class for table "dandan_modules".
  *
@@ -20,6 +22,17 @@ use easydandan\Helpers\Data;
 class Module extends \easydandan\models\db\Modules
 {
     const CACHE_KEY = 'dandan_modules';
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [
+                [
+                    'class' => SortableModel::className(),
+                ],
+            ]);
+    }
 
     public static function findAllActive()
     {

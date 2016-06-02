@@ -13,5 +13,6 @@ class ModulesController extends ActiveController
 {
 
     public $modelClass = "easydandan\models\action\Module";
-
+    public $isSortable = true;
+    public $isStatusable = false;
 }

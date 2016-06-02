@@ -50,12 +50,18 @@ $action = $this->context->action->id;
                     <?php endif; ?>
                 </td>
                 <td class="hidden-480">
+                    <label class="pull-right inline">
+                        <small class="muted"><?=Yii::t('easydandan','Status');?></small>
+
+
+
                     <?= Html::checkbox('', $module->status == Module::STATUS_ON, [
-                        'class' => 'switch',
-                        'data-id' => $module->primaryKey,
-                        'data-link' => Url::to(['/admin/modules/']),
+                        'class' => 'ace ace-switch ace-switch-5',
+                        'data-link' => Url::to(['/admin/modules/__act__','id'=>$module->primaryKey]),
                         'data-reload' => '1'
                     ]) ?>
+                    <span class="lbl"></span>
+                    </label>
                 </td>
                 <td class="control">
                     <div class="btn-group btn-group-sm" role="group">

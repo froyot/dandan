@@ -79,6 +79,9 @@ $asset = AppAsset::register($this);
                         <?php echo $this->render('setting');?>
 
                         <div class="row">
+                            <?php foreach(Yii::$app->session->getAllFlashes() as $key => $message) : ?>
+                            <div class="alert alert-<?= $key ?>"><?= $message ?></div>
+                        <?php endforeach; ?>
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT BEGINS -->
 

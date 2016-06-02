@@ -33,7 +33,7 @@ class Modules extends ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'class', 'title', 'icon', 'settings'], 'required'],
+            [['name', 'class', 'title', 'icon'], 'required'],
             [['settings'], 'string'],
             [['notice', 'order_num', 'status'], 'integer'],
             [['name'], 'string', 'max' => 64],
