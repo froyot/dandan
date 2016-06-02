@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 
 use easydandan\behaviors\CurdBehavior;
 use easydandan\models\action\Module;
+use yii\web\NotFoundHttpException;
 /**
  * 模块管理控制器
  */
@@ -22,6 +23,7 @@ class ModulesController extends ActiveController
         $model = Module::find()->where(['module_id'=>$id])->one();
         if(!$model)
         {
+            throw new NotFoundHttpException("Modules not exist");
 
         }
 

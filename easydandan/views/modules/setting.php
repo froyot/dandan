@@ -2,7 +2,9 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = $model->title;
+$this->title = $model->name.' '.Yii::t('easydandan','Setting');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Modules'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Setting');
 ?>
 
 
