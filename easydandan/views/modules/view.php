@@ -9,6 +9,12 @@ use yii\widgets\DetailView;
 $this->title = $model->getPrimaryKey();
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Modules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = Yii::t('app', 'View Detail ').$this->title;
+$attributes = $model->attributes;
+unset($attributes['settings']);
+unset($attributes['class']);
+
+
+
 ?>
 <div class="view">
 
@@ -16,7 +22,17 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'View Detail ').$this->title;
 
 <?=DetailView::widget([
 'model' => $model,
-'attributes' => array_keys($model->attributes),
+'attributes' => array_merge(
+    array_keys($attributes),
+    [
+    [
+        'attribute'=>'settings',
+        'value'=>json_encode($model->settings)
+    ]
+
+    ]
+    )
+
 ])?>
 
 </div>

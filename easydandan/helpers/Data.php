@@ -7,6 +7,7 @@ class Data
 {
     public static function cache($key, $duration, $callable)
     {
+
         $cache = Yii::$app->cache;
         if($cache->exists($key)){
             $data = $cache->get($key);

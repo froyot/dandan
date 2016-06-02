@@ -34,7 +34,7 @@ class Modules extends ActiveRecord
     {
         return [
             [['name', 'class', 'title', 'icon'], 'required'],
-            [['settings'], 'string'],
+            [['settings'], 'safe'],
             [['notice', 'order_num', 'status'], 'integer'],
             [['name'], 'string', 'max' => 64],
             [['class', 'title'], 'string', 'max' => 128],
