@@ -2,7 +2,6 @@
 use yii\helpers\ArrayHelper;
 $params = require(__DIR__ . '/params.php');
 $webroot =  dirname(__DIR__);
-
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -10,7 +9,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'OoIMSTYiGS3C-7jnuRCdPNUuNkkCBgR4',
+            'cookieValidationKey' => 'asdfasdfasdfasdfaweqrq23523',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -39,31 +38,18 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
     ],
     'params' => $params,
 ];
-
-$config = ArrayHelper::merge($config,require $webroot."/easydandan/config/config.php");
+$config = ArrayHelper::merge($config,require $webroot."/admin/config/config.php");
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-    ];
+    $config['modules']['debug'] = 'yii\debug\Module';
 
     $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-    ];
+    $config['modules']['gii'] = 'yii\gii\Module';
 }
 
 return $config;

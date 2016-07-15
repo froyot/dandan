@@ -54,17 +54,18 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
+        } else {
+            return $this->render('login', [
+                'model' => $model,
+            ]);
         }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
     }
 
     public function actionLogout()
@@ -81,10 +82,11 @@ class SiteController extends Controller
             Yii::$app->session->setFlash('contactFormSubmitted');
 
             return $this->refresh();
+        } else {
+            return $this->render('contact', [
+                'model' => $model,
+            ]);
         }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
     }
 
     public function actionAbout()

@@ -7,9 +7,6 @@ use yii\base\Model;
 
 /**
  * LoginForm is the model behind the login form.
- *
- * @property User|null $user This property is read-only.
- *
  */
 class LoginForm extends Model
 {
@@ -61,8 +58,9 @@ class LoginForm extends Model
     {
         if ($this->validate()) {
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+        } else {
+            return false;
         }
-        return false;
     }
 
     /**
