@@ -3,7 +3,8 @@
 namespace admin\models;
 
 use Yii;
-
+use admin\behaviors\StatusModel;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "modules".
  *
@@ -15,6 +16,17 @@ use Yii;
  */
 class Modules extends \yii\db\ActiveRecord
 {
+    public function behaviors()
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [
+                [
+                'class'=>StatusModel::className(),
+                ]
+            ]
+        );
+    }
     /**
      * @inheritdoc
      */

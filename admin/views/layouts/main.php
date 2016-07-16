@@ -4,7 +4,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use admin\assets\AdminAsset;
-
+use admin\models\helpers\DanDanHelper;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -37,13 +37,37 @@ $bundle = AdminAsset::register($this);
         <?=$this->render('top_nav',['bundle'=>$bundle]);?>
 
         <!-- page content -->
-        <?=$content;?>
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+
+              <?= Breadcrumbs::widget([
+                  'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+              ]) ?>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <?=$content;?>
+            </div>
+        </div>
         <!-- /page content -->
 
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            <?=DanDanHelper::getOption('copyright');?>
           </div>
           <div class="clearfix"></div>
         </footer>

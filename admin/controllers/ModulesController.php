@@ -11,6 +11,7 @@ class ModulesController extends Controller
 {
     public $_left_nav = ['setting','modules/index'];
     public $modelSearch = 'admin\models\search\ModulesSearch';
+    public $modelClass = 'admin\models\Modules';
     public function actionIndex()
     {
         $dataProvider = $this->pageList();

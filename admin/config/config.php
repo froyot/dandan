@@ -18,6 +18,7 @@ return [
             'loginUrl' => ['/admin/public/login'],
         ]
 
-    ]
+    ],
+    'params'=>require(__DIR__.'/../runtime/params.php'),
 ];
 ?>

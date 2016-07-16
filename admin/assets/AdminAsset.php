@@ -57,6 +57,7 @@ class AdminAsset extends AssetBundle
         "js/maps/jquery-jvectormap-world-mill-en.js",
         "js/maps/jquery-jvectormap-us-aea-en.js",
         "js/maps/gdp-data.js",
+        "js/main.js"
     ];
     public $depends = [
         'yii\web\YiiAsset',

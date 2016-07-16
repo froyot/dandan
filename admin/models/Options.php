@@ -3,7 +3,8 @@
 namespace admin\models;
 
 use Yii;
-
+use admin\behaviors\FileConfig;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "options".
  *
@@ -14,6 +15,19 @@ use Yii;
  */
 class Options extends \yii\db\ActiveRecord
 {
+    const OPTIONS_FILE_CONFIG = 'options';
+    public function behaviors()
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [
+                [
+                'class'=>FileConfig::className(),
+                'dataKey'=>Options::OPTIONS_FILE_CONFIG
+                ]
+            ]
+        );
+    }
     /**
      * @inheritdoc
      */
@@ -28,8 +42,8 @@ class Options extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['option_key', 'des', 'option_value'], 'required'],
-            [['option_key', 'des', 'option_value'], 'string', 'max' => 255]
+            [['key', 'des', 'value'], 'required'],
+            [['key', 'des', 'value'], 'string', 'max' => 255]
         ];
     }
 
@@ -40,9 +54,13 @@ class Options extends \yii\db\ActiveRecord
     {
         return [
             'option_id' => Yii::t('app', 'Option ID'),
-            'option_key' => Yii::t('app', 'Option Key'),
+            'key' => Yii::t('app', 'Option Key'),
             'des' => Yii::t('app', 'Des'),
-            'option_value' => Yii::t('app', 'Option Value'),
+            'value' => Yii::t('app', 'Option Value'),
         ];
     }
+
+
+
+
 }

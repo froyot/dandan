@@ -11,6 +11,7 @@ class OptionsController extends Controller
 {
     public $_left_nav = ['setting','options/index'];
     public $modelSearch = 'admin\models\search\OptionsSearch';
+    public $modelClass = 'admin\models\Options';
     public function actionIndex()
     {
 
