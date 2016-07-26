@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use admin\models\helpers\DanDanHelper;
+use admin\models\constFile\AppConst;
 ?>
 
         <div class="col-md-3 left_col">
@@ -14,11 +15,11 @@ use admin\models\helpers\DanDanHelper;
             <!-- menu profile quick info -->
             <div class="profile">
               <div class="profile_pic">
-                <img src="<?=$bundle->baseUrl;?>/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="<?=DanDanHelper::getSession(AppConst::USER_NAME,$bundle->baseUrl.'/images/img.jpg');?>" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2><?=DanDanHelper::getSession(AppConst::USER_NAME,'admin');?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->

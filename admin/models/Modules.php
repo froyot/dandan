@@ -5,6 +5,8 @@ namespace admin\models;
 use Yii;
 use admin\behaviors\StatusModel;
 use yii\helpers\ArrayHelper;
+use admin\models\helpers\ArrayFileHelper;
+
 /**
  * This is the model class for table "modules".
  *
@@ -23,7 +25,8 @@ class Modules extends \yii\db\ActiveRecord
             [
                 [
                 'class'=>StatusModel::className(),
-                ]
+                ],
+
             ]
         );
     }
@@ -60,5 +63,30 @@ class Modules extends \yii\db\ActiveRecord
             'status'=>Yii::t('app','Status'),
             'create_at' => Yii::t('app', 'Create At'),
         ];
+    }
+
+    public function afterSave($insert,$attr)
+    {
+        $this->saveModuleToFile();
+       return parent::afterSave($insert,$attr);
+    }
+
+    public function afterDelete()
+    {
+        $this->saveModuleToFile();
+        return parent::afterDelete();
+    }
+
+    private function saveModuleToFile()
+    {
+        $modules = self::find()->where(['status'=>1])->all();
+        $configs = [];
+        foreach ($modules as $key => $module) {
+            $tmp = [
+                'class'=>$module->path
+            ];
+            $configs[$module->name] = $tmp;
+        }
+        ArrayFileHelper::flushToFile($configs,'modules.php');
     }
 }

@@ -16,8 +16,17 @@ return [
             'enableAutoLogin' => true,
             'authTimeout' => 86400,
             'loginUrl' => ['/admin/public/login'],
-        ]
+        ],
 
+
+    'assetManager' => [
+        'bundles' => [
+            'yii\web\JqueryAsset' => [
+                'sourcePath' => '@admin/static',
+                'js' => ['js/jquery.min.js']
+            ],
+        ],
+    ],
     ],
     'params'=>require(__DIR__.'/../runtime/params.php'),
 ];

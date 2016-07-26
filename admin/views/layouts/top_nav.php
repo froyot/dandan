@@ -1,3 +1,8 @@
+<?php
+use yii\helpers\Url;
+use admin\models\helpers\DanDanHelper;
+use admin\models\constFile\AppConst;
+?>
         <!-- top navigation -->
         <div class="top_nav">
           <div class="nav_menu">
@@ -9,7 +14,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="<?=$bundle->baseUrl;?>/images/img.jpg" alt="">John Doe
+                    <img src="<?=DanDanHelper::getSession(AppConst::USER_NAME,$bundle->baseUrl.'/images/img.jpg');?>" alt=""><?=DanDanHelper::getSession(AppConst::USER_NAME,'admin');?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -21,7 +26,7 @@
                       </a>
                     </li>
                     <li><a href="javascript:;">Help</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="<?=Url::to(['/admin/site/logout']);?>" data-method="post"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
 

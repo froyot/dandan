@@ -21,6 +21,18 @@ class Module extends \yii\base\Module
     {
         parent::init();
 
+        $modules = require(Yii::getAlias('@admin/runtime/modules.php'));
+
+        // //注册已经配置的模块
+        // $modules = [];
+        // foreach ($this->activeModules as $name => $module) {
+        //     $modules[$name]['class'] = $module->class;
+        //     if (is_array($module->settings)) {
+        //         $modules[$name]['settings'] = $module->settings;
+        //     }
+        // }
+        $this->setModules($modules);
+
         // //查询已经安装的模块
         // $this->activeModules = Module::findAllActive();
 

@@ -23,7 +23,8 @@ class Options extends \yii\db\ActiveRecord
             [
                 [
                 'class'=>FileConfig::className(),
-                'dataKey'=>Options::OPTIONS_FILE_CONFIG
+                'dataKey'=>Options::OPTIONS_FILE_CONFIG,
+                'fileName'=>'params.php'
                 ]
             ]
         );

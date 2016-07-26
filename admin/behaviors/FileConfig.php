@@ -3,7 +3,7 @@ namespace admin\behaviors;
 
 use Yii;
 use yii\db\ActiveRecord;
-
+use admin\behaviors\ArrayFileHelper;
 /**
  * key value make php array file
  * @inheritdoc
@@ -12,7 +12,8 @@ class FileConfig extends \yii\base\Behavior
 {
     /** @var  string */
     public $dataKey;
-    public $createdAtAttribute = 'created_at';
+    public $fileName ='params.php';
+
 
 
     public function attach($owner)
@@ -33,28 +34,21 @@ class FileConfig extends \yii\base\Behavior
 
     private function saveData($key,$value)
     {
-        $path = Yii::getAlias('@admin/runtime/params.php');
+        $path = Yii::getAlias('@admin/runtime/'.$this->fileName);
         $data =  require($path);
-        $data[$this->dataKey][$key] = $value;
-        $this->flushToFile($data);
-    }
-
-    private function flushToFile($datas)
-    {
-        $content ="<?php\r\nreturn [\r\n";
-        foreach($datas as $k=>$data)
+        if($this->dataKey)
         {
-            $content .="'".$k."'=>[\r\n";
-            foreach($data as $key=>$value){
-                $content .= "'".$key."'=>'".$value."',\r\n";
-            }
-            $content .= "],\r\n";
-
+            $data[$this->dataKey][$key] = $value;
         }
-        $content .= "];\r\n";
-        $path = Yii::getAlias('@admin/runtime/params.php');
-        file_put_contents($path, $content);
+        else
+        {
+            $data[$key] = $value;
+        }
+
+        ArrayFileHelper::flushToFile($data,$this->fileName);
     }
+
+
 
     /**
      * Flush cache
@@ -68,12 +62,19 @@ class FileConfig extends \yii\base\Behavior
     public function remove()
     {
         $model = $this->owner;
-        $path = Yii::getAlias('@admin/runtime/params.php');
+        $path = Yii::getAlias('@admin/runtime/'.$this->fileName);
         $data =  require($path);
-        if(isset($data[$this->dataKey]) && isset($data[$this->dataKey][$model->key]))
+        $tmpData = isset($this->dataKey)?$data[$this->dataKey]:$data;
+        if(isset($tmpData[$model->key]))
         {
-            unset($data[$this->dataKey][$model->key]);
-            $this->flushToFile($data);
+            if( isset($this->dataKey))
+            {
+               unset($data[$this->dataKey][$model->key]);
+            }else
+            {
+              unset($data[$model->key]);
+            }
+            ArrayFileHelper::flushToFile($data,$this->fileName);
         }
 
     }

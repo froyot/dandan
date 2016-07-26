@@ -19,6 +19,7 @@ class AdminAsset extends AssetBundle
 
     public $baseUrl = '@web';
     public $css = [
+        'vendors/bootstrap/dist/css/bootstrap.css',
         'vendors/font-awesome/css/font-awesome.min.css',
         'vendors/iCheck/skins/flat/green.css',
         'vendors/iCheck/skins/flat/green.css',
@@ -31,8 +32,11 @@ class AdminAsset extends AssetBundle
 
 
 
-
+    // public $jsOptions=['depends'=>['yii\bootstrap\BootstrapAsset']];
     public $js = [
+        'js/jquery.min.js',
+        'vendors/bootstrap/dist/js/bootstrap.min.js',
+
         'vendors/fastclick/lib/fastclick.js',
         'vendors/nprogress/nprogress.js',
         'vendors/Chart.js/dist/Chart.min.js',
@@ -61,6 +65,6 @@ class AdminAsset extends AssetBundle
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        // 'yii\bootstrap\BootstrapAsset'
     ];
 }

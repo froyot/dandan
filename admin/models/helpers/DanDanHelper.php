@@ -23,4 +23,14 @@ class DanDanHelper extends \yii\base\model
         }
 
     }
+
+    public static function getSession($key,$default='')
+    {
+        $res = SessionHelper::get($key);
+        if(!$res && $default)
+        {
+            return $default;
+        }
+        return $res;
+    }
 }
