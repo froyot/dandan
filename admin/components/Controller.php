@@ -76,6 +76,10 @@ class Controller extends \yii\web\Controller
             {
                 return $this->redirect($this->getReturnUrl());
             }
+            else
+            {
+                var_dump($model->errors);die;
+            }
         }
         return $this->render('create',['model'=>$model]);
     }

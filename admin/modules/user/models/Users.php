@@ -3,7 +3,8 @@
 namespace admin\modules\user\models;
 
 use Yii;
-
+use admin\behaviors\StatusModel;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "users".
  *
@@ -15,6 +16,19 @@ use Yii;
  */
 class Users extends \yii\db\ActiveRecord
 {
+
+    public function behaviors()
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [
+                [
+                'class'=>StatusModel::className(),
+                ],
+
+            ]
+        );
+    }
     /**
      * @inheritdoc
      */

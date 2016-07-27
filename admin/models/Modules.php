@@ -44,7 +44,9 @@ class Modules extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'des', 'path', 'create_at','status'], 'required'],
+            ['status','default','value'=>1],
+            ['create_at','default','value'=>date('Y-m-d H:i:s')],
+            [['name', 'des', 'path'], 'required'],
             [['create_at'], 'safe'],
             [['name', 'des', 'path'], 'string', 'max' => 255]
         ];

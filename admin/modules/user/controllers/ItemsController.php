@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 class ItemsController extends Controller {
 
 
-    public $_left_nav = ['user','user/items/index'];
+    public $_left_nav = ['modules','user/items/index'];
     public $modelSearch = 'admin\modules\user\models\UsersSearch';
     public $modelClass = 'admin\modules\user\models\Users';
     public function actionIndex()

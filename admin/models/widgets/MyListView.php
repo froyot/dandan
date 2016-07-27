@@ -36,7 +36,7 @@ class MyListView extends BaseListView
     {
         parent::init();
         $this->dataModels = array_values($this->dataProvider->getModels());
-        if($this->dataModels[0])
+        if(count($this->dataModels)>0 && $this->dataModels[0])
         {
 
             $model = reset($this->dataModels);
@@ -62,12 +62,14 @@ class MyListView extends BaseListView
 
     private function renderRow($model, $key, $index)
     {
+
+
             $tr = '<tr><td>'.($index+1).'</td>';
             foreach ($model as $name => $value) {
 
                 if($name == 'status')
                 {
-                    $tr .='<td><button type="button" class="btn btn-success btn-xs status-btn" data-id="'.$model->getPrimarykey().'">'.($value?"Used":"not used").'</button></td>';
+                    $tr .='<td><button type="button" class="btn '.($value?'btn-success':'').' btn-xs status-btn" data-id="'.$model->getPrimarykey().'">'.($value?"Used":"not used").'</button></td>';
                 }
                 else
                 {
@@ -75,7 +77,8 @@ class MyListView extends BaseListView
                 }
 
             }
-            $tr .='<td><a href="'.Url::to([$model->ClassName().'/update','id'=>$model->getPrimarykey()]).'" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a><a href="'.Url::to([$model->ClassName().'/delete','id'=>$model->getPrimarykey()]).'" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a></td>';
+
+            $tr .='<td><a href="'.Url::to(['update','id'=>$model->getPrimarykey()]).'" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a><a href="'.Url::to(['delete','id'=>$model->getPrimarykey()]).'" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a></td>';
             $tr .='</tr>';
 
             return $tr;

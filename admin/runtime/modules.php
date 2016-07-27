@@ -3,7 +3,7 @@ return [
 'user'=>[
 'class'=>'admin\modules\user\Module',
 ],
-'comment'=>[
-'class'=>'admin\modules\comments',
+'category'=>[
+'class'=>'admin\modules\category\Module',
 ],
 ];

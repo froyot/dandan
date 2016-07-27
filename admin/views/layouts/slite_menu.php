@@ -2,6 +2,8 @@
 use yii\helpers\Url;
 use admin\models\helpers\DanDanHelper;
 use admin\models\constFile\AppConst;
+
+$activeModules = require(Yii::getAlias('@admin/runtime/modules.php'));
 ?>
 
         <div class="col-md-3 left_col">
@@ -48,8 +50,18 @@ use admin\models\constFile\AppConst;
                   <li <?php if($this->context->_left_nav[0] == 'setting'):?>class="active"<?php endif;?>><a><i class="fa fa-bug"></i> Setting <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
 
-                      <li <?php if($this->context->_left_nav[1] == 'modules/index'):?>class="current-page"<?php endif;?>><a href="<?=Url::to(['modules/index']);?>">Modules</a></li>
-                      <li <?php if($this->context->_left_nav[1] == 'options/index'):?>class="current-page"<?php endif;?>><a href="<?=Url::to(['options/index']);?>">Options</a></li>
+                      <li <?php if($this->context->_left_nav[1] == 'modules/index'):?>class="current-page"<?php endif;?>><a href="<?=Url::to(['/admin/modules/index']);?>">Modules</a></li>
+                      <li <?php if($this->context->_left_nav[1] == 'options/index'):?>class="current-page"<?php endif;?>><a href="<?=Url::to(['/admin/options/index']);?>">Options</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <ul class="nav side-menu">
+
+                  <li <?php if($this->context->_left_nav[0] == 'modules'):?>class="active"<?php endif;?>><a><i class="fa fa-home"></i> Modules <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <?php foreach($activeModules as $key =>$module):?>
+                      <li <?php if($this->context->_left_nav[1] == $key.'/items/index'):?>class="current-page"<?php endif;?>><a href="<?=Url::to(['/admin/'.$key.'/items/index']);?>"><?=$key;?></a></li>
+                      <?php endforeach;?>
                     </ul>
                   </li>
                 </ul>
