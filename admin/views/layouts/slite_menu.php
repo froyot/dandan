@@ -52,6 +52,7 @@ $activeModules = require(Yii::getAlias('@admin/runtime/modules.php'));
 
                       <li <?php if($this->context->_left_nav[1] == 'modules/index'):?>class="current-page"<?php endif;?>><a href="<?=Url::to(['/admin/modules/index']);?>">Modules</a></li>
                       <li <?php if($this->context->_left_nav[1] == 'options/index'):?>class="current-page"<?php endif;?>><a href="<?=Url::to(['/admin/options/index']);?>">Options</a></li>
+                      <li <?php if($this->context->_left_nav[1] == 'generate/index'):?>class="current-page"<?php endif;?>><a href="<?=Url::to(['/admin/generate/index']);?>">Generate</a></li>
                     </ul>
                   </li>
                 </ul>

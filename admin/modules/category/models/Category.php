@@ -5,7 +5,7 @@ namespace admin\modules\category\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%category}}".
+ * This is the model class for table "category".
  *
  * @property integer $cat_id
  * @property integer $parent_id
@@ -23,7 +23,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%category}}';
+        return 'category';
     }
 
     /**
@@ -46,14 +46,14 @@ class Category extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'cat_id' => Yii::t('app', 'Cat ID'),
-            'parent_id' => Yii::t('app', 'Parent ID'),
-            'type' => Yii::t('app', 'Type'),
-            'name' => Yii::t('app', 'Name'),
-            'des' => Yii::t('app', 'Des'),
-            'status' => Yii::t('app', 'Status'),
-            'create_at' => Yii::t('app', 'Create At'),
-            'sort_num' => Yii::t('app', 'Sort Num'),
+            'cat_id' => 'Cat ID',
+            'parent_id' => 'Parent ID',
+            'type' => 'Type',
+            'name' => 'Name',
+            'des' => 'Des',
+            'status' => 'Status',
+            'create_at' => 'Create At',
+            'sort_num' => 'Sort Num',
         ];
     }
 }

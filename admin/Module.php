@@ -7,6 +7,8 @@ use Yii;
  */
 class Module extends \yii\base\Module
 {
+    public $newFileMode = 0666;
+    public $newDirMode = 0777;
 
     public function beforeAction($action)
     {

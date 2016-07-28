@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\web\View;
 use admin\models\widgets\MyListView;
 
-$this->title = Yii::t('app', 'Category');
+$this->title = Yii::t('app', 'Posts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Category'), ['create'], ['class' => 'btn btn-success']) ?>    </p>
+        <?= Html::a(Yii::t('app', 'Create Posts'), ['create'], ['class' => 'btn btn-success']) ?>    </p>
 
     <?= MyListView::widget([
         'dataProvider' => $dataProvider,
