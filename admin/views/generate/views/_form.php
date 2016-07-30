@@ -26,7 +26,9 @@ use yii\widgets\ActiveForm;
 
 <?php foreach ($generator->getSaveColumnNames() as $attribute) {
 
+
     echo "    <?= " . $generator->generateActiveField($attribute) . " ?>\n\n";
+
 
 } ?>
     <div class="form-group">

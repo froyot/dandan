@@ -23,3 +23,15 @@ $('.status-btn').on('click',function(){
         }
     })
 });
+
+
+
+
+$('.datetimeinput').daterangepicker({
+  singleDatePicker: true,
+  calender_style: "picker_2",
+  format:"YYYY-MM-DD h:mm"
+}, function(start, end, label) {
+  console.log(start.toISOString(), end.toISOString(), label);
+});
+

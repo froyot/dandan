@@ -345,11 +345,33 @@ class Generator extends ModelGenerator{
             }
         }
         $column = $tableSchema->columns[$attribute];
-        if ($column->phpType === 'boolean') {
+
+        if($column->type =='datetime')
+        {
+
+            return "\$form->field(\$model, '$attribute')->render(function(\$filed){
+
+                return '<div class=\"has-feedback\"><input type=\"text\" class=\"form-control has-feedback-left datetimeinput\"   aria-describedby=\"inputSuccess$attribute\" value=\"'.\$filed->model->$attribute.'\">
+                        <span class=\"fa fa-calendar-o form-control-feedback left\" aria-hidden=\"true\"></span>
+                        <span id=\"inputSuccess$attribute\" class=\"sr-only\">(success)</span></div>
+                      ';
+            })";
+        }
+        elseif ($column->phpType === 'boolean') {
             return "\$form->field(\$model, '$attribute')->checkbox()";
         } elseif ($column->type === 'text') {
             return "\$form->field(\$model, '$attribute')->textarea(['rows' => 6])";
-        } else {
+        }
+        elseif($column->name =="status")
+        {
+            $dropDownOptions = [
+            '0'=>'Not Used',
+            '1'=>'Used'
+            ];
+            return "\$form->field(\$model, '$attribute')->dropDownList("
+                    . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)).")";
+        }
+        else {
             if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
                 $input = 'passwordInput';
             } else {
