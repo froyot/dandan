@@ -1,10 +1,10 @@
 <?= "<?php"?>
 
-namespace admin\modules\<?= $modelClass;?>;
+namespace <?=$moduleNs;?>;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'admin\modules\<?= $modelClass;?>\controllers';
+    public $controllerNamespace = '<?=$moduleNs;?>\controllers';
 
     public function init()
     {

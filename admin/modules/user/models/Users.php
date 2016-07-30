@@ -3,10 +3,9 @@
 namespace admin\modules\user\models;
 
 use Yii;
-use admin\behaviors\StatusModel;
-use yii\helpers\ArrayHelper;
+
 /**
- * This is the model class for table "users".
+ * This is the model class for table "{{%users}}".
  *
  * @property integer $user_id
  * @property string $username
@@ -16,25 +15,12 @@ use yii\helpers\ArrayHelper;
  */
 class Users extends \yii\db\ActiveRecord
 {
-
-    public function behaviors()
-    {
-        return ArrayHelper::merge(
-            parent::behaviors(),
-            [
-                [
-                'class'=>StatusModel::className(),
-                ],
-
-            ]
-        );
-    }
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'users';
+        return '{{%users}}';
     }
 
     /**
@@ -57,11 +43,11 @@ class Users extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('app', 'User ID'),
-            'username' => Yii::t('app', 'Username'),
-            'password' => Yii::t('app', 'Password'),
-            'create_at' => Yii::t('app', 'Create At'),
-            'status' => Yii::t('app', 'Status'),
+            'user_id' => 'User ID',
+            'username' => 'Username',
+            'password' => 'Password',
+            'create_at' => 'Create At',
+            'status' => 'Status',
         ];
     }
 }

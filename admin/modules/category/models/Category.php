@@ -5,13 +5,13 @@ namespace admin\modules\category\models;
 use Yii;
 
 /**
- * This is the model class for table "category".
+ * This is the model class for table "{{%category}}".
  *
  * @property integer $cat_id
  * @property integer $parent_id
  * @property string $type
  * @property string $name
- * @property integer $des
+ * @property string $des
  * @property integer $status
  * @property string $create_at
  * @property integer $sort_num
@@ -23,7 +23,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'category';
+        return '{{%category}}';
     }
 
     /**
@@ -32,11 +32,11 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent_id', 'des', 'status', 'sort_num'], 'integer'],
+            [['parent_id', 'status', 'sort_num'], 'integer'],
             [['type', 'name', 'des', 'status', 'create_at', 'sort_num'], 'required'],
             [['type'], 'string'],
             [['create_at'], 'safe'],
-            [['name'], 'string', 'max' => 200]
+            [['name', 'des'], 'string', 'max' => 200]
         ];
     }
 

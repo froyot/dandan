@@ -8,6 +8,7 @@ use yii\db\ActiveRecord;
 use yii\web\View;
 use yii\db\Schema;
 use yii\helpers\Inflector;
+use yii\helpers\VarDumper;
 class Generator extends ModelGenerator{
 
     public $db = 'db';
@@ -143,7 +144,8 @@ class Generator extends ModelGenerator{
                 }
                 if (is_file($templatePath . '/' . $file) && pathinfo($file, PATHINFO_EXTENSION) === 'php') {
                     $files[] = new CodeFile("$viewPath/$file", $this->render("@admin/views/generate/views/".$file,[
-                            'modelClass'=>$this->modelClass
+                            'modelClass'=>$this->ns."\\".$this->modelClass,
+                            'generator'=>$this
                         ]));
                 }
             }
@@ -153,7 +155,7 @@ class Generator extends ModelGenerator{
             $moduleFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($moduleFile, '\\')) . '.php');
 
             $files[]= new CodeFile($moduleFile, $this->render('@admin/views/generate/module.php',[
-                'modelClass'=>lcfirst($this->modelClass),
+                'moduleNs'=>$this->moduleNs,
             ]));
 
         }
@@ -174,6 +176,22 @@ class Generator extends ModelGenerator{
     {
         $db = $this->getDbConnection();
         return $db->getTableSchema($this->tableName)->getColumnNames();
+
+    }
+
+    public function getSaveColumnNames()
+    {
+        $primaryKey = [];
+        if (($table =$this->getDbConnection()->getTableSchema($this->tableName)) !== false)
+        {
+            $primaryKey = $table->primaryKey;
+        }
+        else
+        {
+            return [];
+        }
+        $column = $table->getColumnNames();
+        return array_diff($column,$primaryKey);
 
     }
    /**
@@ -307,6 +325,70 @@ class Generator extends ModelGenerator{
         }
 
         return $conditions;
+    }
+
+
+        /**
+     * Generates code for active field
+     * @param string $attribute
+     * @return string
+     */
+    public function generateActiveField($attribute)
+    {
+
+        $tableSchema = $this->getDbConnection()->getTableSchema($this->tableName);
+        if ($tableSchema === false || !isset($tableSchema->columns[$attribute])) {
+            if (preg_match('/^(password|pass|passwd|passcode)$/i', $attribute)) {
+                return "\$form->field(\$model, '$attribute')->passwordInput()";
+            } else {
+                return "\$form->field(\$model, '$attribute')";
+            }
+        }
+        $column = $tableSchema->columns[$attribute];
+        if ($column->phpType === 'boolean') {
+            return "\$form->field(\$model, '$attribute')->checkbox()";
+        } elseif ($column->type === 'text') {
+            return "\$form->field(\$model, '$attribute')->textarea(['rows' => 6])";
+        } else {
+            if (preg_match('/^(password|pass|passwd|passcode)$/i', $column->name)) {
+                $input = 'passwordInput';
+            } else {
+                $input = 'textInput';
+            }
+            if (is_array($column->enumValues) && count($column->enumValues) > 0) {
+                $dropDownOptions = [];
+                foreach ($column->enumValues as $enumValue) {
+                    $dropDownOptions[$enumValue] = Inflector::humanize($enumValue);
+                }
+                return "\$form->field(\$model, '$attribute')->dropDownList("
+                    . preg_replace("/\n\s*/", ' ', VarDumper::export($dropDownOptions)).", ['prompt' => ''])";
+            } elseif ($column->phpType !== 'string' || $column->size === null) {
+                return "\$form->field(\$model, '$attribute')->$input()";
+            } else {
+                return "\$form->field(\$model, '$attribute')->$input(['maxlength' => $column->size])";
+            }
+        }
+    }
+    /**
+     * Generates column format
+     * @param \yii\db\ColumnSchema $column
+     * @return string
+     */
+    public function generateColumnFormat($column)
+    {
+        if ($column->phpType === 'boolean') {
+            return 'boolean';
+        } elseif ($column->type === 'text') {
+            return 'ntext';
+        } elseif (stripos($column->name, 'time') !== false && $column->phpType === 'integer') {
+            return 'datetime';
+        } elseif (stripos($column->name, 'email') !== false) {
+            return 'email';
+        } elseif (stripos($column->name, 'url') !== false) {
+            return 'url';
+        } else {
+            return 'text';
+        }
     }
 
 }

@@ -18,8 +18,8 @@ class CategorySearch extends Category
     public function rules()
     {
         return [
-            [['cat_id', 'parent_id', 'des', 'status', 'sort_num'], 'integer'],
-            [['type', 'name', 'create_at'], 'safe'],
+            [['cat_id', 'parent_id', 'status', 'sort_num'], 'integer'],
+            [['type', 'name', 'des', 'create_at'], 'safe'],
         ];
     }
 
@@ -58,14 +58,14 @@ class CategorySearch extends Category
         $query->andFilterWhere([
             'cat_id' => $this->cat_id,
             'parent_id' => $this->parent_id,
-            'des' => $this->des,
             'status' => $this->status,
             'create_at' => $this->create_at,
             'sort_num' => $this->sort_num,
         ]);
 
         $query->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'name', $this->name]);
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'des', $this->des]);
 
         return $dataProvider;
     }

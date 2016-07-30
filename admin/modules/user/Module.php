@@ -1,15 +1,10 @@
 <?php
-
 namespace admin\modules\user;
-use Yii;
-/**
- * andan module definition class
- */
+
 class Module extends \yii\base\Module
 {
-    /**
-     * @inheritdoc
-     */
+    public $controllerNamespace = 'admin\modules\user\controllers';
+
     public function init()
     {
         parent::init();
