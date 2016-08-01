@@ -18,7 +18,7 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "<?= $generator->generateTableName($tableName) ?>".
  *
@@ -34,6 +34,48 @@ use Yii;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+    <?php if($generator->correlationable):?>
+        public $_relates;
+
+        <?php $rules[] = "['_relates','safe']";?>
+    <?php endif;?>
+    <?php if($generator->hasBehaviors()):?>
+    public function behaviors()
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [
+                <?php if($generator->sortable):?><?="\n"?>
+                [
+                    asfa
+                ],<?="\n"?>
+                <?php endif;?>
+                <?php if($generator->correlationable):?><?="\n"?>
+                [
+                    'class'=>'admin\behaviors\CorrelationModel',
+                    'model'=>'<?=$className;?>',
+                    'correlations'=>[
+                        //'category'=>[
+                        //   'type'=>'single',//or 'multinue'
+                        //   'class'=>'admin\modules\category\models\Category',
+                        //   'value_key'=>'cat_id',
+                        //   'label_key'=>'name'
+                        //]
+                    ],
+                    'saveCorrets'=>function(&$relates){
+                                $relates = $this->_relates;
+                    }
+                ],<?="\n"?>
+                <?php endif;?>
+                <?php if($generator->statusable):?><?="\n"?>
+                [
+                    'class'=>'admin\behaviors\StatusModel'
+                ],
+                <?php endif;?><?="\n"?>
+            ]
+        );
+    }
+    <?php endif;?>
     /**
      * @inheritdoc
      */
@@ -57,7 +99,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
      */
     public function rules()
     {
-        return [<?= "\n            " . implode(",\n            ", $rules) . "\n        " ?>];
+        return [<?= empty($rules) ? '' : ("\n            " . implode(",\n            ", $rules) . ",\n        ") ?>];
     }
 
     /**

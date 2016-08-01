@@ -4,6 +4,9 @@
 /* @var $generator yii\gii\generators\form\Generator */
 
 echo $form->field($generator, 'tableName');
+echo $form->field($generator,'statusable')->checkbox();
+echo $form->field($generator,'sortable')->checkbox();
+echo $form->field($generator,'correlationable')->checkbox();
 echo $form->field($generator, 'moduleNs');
 echo $form->field($generator, 'useTablePrefix')->checkbox();
 echo $form->field($generator, 'generateRelations')->checkbox();

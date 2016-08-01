@@ -20,10 +20,16 @@ class Generator extends ModelGenerator{
     public $generateRelations = true;
     public $generateLabelsFromComments = false;
     public $useTablePrefix = false;
+    public $correlationable = false;//是否允许
+    public $statusable = false;
+    public $sortable = false;
 
     public $searchModelClass;
 
-
+    public function hasBehaviors()
+    {
+        return $this->correlationable || $this->statusable || $this->sortable;
+    }
     public function load($data, $formName = null)
     {
         if( parent::load($data, $formName) )
@@ -36,6 +42,8 @@ class Generator extends ModelGenerator{
         return false;
 
     }
+
+
     public function rules()
     {
         return [
@@ -55,7 +63,7 @@ class Generator extends ModelGenerator{
             [['baseClass'], 'validateClass', 'params' => ['extends' => ActiveRecord::className()]],
             [['generateRelations', 'generateLabelsFromComments'], 'boolean'],
             [['enableI18N'], 'boolean'],
-            [['useTablePrefix'], 'boolean'],
+            [['useTablePrefix','correlationable','statusable','sortable'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
         ];
     }
@@ -86,6 +94,7 @@ class Generator extends ModelGenerator{
     public function generate()
     {
 
+
         $files = [];
 
         //生成model
@@ -96,6 +105,7 @@ class Generator extends ModelGenerator{
             $className = $this->generateClassName($tableName);
             $tableSchema = $db->getTableSchema($tableName);
             $params = [
+                'generator'=>$this,
                 'tableName' => $tableName,
                 'className' => $className,
                 'tableSchema' => $tableSchema,
@@ -107,7 +117,7 @@ class Generator extends ModelGenerator{
 
             $files[] = new CodeFile(
                 Yii::getAlias('@' . str_replace('\\', '/', $this->ns)) . '/' . $className . '.php',
-                $this->render('@yii/gii/generators/model/default/model.php', $params)
+                $this->render('@admin/views/generate/model.php', $params)
             );
 
             //生成searchmodel
@@ -351,7 +361,7 @@ class Generator extends ModelGenerator{
 
             return "\$form->field(\$model, '$attribute')->render(function(\$filed){
 
-                return '<div class=\"has-feedback\"><input type=\"text\" class=\"form-control has-feedback-left datetimeinput\"   aria-describedby=\"inputSuccess$attribute\" value=\"'.\$filed->model->$attribute.'\">
+                return '<div class=\"has-feedback\"><input type=\"text\" class=\"form-control has-feedback-left datetimeinput\"   aria-describedby=\"inputSuccess$attribute\" value=\"'.\$filed->model->$attribute.'\" name=\"'.Html::getInputName(\$filed->model,\"$attribute\").'\">
                         <span class=\"fa fa-calendar-o form-control-feedback left\" aria-hidden=\"true\"></span>
                         <span id=\"inputSuccess$attribute\" class=\"sr-only\">(success)</span></div>
                       ';
