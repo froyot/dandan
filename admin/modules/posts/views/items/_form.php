@@ -37,21 +37,48 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'author_id')->textInput() ?>
 
 
+
+
     <?php foreach($model->correlations as $key=>$corretion):?>
-        <?php if($corretion['type']=='single'):?>
-           <?php $corretionModel = $model->getCorrelation($key);?>
+        <?php if($corretion['type']=='single'):?>           <?php $corretionModel = $model->getCorrelation($key);?>
                 <div class="form-group field-posts-abstruct">
                 <label class="control-label" for="posts-<?=$key;?>"><?=$key;?></label>
-                <?= Html::dropDownList( Html::getInputName($model, '_relates').'['.$key.']', $corretionModel?$corretionModel->getPrimaryKey():null,ArrayHelper::map($model->getCorModels($corretion['class']),$corretion['value_key'],$corretion['label_key']),['class'=>'form-control']);?>
+                <?= Html::dropDownList( Html::getInputName($model, '_relates').'['.$key.']', $corretionModel?$corretionModel->cor_model_id:null,ArrayHelper::map($model->getCorModels($corretion['class']),$corretion['value_key'],$corretion['label_key']),['class'=>'form-control']);?>                <div class="help-block"></div>
+                </div>
+        <?php else:?>
+            <?php foreach($model->getCorrelations($key) as $corretionModel):?>
+                <div class="form-group field-posts-abstruct">
+                <label class="control-label" for="posts-<?=$key;?>"><?=$key;?></label>
+                <?= Html::checkbox( Html::getInputName($model, '_relates').'['.$key.'][]', true,['value'=>$corretionModel->cor_model_id,'label'=>$corretionModel->getCorModelName($corretion['class'])."\t"]);?>
                 <div class="help-block"></div>
                 </div>
+            <?php endforeach;?>
+
         <?php endif;?>
     <?php endforeach;?>
 
-    <div class="form-group">
+
+
+        <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php
+//$bundle = $this->getAssetManager()->getBundle('admin\assets\AdminAsset');
+//$this->registerJsFile($bundle->baseUrl.'/vendors/ueditor/utf8-php/ueditor.config.js');
+//$this->registerJsFile($bundle->baseUrl.'/vendors/ueditor/utf8-php/ueditor.all.js');
+//$this->registerJs('
+//    $("#_editor").removeClass("form-control");
+//    var _ue = UE.getEditor("_editor",{
+//        toolbars: [
+//            ["fullscreen", "source", "undo", "redo", "bold","simpleupload","link","justifyleft","justifyright","justifycenter","forecolor","italic","underline","strikethrough"]
+//        ],
+//        initialFrameHeight:500
+//    });
+//');
+
+?>

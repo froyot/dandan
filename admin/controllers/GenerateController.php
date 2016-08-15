@@ -25,7 +25,29 @@ class GenerateController extends Controller
 {
     public $enableCsrfValidation = false;
     public $_left_nav = ['Setting','generate/index'];
-
+    /**
+     * 登陆验证
+     * @return [type] [description]
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
 
     /**

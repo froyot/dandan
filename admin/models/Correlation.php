@@ -46,4 +46,21 @@ class Correlation extends \yii\db\ActiveRecord
             'cor_model_id' => Yii::t('app', 'Cor Model ID'),
         ];
     }
+
+    public function getCorModel($corModelClass)
+    {
+            $model = Yii::createObject($corModelClass);
+            return $model->findOne($this->cor_model);
+    }
+
+    public function getCorModelName($corModelClass)
+    {
+        $model = Yii::createObject($corModelClass);
+        $model = $model->findOne($this->cor_model_id);
+        if($model)
+        {
+            return $model->name;
+        }
+        return '';
+    }
 }

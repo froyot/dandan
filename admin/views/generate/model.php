@@ -47,7 +47,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
             [
                 <?php if($generator->sortable):?><?="\n"?>
                 [
-                    asfa
+
                 ],<?="\n"?>
                 <?php endif;?>
                 <?php if($generator->correlationable):?><?="\n"?>

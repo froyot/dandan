@@ -36,6 +36,7 @@ class CorrelationModel extends \yii\base\Behavior
         return Correlation::findOne(['model'=>$this->model,'cor_model'=>$corModel,'model_id'=>$this->owner->getPrimaryKey()]);
     }
 
+
     /**
      * 获取数据关联数据，多个
      * @author Allon<xianlong300@sina.com>
@@ -44,8 +45,9 @@ class CorrelationModel extends \yii\base\Behavior
      */
     public function getCorrelations($corModel)
     {
-        return Correlation::find()->where(['model'=>$this->model,'cor_model'=>$this->corModel,'model_id'=>$this->owner->getPrimaryKey()])->all();
+        return Correlation::find()->where(['model'=>$this->model,'cor_model'=>$corModel,'model_id'=>$this->owner->getPrimaryKey()])->all();
     }
+
 
     public function getCorModels($corModelClass)
     {
@@ -82,44 +84,35 @@ class CorrelationModel extends \yii\base\Behavior
         {
             if($this->correlations[$corModel]['type'] == 'single')
             {
-                $correlation = Correlation::findOne([
-                    'model'=>$this->model,
-                    'cor_model'=>$corModel,
-                    'model_id'=>$this->owner->getPrimaryKey(),
-                ]);
-                if(!$correlation)
-                {
+
                     $correlation = new Correlation();
                     $correlation->attributes = [
                         'model'=>$this->model,
                         'cor_model'=>$corModel,
                         'model_id'=>$this->owner->getPrimaryKey(),
+                        'cor_model_id'=>$cor_model_id
                     ];
-                }
-                $correlation->cor_model_id = $cor_model_id;
+
+                $correlation->save();
 
             }
             else
             {
-                $correlation = Correlation::findOne([
-                    'model'=>$this->model,
-                    'cor_model'=>$corModel,
-                    'model_id'=>$this->owner->getPrimaryKey(),
-                    'cor_model_id'=>$cor_model_id
-                ]);
-                if($correlation)
-                {
+
+                if(!is_array($cor_model_id))
                     return;
+                foreach($cor_model_id as $cor_id){
+                    $correlation = new Correlation();
+                    $correlation->attributes = [
+                            'model'=>$this->model,
+                            'cor_model'=>$corModel,
+                            'model_id'=>$this->owner->getPrimaryKey(),
+                            'cor_model_id'=>$cor_id
+                    ];
+                    $correlation->save();
                 }
-                $correlation = new Correlation();
-                $correlation->attributes = [
-                        'model'=>$this->model,
-                        'cor_model'=>$corModel,
-                        'model_id'=>$this->owner->getPrimaryKey(),
-                        'cor_model_id'=>$cor_model_id
-                ];
             }
-            $correlation->save();
+
         }
 
     }

@@ -34,7 +34,13 @@ class Posts extends \yii\db\ActiveRecord
                           'class'=>'admin\modules\category\models\Category',
                           'value_key'=>'cat_id',
                           'label_key'=>'name'
-                        ]
+                        ],
+                        'tags'=>[
+                              'type'=>'multinue',//or 'multinue'
+                              'class'=>'admin\modules\tags\models\Tags',
+                              'value_key'=>'cat_id',
+                              'label_key'=>'name'
+                        ],
                     ],
                     'saveCorrets'=>function(&$relates){
                                 $relates = $this->_relates;

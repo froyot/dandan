@@ -3,7 +3,7 @@
 namespace admin\modules\user\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "{{%users}}".
  *
@@ -15,7 +15,20 @@ use Yii;
  */
 class Users extends \yii\db\ActiveRecord
 {
-    /**
+            public function behaviors()
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [
+                                                
+                [
+                    'class'=>'admin\behaviors\StatusModel'
+                ],
+                
+            ]
+        );
+    }
+        /**
      * @inheritdoc
      */
     public static function tableName()
@@ -33,7 +46,7 @@ class Users extends \yii\db\ActiveRecord
             [['create_at'], 'safe'],
             [['status'], 'integer'],
             [['username'], 'string', 'max' => 20],
-            [['password'], 'string', 'max' => 40]
+            [['password'], 'string', 'max' => 40],
         ];
     }
 

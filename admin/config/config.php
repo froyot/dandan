@@ -17,6 +17,9 @@ return [
             'authTimeout' => 86400,
             'loginUrl' => ['/admin/public/login'],
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
 
 
     'assetManager' => [

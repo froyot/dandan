@@ -22,6 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
     'dataProvider' => $dataProvider,
     'columns' => [
         [
+            'attribute'=>'content',
+            'show'=>false
+        ],
+        [
         'class' => 'admin\models\widgets\ActionColumn'
         ],
     ],

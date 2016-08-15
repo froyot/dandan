@@ -51,12 +51,14 @@ class MyGridView extends GridView
 
         $guessColumns = $this->guessColumns();
         $configColums = [];
+        $hiddenColums = [];
         $addColum = [];
         foreach ($this->columns as $key => $colum) {
            if(is_array($colum))
            {
             if(isset($colum['show']) && $colum['show'] === false)
             {
+                $hiddenColums[$colum['attribute']] = 1;
                 continue;
             }
             if(isset($colum['attribute']))
@@ -75,6 +77,10 @@ class MyGridView extends GridView
         $this->columns[] = ['class' => 'yii\grid\SerialColumn'];
 
         foreach ($guessColumns as $key => $name) {
+            if(isset($hiddenColums[$name]))
+            {
+                continue;
+            }
             if(isset($configColums[$name]))
             {
                 $this->columns[] = $configColums[$name];

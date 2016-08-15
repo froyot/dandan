@@ -3,7 +3,7 @@
 namespace admin\modules\category\models;
 
 use Yii;
-
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "{{%category}}".
  *
@@ -18,7 +18,20 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
-    /**
+            public function behaviors()
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [
+                                                
+                [
+                    'class'=>'admin\behaviors\StatusModel'
+                ],
+                
+            ]
+        );
+    }
+        /**
      * @inheritdoc
      */
     public static function tableName()
@@ -36,7 +49,7 @@ class Category extends \yii\db\ActiveRecord
             [['type', 'name', 'des', 'status', 'create_at', 'sort_num'], 'required'],
             [['type'], 'string'],
             [['create_at'], 'safe'],
-            [['name', 'des'], 'string', 'max' => 200]
+            [['name', 'des'], 'string', 'max' => 200],
         ];
     }
 

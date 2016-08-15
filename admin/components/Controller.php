@@ -1,6 +1,7 @@
 <?php
 namespace admin\components;
 
+use yii\filters\AccessControl;
 use Yii;
 use yii\easyii\models;
 use yii\helpers\Url;
@@ -18,6 +19,29 @@ class Controller extends \yii\web\Controller
     public $_left_nav = ['Home','site/index'];
     public $modelClass;
     public $modelSearch;
+    /**
+     * 登陆验证
+     * @return [type] [description]
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => [],
+                        'allow' => false,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
 
     /**
@@ -42,11 +66,27 @@ class Controller extends \yii\web\Controller
         //         throw new \yii\web\ForbiddenHttpException('You cannot access this action');
         //     }
 
+
+
+            if (Yii::$app->user->isGuest) {
+                return $this->redirect(['login']);exit;
+            }
             if($action->id === 'index'){
                 $this->setReturnUrl();
             }
+            $permission = $action->id . ' ' . $this->id;
+            if (\Yii::$app->user->can($permission)) {
+                return true;
+            } else {
+                if (method_exists($this, 'checkOwnPermission')) {
+                    if ($this->checkOwnPermission($action)) {
+                        return true;
+                    }
+                }
+                throw new \yii\web\UnauthorizedHttpException("Don't has permission to finish action");
+            }
 
-            return true;
+
         // }
     }
 
